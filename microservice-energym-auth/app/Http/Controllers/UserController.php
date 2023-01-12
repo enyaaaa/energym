@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+use url;
 
 class UserController extends Controller
 {
@@ -134,11 +136,25 @@ class UserController extends Controller
                 $profile->mobile = $request->input('mobile');
 
                 if($request->hasFile('profilePic')){
+                    if ($profile->profilePic) {
+                        $old_path = $profile->profilePic;
+                        if (Storage::disk('s3')->exists($old_path)) {
+                            Storage::disk('s3')->delete($old_path);
+                        }
+                    }
+
                     $file = $request->file('profilePic');
                     $filename = $file->getClientOriginalName();
-                    $file -> storeAs('profilePic/' . $profile->email, $filename, "s3");
+                    $file = $request->profilePic->storeAs('profilePic/' . $profile->email, $filename, "s3");
+                    Storage::disk('s3')->setVisibility($file, 'public');
+                    $url = Storage::disk('s3')->url($file);
                     $profile->update([
-                        "profilePic" => $filename,
+                        "profilePic" => $url,
+                    ]);
+                }else {
+                    $url = $profile->profilePic;
+                    $profile->update([
+                        "profilePic" => $url,
                     ]);
                 }
 
