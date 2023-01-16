@@ -1,0 +1,47 @@
+networks:
+  energym:
+
+services:
+  microservice-energym-auth:
+    build: 
+      context: microservice-energym-auth
+      dockerfile: ../Dockerfile
+    container_name: microservice-energym-auth
+    image: microservice-energym-auth
+    ports:
+      - 8000:80
+    networks:
+      - energym
+
+  microservice-energym-booking:
+    build: 
+      context: microservice-energym-booking
+      dockerfile: ../Dockerfile
+    container_name: microservice-energym-booking
+    image: microservice-energym-booking
+    ports:
+      - 8001:80
+    networks:
+      - energym
+
+  microservice-energym-classes:
+    build: 
+      context: microservice-energym-classes
+      dockerfile: ../Dockerfile
+    container_name: microservice-energym-classes
+    image: microservice-energym-classes
+    ports:
+      - 8002:80
+    networks:
+      - energym
+
+  microservice-energym-forum:
+    build: 
+      context: microservice-energym-forum
+      dockerfile: ../Dockerfile
+    container_name: microservice-energym-forum
+    image: microservice-energym-forum
+    ports:
+      - 8003:80
+    networks:
+      - energym

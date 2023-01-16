@@ -19,11 +19,12 @@ return new class extends Migration
             $table->text('classTitle');
             $table->string('classImage') ->nullable();
             $table->text('classType');
-            $table->text('classLocation');
+            $table->string('classRoom');
             $table->string('classDate');
             $table->time('classTime');
             $table->string('classDuration');
             $table->decimal('price', 6,2);
+            $table->text('purpose');
             $table->text('description') -> nullable();
             $table->integer('slots');
             $table->timestamps();
