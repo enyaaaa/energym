@@ -9,7 +9,7 @@ services:
     container_name: microservice-energym-auth
     image: microservice-energym-auth
     ports:
-      - 8004:80
+      - 8000:80
     networks:
       - energym
 
