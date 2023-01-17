@@ -36,32 +36,68 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $validator  = Validator::make($request->all(), [
-            "userFullName" => 'required',
-            "userEmail" => 'required|email|max:191',
-            "userMobile" => 'required|max:8',
-        ]);
+        if (auth('sanctum')->check()) {
 
-        if ($validator->fails()) {
+            $user_id = auth('sanctum')->user()->id;
+            $class_id = $request->class_id;
+            $userFullName = $request->input('userFullName');
+            $userEmail = $request->input('userEmail');
+            $userMobile = $request->input('userMobile');
+
+            $bookingCheck = bookings::where('id', $class_id)->first();
+
+            if ($bookingCheck) {
+
+                if (bookings::where('class_id', $class_id)->where('user_id', $user_id)->exists()) {
+                    return response()->json([
+                        'status' => 409,
+                        'message' => 'you have already booked a slot',
+                    ]);
+                } else {
+                    $validator  = Validator::make($request->all(), [
+                        "userFullName" => 'required',
+                        "userEmail" => 'required|email|max:191',
+                        "userMobile" => 'required|max:8',
+                    ]);
+
+                    if ($validator->fails()) {
+                        return response()->json([
+                            'status' => 404,
+                            'message' => 'Some fields are missing',
+                            'validation_errors' => $validator->errors(),
+                        ]);
+                    } else {
+                        $booking = new bookings;
+
+                        $booking->user_id = $user_id;
+                        $booking->class_id = $class_id;
+                        $booking->userFullName = $userFullName;
+                        $booking->userEmail = $userEmail;
+                        $booking->userMobile = $userMobile;
+
+                        $booking->save();
+
+                        return response()->json([
+                            'status' => 201,
+                            'message' => 'Booked class Successfully',
+                        ]);
+                    }
+                }
+            } else {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Booking not found',
+                ]);
+            }
+
             return response()->json([
-                'status' => 404,
-                'message' => 'Some fields are missing',
-                'validation_errors' => $validator->errors(),
+                'status' => 201,
+                'message' => 'Booked',
             ]);
         } else {
-
-            $booking = new bookings();
-
-            $booking->user_id = $request->input('user_id');
-            $booking->class_id = $request->input('class_id');
-            $booking->userFullName = $request->input('userFullName');
-            $booking->userEmail = $request->input('userEmail');
-            $booking->userMobile = $request->input('userMobile');
-
-            $booking->save();
             return response()->json([
-                'status' => 200,
-                'message' => 'Booked class Successfully',
+                'status' => 401,
+                'message' => 'Login to add a booking',
             ]);
         }
     }
@@ -74,7 +110,8 @@ class BookingController extends Controller
      */
     public function show($id)
     {
-        //
+        $booking = bookings::where("user_id", $id)->get();
+        return $booking;
     }
 
     /**

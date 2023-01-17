@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\BookingsController;
+use App\Http\Controllers\BookingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('bookings', BookingsController::class);
-Route::delete('bookings', 'App\Http\Controllers\BookingsController@destroy');
+Route::apiResource('bookings', BookingController::class);
+Route::get('bookings/{id}', "App\Http\Controllers\BookingController@show");
+Route::delete('bookings', 'App\Http\Controllers\BookingController@destroy');

@@ -4,7 +4,7 @@ WORKDIR /var/www/html
 
 RUN apt-get update
 RUN apt-get install -y g++ libicu-dev libpq-dev libzip-dev zip zlib1g-dev
-RUN docker-php-ext-install intl opcache pdo pdo_pgsql pgsql
+RUN docker-php-ext-install mysqli pdo pdo_mysql
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 COPY . .
