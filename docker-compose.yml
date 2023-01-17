@@ -9,7 +9,7 @@ services:
     container_name: microservice-energym-auth
     image: microservice-energym-auth
     ports:
-      - 8000:80
+      - 8004:80
     networks:
       - energym
 
@@ -20,7 +20,7 @@ services:
     container_name: microservice-energym-booking
     image: microservice-energym-booking
     ports:
-      - 8001:80
+      - 8005:80
     networks:
       - energym
 
@@ -31,7 +31,7 @@ services:
     container_name: microservice-energym-classes
     image: microservice-energym-classes
     ports:
-      - 8002:80
+      - 8006:80
     networks:
       - energym
 
@@ -42,6 +42,6 @@ services:
     container_name: microservice-energym-forum
     image: microservice-energym-forum
     ports:
-      - 8003:80
+      - 8007:80
     networks:
       - energym
