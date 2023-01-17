@@ -89,7 +89,7 @@ class UserController extends Controller
         } else {
             return response()->json([
                 'status' => 401,
-                'message' => 'Login to continue',
+                'message' => 'Create account to continue',
             ]);
         }
     }
