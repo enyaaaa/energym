@@ -1,0 +1,31 @@
+name: Deploy Laravel Forum Microservice
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+    paths:
+      - microservice-energym-forum/**
+      - .github/workflows/microservice-energym-forum-deploy.yml
+      - docker-compose.yml
+      - Dockerfile
+
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Run update command
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST_ADDRESS }}
+          username: ${{ secrets.HOST_USERNAME }}
+          key: ${{ secrets.HOST_PRIVATE_KEY }}
+          port: 22
+          script: |
+            cd ~/energym
+            git pull origin master
+            docker-compose up -d --build microservice-energym-forum
+            echo 'Forum Service Updated'
