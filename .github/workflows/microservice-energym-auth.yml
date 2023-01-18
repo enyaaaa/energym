@@ -7,7 +7,7 @@ on:
       - master
     paths:
       - microservice-energym-auth/**
-      - .github/workflows/laravel-subspace-authentication-deploy.yml
+      - .github/workflows/microservice-energym-auth-deploy.yml
       - docker-compose.yml
       - Dockerfile
 
