@@ -52,51 +52,40 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        if (auth('sanctum')->check()) {
-            $user_id = auth('sanctum')->user()->id;
-            $profile = User::where('id', $user_id)->first();
-
-            $validator = Validator::make($request->all(), [
-                'email' => 'required|max:191',
-                'password' => 'required'
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|max:191',
+            'password' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json([
+                'validation_errors' => $validator->errors(),
             ]);
-            if ($validator->fails()) {
+        } else {
+            $user = User::where('email', $request->email)->first();
+
+            if (!$user || !Hash::check($request->password, $user->password)) {
                 return response()->json([
-                    'validation_errors' => $validator->errors(),
+                    'status' => 404,
+                    'message' => 'Invalid',
                 ]);
             } else {
-                $user = User::where('email', $request->email)->first();
+                $token = $user->createToken($user->email . 'token')->plainTextToken;
 
-                if (!$user || !Hash::check($request->password, $user->password)) {
-                    return response()->json([
-                        'status' => 404,
-                        'message' => 'Invalid',
-                    ]);
-                } else {
-                    $token = $user->createToken($user->email . 'token')->plainTextToken;
-
-                    return response()->json([
-                        'status' => 200,
-                        'username' => $user->username,
-                        'token' => $token,
-                        'userid' => $user->id,
-                        'email' => $user->email,
-                        'mobile' => $user->mobile,
-                        'message' => 'Logged in Successfully'
-                    ]);
-                }
+                return response()->json([
+                    'status' => 200,
+                    'username' => $user->username,
+                    'token' => $token,
+                    'userid' => $user->id,
+                    'email' => $user->email,
+                    'mobile' => $user->mobile,
+                    'message' => 'Logged in Successfully'
+                ]);
             }
-        } else {
-            return response()->json([
-                'status' => 401,
-                'message' => 'Create account to continue',
-            ]);
         }
     }
 
     public function logout(Request $request)
     {
-
         $request->user()->tokens()->delete();
 
         return response()->json([
