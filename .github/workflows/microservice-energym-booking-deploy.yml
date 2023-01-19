@@ -10,8 +10,7 @@ on:
       - .github/workflows/microservice-energym-booking-deploy.yml
       - docker-compose.yml
       - Dockerfile
-
-
+      
 jobs:
   deploy:
     runs-on: ubuntu-latest
