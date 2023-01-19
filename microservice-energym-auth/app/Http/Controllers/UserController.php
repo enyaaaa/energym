@@ -143,7 +143,7 @@ class UserController extends Controller
 
                     $file = $request->file('profilePic');
                     $filename = $file->getClientOriginalName();
-                    $file = $request->profilePic->storeAs('profilePic/' . $profile->email, $filename, "s3");
+                    $file = $request->profilePic->storeAs('profilePic/user/' . $profile->email, $filename, "s3");
                     Storage::disk('s3')->setVisibility($file, 'public');
                     $url = Storage::disk('s3')->url($file);
                     $profile->update([
