@@ -20,9 +20,9 @@ jobs:
       - name: Run update command
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST_ADDRESS }}
-          username: ${{ secrets.HOST_USERNAME }}
-          key: ${{ secrets.HOST_PRIVATE_KEY }}
+          host: ${{ secrets.ADDRESS }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           script: |
             cd ~/energym
