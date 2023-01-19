@@ -18,7 +18,7 @@ jobs:
     environment: production
     steps:
       - name: Run update command
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@main
         with:
           host: ${{ secrets.HOST_ADDRESS }}
           username: ${{ secrets.HOST_USERNAME }}
@@ -26,6 +26,6 @@ jobs:
           port: 22
           script: |
             cd ~/energym
-            git pull origin master
+            git pull origin main
             docker-compose up -d --build microservice-energym-classes
             echo 'Classes Service Updated'
