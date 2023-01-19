@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - main
     paths:
       - microservice-energym-auth/**
       - .github/workflows/microservice-energym-auth-deploy.yml
