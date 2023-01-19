@@ -26,6 +26,6 @@ jobs:
           port: 22
           script: |
             cd ~/energym
-            git pull
+            git pull origin main
             docker-compose up -d --build microservice-energym-booking
             echo 'Booking Service Updated'
