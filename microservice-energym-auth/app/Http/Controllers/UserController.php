@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 
+
 class UserController extends Controller
 {
     public function register(Request $request)
@@ -73,7 +74,7 @@ class UserController extends Controller
                     'status' => 200,
                     'username' => $user->username,
                     'token' => $token,
-                    'userid' => $user->id,
+                    'user_id' => $user->id,
                     'email' => $user->email,
                     'mobile' => $user->mobile,
                     'message' => 'Logged in Successfully'

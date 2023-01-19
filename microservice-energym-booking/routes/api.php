@@ -22,4 +22,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('bookings', BookingController::class);
 Route::get('bookings/{id}', "App\Http\Controllers\BookingController@show");
+Route::post('updatebooking/{id}', 'App\Http\Controllers\BookingController@update');
 Route::delete('bookings', 'App\Http\Controllers\BookingController@destroy');
