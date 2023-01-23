@@ -129,6 +129,11 @@ class BookingController extends Controller
                 'status' => 200,
                 'message' => 'Deleted Class Booking Successfully',
             ]);
+        } else {
+            return response()->json([
+                'status' => 404,
+                "message" => 'No classes found'
+            ]);
         }
     }
 }

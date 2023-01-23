@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->text('review');
-            $table->string('uploadImage') ->nullable();
+            $table->string('commentImage') ->nullable();
             $table->integer('rating');
             $table->timestamps();
         });

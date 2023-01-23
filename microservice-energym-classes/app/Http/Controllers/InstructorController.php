@@ -178,4 +178,24 @@ class InstructorController extends Controller
             ]);
         }
     }
+
+    public function destroy($id)
+    {
+        if (auth('sanctum')->check()) {
+
+            $instructor = instructors::find($id);
+
+            if ($instructor->delete()) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Deleted Account Successfully',
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Login to delete account',
+            ]);
+        }
+    }
 }

@@ -30,6 +30,7 @@ Route::post('register', 'App\Http\Controllers\InstructorController@register');
 Route::post('login', 'App\Http\Controllers\InstructorController@login');
 Route::get('profile', 'App\Http\Controllers\InstructorController@viewprofile');
 Route::post('updateprofile', 'App\Http\Controllers\InstructorController@editprofile');
+Route::delete('profile/{id}', 'App\Http\Controllers\InstructorController@destroy');
 
 Route::apiResource('classes', ClassController::class);
 Route::get('class/{id}', "App\Http\Controllers\ClassController@getclass");
