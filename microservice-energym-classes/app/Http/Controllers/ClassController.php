@@ -68,8 +68,8 @@ class ClassController extends Controller
             $slots = $request->input('slots');
 
             if (classes::where('classRoom', request('classRoom'))
-                ->where('classStartDateTime', '<=', request('classStartDateTime'))
-                ->where('classEndDateTime', '>=', request('classEndDateTime'))
+                ->where('classStartDateTime', '>=', request('classStartDateTime'))
+                ->where('classEndDateTime', '<=', request('classEndDateTime'))
                 ->exists()
             ) {
                 return response()->json([
