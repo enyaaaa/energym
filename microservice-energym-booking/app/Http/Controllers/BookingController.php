@@ -111,47 +111,7 @@ class BookingController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user_id = $request->user_id;
-        $class_id = $request->class_id;
-        $userFullName = $request->input('userFullName');
-        $userEmail = $request->input('userEmail');
-        $userMobile = $request->input('userMobile');
-
-        if (bookings::where('class_id', $class_id)->where('user_id', $user_id)->exists()) {
-            return response()->json([
-                'status' => 409,
-                'message' => 'you have already booked a slot',
-            ]);
-        } else {
-            $validator  = Validator::make($request->all(), [
-                "userFullName" => 'required',
-                "userEmail" => 'required|email|max:191',
-                "userMobile" => 'required|max:8',
-            ]);
-    
-            if ($validator->fails()) {
-                return response()->json([
-                    'status' => 404,
-                    'message' => 'Some fields are missing',
-                    'validation_errors' => $validator->errors(),
-                ]);
-            } else {
-    
-                $booking = bookings::find($id);
-    
-                $booking->user_id = $user_id;
-                $booking->class_id = $class_id;
-                $booking->userFullName = $userFullName;
-                $booking->userEmail = $userEmail;
-                $booking->userMobile = $userMobile;
-    
-                $booking->save();
-                return response()->json([
-                    'status' => 200,
-                    'message' => 'Booking Updated Successfully',
-                ]);
-            }
-        }
+        //
     }
 
     /**
