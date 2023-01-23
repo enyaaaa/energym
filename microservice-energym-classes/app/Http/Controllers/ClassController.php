@@ -67,9 +67,22 @@ class ClassController extends Controller
             $description = $request->input('description');
             $slots = $request->input('slots');
 
-            if (classes::where('classRoom', request('classRoom'))
-                ->where('classStartDateTime', '>=', request('classStartDateTime'))
-                ->where('classEndDateTime', '<=', request('classEndDateTime'))
+            if (classes::where('classRoom', $request->classRoom)
+                ->where(function ($query) use ($classStartDateTime, $classEndDateTime) {
+                    $query->where(function ($q) use ($classStartDateTime, $classEndDateTime) {
+                        $q->where('classStartDateTime', '>=', $classStartDateTime)
+                           ->where('classStartDateTime', '<', $classEndDateTime);
+                    })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
+                        $q->where('classStartDateTime', '<=', $classStartDateTime)
+                           ->where('classEndDateTime', '>', $classEndDateTime);
+                    })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
+                        $q->where('classEndDateTime', '>', $classStartDateTime)
+                           ->where('classEndDateTime', '<=', $classEndDateTime);
+                    })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
+                        $q->where('classStartDateTime', '>=', $classStartDateTime)
+                           ->where('classEndDateTime', '<=', $classEndDateTime);
+                    });
+                })
                 ->exists()
             ) {
                 return response()->json([
