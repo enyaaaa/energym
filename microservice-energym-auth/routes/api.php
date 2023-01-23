@@ -29,3 +29,4 @@ Route::post('register', 'App\Http\Controllers\UserController@register');
 Route::post('login', 'App\Http\Controllers\UserController@login');
 Route::get('profile', 'App\Http\Controllers\UserController@viewprofile');
 Route::post('updateprofile', 'App\Http\Controllers\UserController@editprofile');
+Route::delete('profile/{id}', 'App\Http\Controllers\UserController@destroy');

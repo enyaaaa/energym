@@ -169,4 +169,23 @@ class UserController extends Controller
             ]);
         }
     }
+    public function destroy($id)
+    {
+        if (auth('sanctum')->check()) {
+
+            $user = User::find($id);
+
+            if ($user->delete()) {
+                return response()->json([
+                    'status' => 200,
+                    'message' => 'Deleted Account Successfully',
+                ]);
+            }
+        } else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Login to delete account',
+            ]);
+        }
+    }
 }

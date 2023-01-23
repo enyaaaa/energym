@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\InstructorController;
+use App\Http\Controllers\ClassController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,7 @@ Route::post('register', 'App\Http\Controllers\InstructorController@register');
 Route::post('login', 'App\Http\Controllers\InstructorController@login');
 Route::get('profile', 'App\Http\Controllers\InstructorController@viewprofile');
 Route::post('updateprofile', 'App\Http\Controllers\InstructorController@editprofile');
+
+Route::apiResource('classes', ClassController::class);
+Route::get('class/{id}', "App\Http\Controllers\ClassController@getclass");
+Route::delete('class/{id}', 'App\Http\Controllers\ClassController@destroy');
