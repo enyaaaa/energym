@@ -130,7 +130,7 @@ class ClassController extends Controller
         } else {
             return response()->json([
                 'status' => 401,
-                'message' => 'Login to add a booking',
+                'message' => 'Login to book a room',
             ]);
         }
     }
