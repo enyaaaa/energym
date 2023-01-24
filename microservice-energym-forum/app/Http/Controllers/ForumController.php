@@ -38,13 +38,13 @@ class ForumController extends Controller
     {
         $comment = new forum();
 
-        $comment->userId = $request->input('userId');
+        $comment->user_id = $request->input('user_id');
         $comment->review = $request->input('review');
         $comment->rating = $request->input('rating');
 
         $file = $request->file('commentImage');
         $filename = $file->getClientOriginalName();
-        $file = $request->commentImage->storeAs('commentImage/' . $comment->userId, $filename, "s3");
+        $file = $request->commentImage->storeAs('commentImage/' . $comment->user_id, $filename, "s3");
         Storage::disk('s3')->setVisibility($file, 'public');
         $url = Storage::disk('s3')->url($file);
 
@@ -88,7 +88,6 @@ class ForumController extends Controller
     {
         $comment = forum::find($id);
 
-        $comment->user_id = $request->input('user_id');
         $comment->review = $request->input('review');
         $comment->rating = $request->input('rating');
 

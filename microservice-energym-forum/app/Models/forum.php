@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class forum extends Model
 {
     use HasFactory;
+
+    protected $table = 'forums';
+    protected $primaryKey = 'id';
+    protected $fillable = [
+        'review',
+        'commentImage',
+        'rating',
+    ];
 }
