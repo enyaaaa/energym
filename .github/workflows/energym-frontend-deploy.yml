@@ -1,0 +1,42 @@
+name: Deploy Energym Frontend
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - energym-frontend/**
+      - .github/workflows/energym-frontend-deploy.yml
+
+jobs:
+  SFTP-Deploy-Action:
+    name: SFTP-Deploy-Action
+    runs-on: ubuntu-latest
+    environment: frontend-production
+    steps:
+    - uses: actions/checkout@master
+    
+    - name: Use Node.js 16
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16
+        
+    - name: Build Project
+      run: |
+        cd energym-frontend
+        npm install
+        npm run build --if-present
+    - name: List output files
+      run: |
+        cd energym-frontend
+        ls
+    - name: Deploying Files to Server
+      uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      with:
+          username: ${{ secrets.USERNAME }}
+          server: ${{ secrets.ADDRESS }}
+          password: ${{ secrets.PASSWORD }}
+          local_path: './energym-frontend/dist/*'
+          remote_path: '/var/www/139.162.58.164'
+          sftpArgs: '-o ConnectTimeout=5' 
