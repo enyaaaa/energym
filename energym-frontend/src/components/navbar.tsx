@@ -2,7 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { UserCircle } from "phosphor-react";
+import { User } from "phosphor-react";
+import { mobile } from "../responsive";
 
 type Props = {};
 
@@ -19,7 +20,7 @@ const navbar = (props: Props) => {
           <NavLink to="/ourclass">BOOK A CLASS</NavLink>
           <NavLink to="/ourteam">OUR TEAM</NavLink>
           <NavLink to="/forum">FAQ</NavLink>
-          <NavLink to="/profile"><UserCircle size={32} /></NavLink>
+          <NavLink to="/login"><User size={32} /></NavLink>
         </Right>
       </Wrapper>
     </Container>
@@ -29,6 +30,7 @@ const navbar = (props: Props) => {
 const Image = styled.img`
   height: 80px;
   width: auto;
+  ${mobile({ height: "35px" })}
 `;
 
 const Container = styled.div`
@@ -36,10 +38,11 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  padding: 10px 70px;
+  padding: 20px 50px;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  ${mobile({ padding: "20px 0"})}
 `;
 
 const Left = styled.div`

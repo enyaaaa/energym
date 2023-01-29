@@ -1,16 +1,24 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
+import energymvideo from "../assets/video/energym.mp4";
 
-type Props = {}
+type Props = {};
 
 const banner = (props: Props) => {
   return (
-    <Container>banner</Container>
-  )
-}
+    <Container>
+      <video controls width="100%" loop autoPlay>
+        <source src={energymvideo} type="video/mp4" />
+      </video>
+    </Container>
+  );
+};
 
 const Container = styled.div`
-  text-align: center;
+  padding-top: 2%;
+  padding-left: 10%;
+  padding-right: 10%;
+  align-items: center;
 `;
 
-export default banner
+export default banner;

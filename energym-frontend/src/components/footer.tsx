@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 import { Envelope, Phone, MapPin } from "phosphor-react";
 import logo from "../assets/logo_icon.png";
+import { mobile } from "../responsive";
 
 type Props = {};
 
@@ -56,7 +57,7 @@ const footer = (props: Props) => {
 const Container = styled.div`
   display: flex;
   padding: 70px;
-  
+  ${mobile({ padding: "35px", flexDirection: "column", textAlign: "center" })}
 `;
 
 const Left = styled.div`
@@ -100,12 +101,12 @@ const List = styled.ul`
 const NavLink = styled(Link)`
   width: 50%;
   margin-bottom: 10px;
-  display: flex;
   text-decoration: none;
   cursor: pointer;
   &:hover {
     color: #6bbbb4;
   }
+  
 `;
 
 const Right = styled.div`

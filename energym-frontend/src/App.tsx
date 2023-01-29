@@ -11,6 +11,8 @@ import Getstarted from "./layout/getstarted";
 import Termsandconditions from "./layout/termsandconditions";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
+import Login from "./components/login";
+import Register from "./components/register";
 
 function App() {
   return (
@@ -26,7 +28,8 @@ function App() {
         <Route path="/getstarted" element={<Getstarted />} />
         <Route path="/termsandconditions" element={<Termsandconditions />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <Footer />
     </Container>
