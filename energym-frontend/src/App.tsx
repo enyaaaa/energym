@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import Home from "./layout/home";
-import Booking from "./layout/booking";
+import Classes from "./layout/classes";
 import Team from "./layout/team";
 import Forum from "./layout/forum";
 import Profile from "./layout/profile";
@@ -20,7 +20,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/ourclass" element={<Booking />} />
+        <Route path="/ourclass" element={<Classes />} />
         <Route path="/ourteam" element={<Team />} />
         <Route path="/forum" element={<Forum />} />
         <Route path="/profile" element={<Profile />} />

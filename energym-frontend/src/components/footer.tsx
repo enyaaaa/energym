@@ -77,9 +77,13 @@ const Logo = styled.div`
   display: flex;
 `;
 
-const Logotitle = styled.h1``;
+const Logotitle = styled.h1`
+  font-size: 40px;
+`;
 
-const Desc = styled.p``;
+const Desc = styled.p`
+padding: 10px;
+`;
 
 const Center = styled.div`
   flex: 1;
@@ -88,6 +92,7 @@ const Center = styled.div`
 
 const Title = styled.h3`
   margin-bottom: 30px;
+  font-size: 20px;
 `;
 
 const List = styled.ul`
@@ -106,7 +111,6 @@ const NavLink = styled(Link)`
   &:hover {
     color: #6bbbb4;
   }
-  
 `;
 
 const Right = styled.div`

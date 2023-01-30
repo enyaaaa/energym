@@ -7,7 +7,7 @@ type Props = {};
 const banner = (props: Props) => {
   return (
     <Container>
-      <video controls width="100%" loop autoPlay>
+      <video controls width="100%" loop autoPlay muted>
         <source src={energymvideo} type="video/mp4" />
       </video>
     </Container>
