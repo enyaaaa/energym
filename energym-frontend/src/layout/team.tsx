@@ -12,12 +12,12 @@ import {
 } from "@chakra-ui/react";
 import { classesapi } from "../api/classes";
 
-type Props = {
+interface Props{ 
   id: number;
   name: string;
   profilePic: string;
   key: number;
-};
+}
 
 const team = (props: Props) => {
   //using state
