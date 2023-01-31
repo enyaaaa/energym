@@ -48,13 +48,13 @@ const team = (props: Props) => {
           <Title>OUR TEAM</Title>
         </Header>
       </Wrapper>
-      <SimpleGrid minChildWidth="300px" spacing="40px">
+      <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
         {team.map((item, index) => (
-          <Card background={"black"}>
+          <Card background={"black"} padding={"3%"}>
             <CardBody>
               <Image
                 width="100%"
-                height="400px"
+                height="300px"
                 objectFit="cover"
                 src={item.img}
                 alt={item.username}
