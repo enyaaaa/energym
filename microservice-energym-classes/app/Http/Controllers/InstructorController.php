@@ -10,6 +10,8 @@ use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Contracts\Service\Attribute\Required;
 
+use function GuzzleHttp\Promise\inspect;
+
 class InstructorController extends Controller
 {
     public function register(Request $request)
@@ -197,5 +199,9 @@ class InstructorController extends Controller
                 'message' => 'Login to delete account',
             ]);
         }
+    }
+    public function index()
+    {
+        return instructors::all();
     }
 }
