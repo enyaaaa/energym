@@ -30,21 +30,25 @@ const classes = (props: Props) => {
 
   const category = [
     {
+      id:1,
       header: "SPIN",
       desc: "Indoor cycling, often known as spinning, is a type of exercise that involves using a specific stationary exercise bike with a weighted flywheel in a classroom setting. Classes focus on endurance, strength, intervals, high intensity, and recuperation.",
       img: "https://voguesg.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2022/01/13133338/spin-studios-crnk.jpg",
     },
     {
+      id:2,
       header: "YOGA",
       desc: "Physical exercise that primarily consists of postures, frequently connected by flowing sequences, occasionally including breathing exercises, and frequently concluding with lying down relaxation or meditation.",
       img: "https://www.fitnessfirst.com.sg/-/media/project/evolution-wellness/fitness-first/south-east-asia/malaysia/classes/gentle-flow-yoga/gentle-flow-yoga-class-malaysia.jpg",
     },
     {
+      id:3,
       header: "PILATES",
       desc: "Pilates is a set of repetitive movements done on a mat or other apparatus to increase flexibility, strength, and balance. Pilates movements strengthen the body by putting physical effort from the core outward.",
       img: "https://www.verywellfit.com/thmb/cuTXaANkoMHc1yH7AEPuchMe1jM=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/82301405-56b35cc13df78cdfa004c35a.jpg",
     },
     {
+      id:4,
       header: "HIIT",
       desc: "Exercise plan that mixes brief bursts of vigorous exercise with less vigorous but still active 'recovery' periods. In an HIIT class, the objective is to maintain a target heart rate for exercise, which enables you to burn fat quickly in a short period of time.",
       img: "https://img.livestrong.com/630x/photos.demandstudios.com/getty/article/79/22/175558978.jpg?type=webp",
@@ -69,7 +73,8 @@ const classes = (props: Props) => {
           direction={{ base: "column", sm: "row" }}
           overflow="hidden"
           background={"black"}
-          margin="100px"
+          padding={"5%"}
+          key={item.id}
         >
           <Image
             objectFit="cover"

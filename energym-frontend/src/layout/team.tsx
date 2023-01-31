@@ -1,46 +1,35 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import axios from "axios";
 import { mobile } from "../responsive";
 import {
   Card,
   Stack,
   CardBody,
-  CardFooter,
   Image,
   Heading,
-  Text,
-  Divider,
-  ButtonGroup,
-  Button,
   SimpleGrid,
-  Box,
 } from "@chakra-ui/react";
+import { classesapi } from "../api/classes";
 
-type Props = {};
+type Props = {
+  id: number;
+  name: string;
+  profilePic: string;
+};
 
 const team = (props: Props) => {
-  const team = [
-    {
-      img: "https://media.istockphoto.com/id/876164838/photo/asian-workout-woman-showing-milk-bottle-during-break-or-relax-food-drinks-and-healthy-concept.jpg?s=612x612&w=0&k=20&c=zE0MSC0u5EuosLSpGP7GrvE-bQMADezLyl7R1OKbszc=",
-      username: "Nicole",
-    },
-    {
-      img: "https://media.istockphoto.com/id/876164838/photo/asian-workout-woman-showing-milk-bottle-during-break-or-relax-food-drinks-and-healthy-concept.jpg?s=612x612&w=0&k=20&c=zE0MSC0u5EuosLSpGP7GrvE-bQMADezLyl7R1OKbszc=",
-      username: "Nicole",
-    },
-    {
-      img: "https://images.unsplash.com/photo-1599552683573-9dc48255fe85?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80",
-      username: "Nicole",
-    },
-    {
-      img: "https://media.istockphoto.com/id/876164838/photo/asian-workout-woman-showing-milk-bottle-during-break-or-relax-food-drinks-and-healthy-concept.jpg?s=612x612&w=0&k=20&c=zE0MSC0u5EuosLSpGP7GrvE-bQMADezLyl7R1OKbszc=",
-      username: "Nicole",
-    },
-    {
-      img: "https://media.istockphoto.com/id/876164838/photo/asian-workout-woman-showing-milk-bottle-during-break-or-relax-food-drinks-and-healthy-concept.jpg?s=612x612&w=0&k=20&c=zE0MSC0u5EuosLSpGP7GrvE-bQMADezLyl7R1OKbszc=",
-      username: "Candy",
-    },
-  ];
+  //using state
+  const [instructors, setInstructors] = useState<Props[]>([]);
+
+  //getting all orders that users has made
+  useEffect(() => {
+    classesapi.get(`instructors`).then(({ data }) => {
+      console.log(data)
+      setInstructors(data);
+    });
+  }, []);
+
   return (
     <Container>
       <Wrapper>
@@ -49,22 +38,24 @@ const team = (props: Props) => {
         </Header>
       </Wrapper>
       <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
-        {team.map((item, index) => (
-          <Card background={"black"} padding={"3%"}>
+      {instructors.map((instructor) => {
+          return (
+            <Card background={"black"} padding={"3%"} key={instructor.id}>
             <CardBody>
               <Image
                 width="100%"
                 height="300px"
                 objectFit="cover"
-                src={item.img}
-                alt={item.username}
+                src={instructor.profilePic}
+                alt={instructor.name}
               />
               <Stack mt="6" spacing="1" textAlign={"center"}>
-                <Heading size="md">{item.username}</Heading>
+                <Heading size="md">{instructor.name}</Heading>
               </Stack>
             </CardBody>
           </Card>
-        ))}
+          )
+        })}
       </SimpleGrid>
     </Container>
   );
