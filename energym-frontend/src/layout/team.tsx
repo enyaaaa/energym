@@ -16,6 +16,7 @@ type Props = {
   id: number;
   name: string;
   profilePic: string;
+  key: number;
 };
 
 const team = (props: Props) => {
