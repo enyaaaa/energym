@@ -33,5 +33,6 @@ Route::post('updateprofile', 'App\Http\Controllers\InstructorController@editprof
 Route::delete('profile/{id}', 'App\Http\Controllers\InstructorController@destroy');
 
 Route::apiResource('classes', ClassController::class);
+Route::get('classes/{classType}', "App\Http\Controllers\ClassController@show");
 Route::get('class/{id}', "App\Http\Controllers\ClassController@getclass");
 Route::delete('class/{id}', 'App\Http\Controllers\ClassController@destroy');

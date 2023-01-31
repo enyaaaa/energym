@@ -71,16 +71,16 @@ class ClassController extends Controller
                 ->where(function ($query) use ($classStartDateTime, $classEndDateTime) {
                     $query->where(function ($q) use ($classStartDateTime, $classEndDateTime) {
                         $q->where('classStartDateTime', '>=', $classStartDateTime)
-                           ->where('classStartDateTime', '<', $classEndDateTime);
+                            ->where('classStartDateTime', '<', $classEndDateTime);
                     })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
                         $q->where('classStartDateTime', '<=', $classStartDateTime)
-                           ->where('classEndDateTime', '>', $classEndDateTime);
+                            ->where('classEndDateTime', '>', $classEndDateTime);
                     })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
                         $q->where('classEndDateTime', '>', $classStartDateTime)
-                           ->where('classEndDateTime', '<=', $classEndDateTime);
+                            ->where('classEndDateTime', '<=', $classEndDateTime);
                     })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
                         $q->where('classStartDateTime', '>=', $classStartDateTime)
-                           ->where('classEndDateTime', '<=', $classEndDateTime);
+                            ->where('classEndDateTime', '<=', $classEndDateTime);
                     });
                 })
                 ->exists()
@@ -154,9 +154,10 @@ class ClassController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($classType)
     {
-        //
+        $class = classes::where("classType", $classType)->get();
+        return $class;
     }
 
     /**

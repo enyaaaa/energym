@@ -12,6 +12,7 @@ import {
   Image,
   Text,
   Stack,
+  Button
 } from "@chakra-ui/react";
 
 type Props = {};
