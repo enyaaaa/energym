@@ -16,7 +16,7 @@ interface Props{
   id: number;
   name: string;
   profilePic: string;
-  key: number;
+  key: any;
 }
 
 const team = (props: Props) => {
