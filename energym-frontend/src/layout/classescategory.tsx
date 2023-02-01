@@ -28,7 +28,7 @@ const classescategory = () => {
     <Container>
       <Wrapper>
         <Header>
-          <Title>{category} SCHEDULE</Title>
+          <Title>{category} CLASSES</Title>
         </Header>
       </Wrapper>
       <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>

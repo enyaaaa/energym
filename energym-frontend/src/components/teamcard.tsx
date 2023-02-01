@@ -1,10 +1,4 @@
-import {
-  Card,
-  Stack,
-  CardBody,
-  Image,
-  Heading,
-} from "@chakra-ui/react";
+import { Image, Box, Center } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { classesapi } from "../api/classes";
 import { Instructor } from "../utils/types";
@@ -26,20 +20,29 @@ const teamcard = ({ instructor }: InstructorProps) => {
   }, []);
 
   return (
-    <Card background={"black"} padding={"3%"} key={instructor.id}>
-      <CardBody>
-        <Image
-          width="100%"
-          height="300px"
-          objectFit="cover"
-          src={instructor.profilePic}
-          alt={instructor.name}
-        />
-        <Stack mt="6" spacing="1" textAlign={"center"}>
-          <Heading size="md">{instructor.name}</Heading>
-        </Stack>
-      </CardBody>
-    </Card>
+    <Box maxW="sm" borderRadius="lg" overflow="hidden">
+      <Image
+        width="100%"
+        height="300px"
+        objectFit="cover"
+        src={instructor.profilePic}
+        alt={instructor.name}
+      />
+      <Box p="6">
+        <Center>
+          <Box
+            mt="1"
+            as="h1"
+            lineHeight="tight"
+            noOfLines={1}
+            fontWeight="semibold"
+            fontSize="20px"
+          >
+            {instructor.name}
+          </Box>
+        </Center>
+      </Box>
+    </Box>
   );
 };
 
