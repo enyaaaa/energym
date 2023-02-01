@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import axios from "axios";
 import { mobile } from "../responsive";
+import TeamCard from "../components/teamcard";
 import {
   Card,
   Stack,
@@ -11,16 +11,11 @@ import {
   SimpleGrid,
 } from "@chakra-ui/react";
 import { classesapi } from "../api/classes";
+import { Instructor } from "../utils/types";
 
-interface Props {
-  id: number;
-  name: string;
-  profilePic: string;
-}
-
-const team = (prop:Props) => {
+const team = () => {
   //using state
-  const [instructors, setInstructors] = useState<Props[]>([]);
+  const [instructors, setInstructors] = useState([]);
 
   //getting all orders that users has made
   useEffect(() => {
@@ -38,26 +33,11 @@ const team = (prop:Props) => {
         </Header>
       </Wrapper>
       <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
-        {instructors.map(
-          (instructor: { id: number; name: string; profilePic: string }) => {
-            return (
-              <Card background={"black"} padding={"3%"} key={instructor.id}>
-                <CardBody>
-                  <Image
-                    width="100%"
-                    height="300px"
-                    objectFit="cover"
-                    src={instructor.profilePic}
-                    alt={instructor.name}
-                  />
-                  <Stack mt="6" spacing="1" textAlign={"center"}>
-                    <Heading size="md">{instructor.name}</Heading>
-                  </Stack>
-                </CardBody>
-              </Card>
-            );
-          }
-        )}
+        {instructors.map((instructor: Instructor) => {
+          return (
+            <TeamCard instructor={instructor} key={instructor.id}></TeamCard>
+          );
+        })}
       </SimpleGrid>
     </Container>
   );
@@ -82,4 +62,4 @@ const Title = styled.h1`
   ${mobile({ fontSize: "50px" })}
 `;
 
-export default team;
+export default team
