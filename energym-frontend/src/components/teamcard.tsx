@@ -4,7 +4,6 @@ import {
   CardBody,
   Image,
   Heading,
-  SimpleGrid,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { classesapi } from "../api/classes";
