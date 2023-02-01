@@ -12,21 +12,20 @@ import {
 } from "@chakra-ui/react";
 import { classesapi } from "../api/classes";
 
-interface Props{ 
+interface Props {
   id: number;
   name: string;
   profilePic: string;
-  key: any;
 }
 
-const team = (props: Props) => {
+const team = (prop:Props) => {
   //using state
   const [instructors, setInstructors] = useState<Props[]>([]);
 
   //getting all orders that users has made
   useEffect(() => {
     classesapi.get(`instructors`).then(({ data }) => {
-      console.log(data)
+      console.log(data);
       setInstructors(data);
     });
   }, []);
@@ -39,24 +38,26 @@ const team = (props: Props) => {
         </Header>
       </Wrapper>
       <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
-      {instructors.map((instructor) => {
-          return (
-            <Card background={"black"} padding={"3%"} key={instructor.id}>
-            <CardBody>
-              <Image
-                width="100%"
-                height="300px"
-                objectFit="cover"
-                src={instructor.profilePic}
-                alt={instructor.name}
-              />
-              <Stack mt="6" spacing="1" textAlign={"center"}>
-                <Heading size="md">{instructor.name}</Heading>
-              </Stack>
-            </CardBody>
-          </Card>
-          )
-        })}
+        {instructors.map(
+          (instructor: { id: number; name: string; profilePic: string }) => {
+            return (
+              <Card background={"black"} padding={"3%"} key={instructor.id}>
+                <CardBody>
+                  <Image
+                    width="100%"
+                    height="300px"
+                    objectFit="cover"
+                    src={instructor.profilePic}
+                    alt={instructor.name}
+                  />
+                  <Stack mt="6" spacing="1" textAlign={"center"}>
+                    <Heading size="md">{instructor.name}</Heading>
+                  </Stack>
+                </CardBody>
+              </Card>
+            );
+          }
+        )}
       </SimpleGrid>
     </Container>
   );
