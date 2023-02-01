@@ -53,6 +53,7 @@ const Wrapper = styled.div`
 
 const Header = styled.div`
   padding: 50px;
+  ${mobile({ padding: "30px" })}
 `;
 
 const Title = styled.h1`
