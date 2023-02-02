@@ -33,7 +33,7 @@ function App() {
         <Route path="/termsandconditions" element={<Termsandconditions />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register" element={<Register username={""} email={""} mobile={0} password={""} confirmPassword={""} />} />
       </Routes>
       <Footer />
     </Container>

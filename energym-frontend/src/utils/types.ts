@@ -7,6 +7,14 @@ export interface User {
     profilePic: string;
 }
 
+export interface Signup {
+    username: string;
+    email: string;
+    mobile: number;
+    password: string;
+    confirmPassword: string;
+}
+
 export interface Booking {
     id: number;
     user_id: number;
