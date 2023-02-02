@@ -17,9 +17,9 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), [
             "username" => 'required|max:191|unique:users,username',
             "email" => 'required|email|max:191|unique:users,email',
-            "mobile" => 'required|max:10|unique:users,mobile',
-            "password" => 'required|min:8|same:passwordConfirmation',
-            "passwordConfirmation"=> 'required|same:password|min:8'
+            "mobile" => 'required|min:8|numeric|unique:users,mobile',
+            "password" => 'required|min:8|same:confirmPassword',
+            "confirmPassword"=> 'required|same:password|min:8'
         ]);
 
         if ($validator->fails()) {

@@ -14,11 +14,11 @@ class InstructorController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "username" => 'required|max:191|unique:instructors,username',
-            "email" => 'required|email|max:191|unique:instructors,email',
-            "mobile" => 'required|max:10|unique:instructors,mobile',
-            "password" => 'required|min:8|same:passwordConfirmation',
-            "passwordConfirmation"=> 'required|same:password|min:8',
+            "username" => 'required|max:191|unique:users,username',
+            "email" => 'required|email|max:191|unique:users,email',
+            "mobile" => 'required|min:8|numeric|unique:users,mobile',
+            "password" => 'required|min:8|same:confirmPassword',
+            "confirmPassword"=> 'required|same:password|min:8',
             "code" => 'required'
         ]);
 

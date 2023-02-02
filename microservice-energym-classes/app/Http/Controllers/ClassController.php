@@ -56,6 +56,7 @@ class ClassController extends Controller
         if (auth('sanctum')->check()) {
 
             $instructor_id = auth('sanctum')->user()->id;
+            $instructorName = $request->instructorName;
             $classTitle = $request->classTitle;
             $classType = $request->input('classType');
             $classRoom = $request->input('classRoom');
@@ -110,6 +111,7 @@ class ClassController extends Controller
                     $class = new classes();
 
                     $class->instructor_id = $instructor_id;
+                    $class->instructorName = $instructorName;
                     $class->classTitle = $classTitle;
                     $class->classType = $classType;
                     $class->classRoom = $classRoom;
