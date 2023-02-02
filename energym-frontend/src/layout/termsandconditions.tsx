@@ -165,7 +165,7 @@ const Title = styled.h1`
 `;
 
 const Terms = styled.div`
-  padding: 70px;
+  padding: 20px;
 `;
 
 const P = styled.p`

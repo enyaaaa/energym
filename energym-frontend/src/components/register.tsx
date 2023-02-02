@@ -1,26 +1,116 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { NavLink as Link } from "react-router-dom";
+import { NavLink as Link, useNavigate } from "react-router-dom";
+import { useToast } from "@chakra-ui/react";
+import { authapi } from "../api/auth";
+import { useForm } from "react-hook-form";
 
-type Props = {};
+interface UserProps {
+  username: string;
+  email: string;
+  mobile: number;
+  password: string;
+  confirmPassword: string;
+}
 
-const register = (props: Props) => {
+const register = ({}: UserProps) => {
+  //navigate user to another page
+  const navigate = useNavigate();
+
+  const toast = useToast();
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+  } = useForm<UserProps>();
+
+  const onSubmit = (data: UserProps) => {
+    // api call
+    authapi.post("/register", data).then(
+      (res) => {
+        console.log(res.data);
+        toast({
+          title: "Account created.",
+          description: res.data.message,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+        navigate('/login', { replace: true });
+      },
+      (error) => {
+        console.log(error.response.data);
+      }
+    );
+  };
+
   return (
     <Container>
       <Wrapper>
         <Title>REGISTER</Title>
-        <Form>
-        <Input type="text" name="username" placeholder="username"/>
-            <Validation>{}</Validation>
-            <Input type="text" name="email" placeholder="email"/>
-            <Validation>{}</Validation>
-            <Input type="tel" name="mobile" placeholder="mobile"/>
-            <Validation>{}</Validation>
-            <Input type="password" name="password" placeholder="password"/>
-            <Validation>{}</Validation>
-          <ForgetPasswowrdLink to="/">FORGET PASSWORD?</ForgetPasswowrdLink>
-          <Button type="submit">SIGN IN</Button>
-          <CreateAccountLink to="/register">CREATE ACCOUNT</CreateAccountLink>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+          <Input
+            type="text"
+            placeholder="username"
+            {...register("username", {
+              required: "Username is Required",
+            })}
+          />
+          <Validation>{errors.username?.message}</Validation>
+          <Input
+            type="text"
+            placeholder="email"
+            {...register("email", {
+              required: "Email is Required",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Invalid email address",
+              },
+            })}
+          />
+          <Validation>{errors.email?.message}</Validation>
+          <Input
+            type="tel"
+            placeholder="mobile"
+            {...register("mobile", {
+              required: "Mobile is Required",
+              minLength: {
+                value: 8,
+                message: "Mobile must have at least 8 characters",
+              },
+            })}
+          />
+          <Validation>{errors.mobile?.message}</Validation>
+          <Input
+            type="password"
+            placeholder="password"
+            {...register("password", {
+              required: "Password is Required",
+              minLength: {
+                value: 8,
+                message: "Password must have at least 8 characters",
+              },
+            })}
+          />
+          <Validation>{errors.password?.message}</Validation>
+          <Input
+            type="password"
+            placeholder="confirm password"
+            {...register("confirmPassword", {
+              required: "Password Confirmation is Required",
+              minLength: {
+                value: 8,
+                message: "Password must have at least 8 characters",
+              },
+              validate: (value) =>
+                value === getValues().password || "The passwords do not match",
+            })}
+          />
+          <Validation>{errors.confirmPassword?.message}</Validation>
+          <Button type="submit">REGISTER</Button>
+          <LoginLink to="/login">AREADY HAVE AN ACCOUNT?</LoginLink>
         </Form>
       </Wrapper>
     </Container>
@@ -32,7 +122,6 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  
 `;
 
 const Wrapper = styled.div`
@@ -58,6 +147,7 @@ const Input = styled.input`
   padding: 10px;
   border-radius: 10px;
   text-align: center;
+  color: #000000;
 `;
 
 const Validation = styled.span`
@@ -67,30 +157,21 @@ const Validation = styled.span`
 
 const Button = styled.button`
   border: none;
-  padding: 15px 10px;
+  padding: 10px;
   border-radius: 10px;
   background-color: #6bbbb4;
   color: white;
   cursor: pointer;
+  margin-top: 10px;
   margin-bottom: 10px;
   justify-content: center;
 `;
 
-const ForgetPasswowrdLink = styled(Link)`
-  color: #ffffff;
-  text-align: center;
-  font-size: 12px;
-  text-decoration: none;
-  cursor: pointer;
-  padding-bottom: 10px;
-`;
-
-const CreateAccountLink = styled(Link)`
+const LoginLink = styled(Link)`
   color: #ffffff;
   font-size: 12px;
   text-decoration: none;
   cursor: pointer;
-  text-align: center;
 `;
 
 export default register;
