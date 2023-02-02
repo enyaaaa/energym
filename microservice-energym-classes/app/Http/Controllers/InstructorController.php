@@ -17,7 +17,8 @@ class InstructorController extends Controller
             "username" => 'required|max:191|unique:instructors,username',
             "email" => 'required|email|max:191|unique:instructors,email',
             "mobile" => 'required|max:10|unique:instructors,mobile',
-            "password" => 'required|min:8',
+            "password" => 'required|min:8|same:passwordConfirmation',
+            "passwordConfirmation"=> 'required|same:password|min:8',
             "code" => 'required'
         ]);
 
