@@ -4,6 +4,7 @@ import { NavLink as Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { User } from "phosphor-react";
 import { mobile } from "../responsive";
+import { ColorModeSwitcher } from "../utils/colormodeswitch";
 
 type Props = {};
 
@@ -29,6 +30,7 @@ const navbar = (props: Props) => {
           </NavLink>
         </Left>
         <Right>
+          <ColorModeSwitcher/>
           <NavLink to="/ourclass">BOOK A CLASS</NavLink>
           <NavLink to="/ourteam">OUR TEAM</NavLink>
           <NavLink to="/forum">FAQ</NavLink>

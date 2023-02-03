@@ -42,7 +42,7 @@ function App() {
 }
 
 const Container = styled.div`
-  background-color: black;
+ 
 `;
 
 export default App;
