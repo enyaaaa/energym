@@ -10,10 +10,11 @@ import Profile from "./layout/profile";
 import Joinourteam from "./layout/joinourteam";
 import Getstarted from "./layout/getstarted";
 import Termsandconditions from "./layout/termsandconditions";
-import Register from "./layout/register";
+import Register from "./components/user/userregisterform";
+import Login from "./components/user/userloginform";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
-import Login from "./components/login";
+
 
 import ScrollToTop from "./components/scrolltotop";
 

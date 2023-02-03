@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { NavLink as Link, useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
-import { authapi } from "../api/auth";
-import { useForm } from "react-hook-form";
-import { RegisterForm } from "../utils/types";
+import { authapi } from "../../api/auth";
 
 const registerform = () => {
   //navigate user to another page
@@ -13,7 +11,7 @@ const registerform = () => {
   const toast = useToast();
 
   //input field for form
-  const [registerInput, setRegister] = useState({
+  const [registerInput, setRegister] = useState<any>({
     username: "",
     name: "",
     email: "",
@@ -58,6 +56,13 @@ const registerform = () => {
           ...registerInput,
           error_list: res.data.validation_errors,
         });
+        toast({
+          title: "Registation Not Successful",
+          description: res.data.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
       }
     });
   };
@@ -67,21 +72,57 @@ const registerform = () => {
       <Wrapper>
         <Title>REGISTER</Title>
         <Form onSubmit={registerSubmit}>
-            <Input type="text" name="username" placeholder="username" onChange={handleInput} value={registerInput.username} />
-            <Validation>{registerInput.error_list.username}</Validation>
-            <Input type="text" name="name" placeholder="name" onChange={handleInput} value={registerInput.name} />
-            <Validation>{registerInput.error_list.name}</Validation>
-            <Input type="text" name="email" placeholder="email" onChange={handleInput} value={registerInput.email} />
-            <Validation>{registerInput.error_list.email}</Validation>
-            <Input type="tel" name="mobile" placeholder="mobile" onChange={handleInput} value={registerInput.mobile} />
-            <Validation>{registerInput.error_list.mobile}</Validation>
-            <Input type="password" name="password" placeholder="password" onChange={handleInput} value={registerInput.password} />
-            <Validation>{registerInput.error_list.password}</Validation>
-            <Input type="password" name="confirmPassword" placeholder="confirm password" onChange={handleInput} value={registerInput.confirmPassword} />
-            <Validation>{registerInput.error_list.comfirmPassword}</Validation>
-            <Button type="submit">REGISTER</Button>
-            <LoginLink to="/login">AREADY HAVE AN ACCOUNT?</LoginLink>
-          </Form>
+          <Input
+            type="text"
+            name="username"
+            placeholder="username"
+            onChange={handleInput}
+            value={registerInput.username}
+          />
+          <Validation>{registerInput.error_list.username}</Validation>
+          <Input
+            type="text"
+            name="name"
+            placeholder="name"
+            onChange={handleInput}
+            value={registerInput.name}
+          />
+          <Validation>{registerInput.error_list.name}</Validation>
+          <Input
+            type="text"
+            name="email"
+            placeholder="email"
+            onChange={handleInput}
+            value={registerInput.email}
+          />
+          <Validation>{registerInput.error_list.email}</Validation>
+          <Input
+            type="tel"
+            name="mobile"
+            placeholder="mobile"
+            onChange={handleInput}
+            value={registerInput.mobile}
+          />
+          <Validation>{registerInput.error_list.mobile}</Validation>
+          <Input
+            type="password"
+            name="password"
+            placeholder="password"
+            onChange={handleInput}
+            value={registerInput.password}
+          />
+          <Validation>{registerInput.error_list.password}</Validation>
+          <Input
+            type="password"
+            name="confirmPassword"
+            placeholder="confirm password"
+            onChange={handleInput}
+            value={registerInput.confirmPassword}
+          />
+          <Validation>{registerInput.error_list.comfirmPassword}</Validation>
+          <Button type="submit">REGISTER</Button>
+          <LoginLink to="/login">AREADY HAVE AN ACCOUNT?</LoginLink>
+        </Form>
       </Wrapper>
     </Container>
   );
