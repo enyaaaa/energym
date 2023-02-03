@@ -10,10 +10,11 @@ import Profile from "./layout/profile";
 import Joinourteam from "./layout/joinourteam";
 import Getstarted from "./layout/getstarted";
 import Termsandconditions from "./layout/termsandconditions";
+import Register from "./layout/register";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import Login from "./components/login";
-import Register from "./components/register";
+
 import ScrollToTop from "./components/scrolltotop";
 
 function App() {
@@ -31,9 +32,8 @@ function App() {
         <Route path="/joinourteam" element={<Joinourteam />} />
         <Route path="/getstarted" element={<Getstarted />} />
         <Route path="/termsandconditions" element={<Termsandconditions />} />
-        <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register username={""} email={""} mobile={0} password={""} confirmPassword={""} />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
       <Footer />
     </Container>
@@ -41,7 +41,7 @@ function App() {
 }
 
 const Container = styled.div`
-    background-color: black;
+  background-color: black;
 `;
 
 export default App;

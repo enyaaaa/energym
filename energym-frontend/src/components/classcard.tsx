@@ -40,11 +40,11 @@ const classcard = ({ Classes }: ClassProps) => {
             textTransform="uppercase"
             ml="2"
           >
-            {Classes.slots} SLOTS &bull; {Classes.classDuration}
+            {Classes.slots} slots &bull; {Classes.classDuration}
           </Box>
         </Box>
 
-        <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
+        <Box mt="1" as="h4" lineHeight="tight" noOfLines={1} textTransform="uppercase">
           {Classes.classTitle}
         </Box>
         <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>

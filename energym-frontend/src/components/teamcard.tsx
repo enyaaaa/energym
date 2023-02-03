@@ -1,4 +1,4 @@
-import { Image, Box, Center } from "@chakra-ui/react";
+import { Image, Box, Center, Badge } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { classesapi } from "../api/classes";
 import { Instructor } from "../utils/types";
@@ -20,7 +20,7 @@ const teamcard = ({ instructor }: InstructorProps) => {
   }, []);
 
   return (
-    <Box maxW="sm" borderRadius="lg" overflow="hidden">
+    <Box maxW="sm" borderRadius="full" overflow="hidden">
       <Image
         width="100%"
         height="300px"
@@ -28,7 +28,7 @@ const teamcard = ({ instructor }: InstructorProps) => {
         src={instructor.profilePic}
         alt={instructor.name}
       />
-      <Box p="6">
+      <Box p="1">
         <Center>
           <Box
             mt="1"
@@ -37,11 +37,15 @@ const teamcard = ({ instructor }: InstructorProps) => {
             noOfLines={1}
             fontWeight="semibold"
             fontSize="20px"
+            textTransform="uppercase"
           >
             {instructor.name}
           </Box>
         </Center>
       </Box>
+      <Center>
+        <Badge borderRadius="full" px="2" colorScheme="teal">{instructor.category}</Badge>
+      </Center>
     </Box>
   );
 };

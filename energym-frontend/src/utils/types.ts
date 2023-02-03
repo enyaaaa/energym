@@ -7,12 +7,14 @@ export interface User {
     profilePic: string;
 }
 
-export interface Signup {
+export interface RegisterForm {
     username: string;
+    name:string;
     email: string;
     mobile: number;
     password: string;
     confirmPassword: string;
+    arror_list: [];
 }
 
 export interface Booking {
@@ -58,7 +60,7 @@ export interface Comment {
     commentImage: string;
     rating: number;
 }
-  
+
   
   
   
