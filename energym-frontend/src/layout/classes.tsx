@@ -72,7 +72,7 @@ const classes = (props: Props) => {
           </Desc>
         </Header>
       </Wrapper>
-      {category.map((item, index) => (
+      {category.map((item) => (
         <Card
           direction={{ base: "column", sm: "row" }}
           overflow="hidden"

@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { NavLink as Link, useNavigate, useLocation } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 import { useToast } from "@chakra-ui/react";
-import { authapi } from "../../api/auth";
+import { authapi, localauthapi } from "../../api/auth";
+import useAuth from "../../hooks/useAuth";
 
 const login = ({}: {}) => {
+  const { setAuth }:any = useAuth();
 
   const toast = useToast();
 
@@ -34,14 +35,13 @@ const login = ({}: {}) => {
     authapi.post(`/login`, data).then((res) => {
       if (res.data.status === 200) {
         localStorage.setItem("auth_token", res.data.token);
-        localStorage.setItem("userid", res.data.userid);
+        localStorage.setItem("user_id", res.data.user_id);
         localStorage.setItem("email", res.data.email);
         localStorage.setItem("mobile", res.data.mobile);
         localStorage.setItem("auth_username", res.data.username);
-        localStorage.setItem('bgcolor', 'red');
         const token = res?.data?.token;
         console.log(res.data);
-        
+        setAuth( token );
         toast({
           title: "Login Successfully",
           description: res.data.message,

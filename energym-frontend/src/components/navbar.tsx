@@ -8,6 +8,18 @@ import { mobile } from "../responsive";
 type Props = {};
 
 const navbar = (props: Props) => {
+    //if user is not logged in it will relocate the user to login page else it will go to the profile page
+    var Profile:any;
+    if (!localStorage.getItem('auth_token')) {
+      Profile = (
+        <NavLink to='/login'><User size={32} /></NavLink>
+      );
+    } else {
+      Profile = (
+        <NavLink to='/profile'><User size={32} /></NavLink>
+      );
+    }
+
   return (
     <Container>
       <Wrapper>
@@ -20,7 +32,7 @@ const navbar = (props: Props) => {
           <NavLink to="/ourclass">BOOK A CLASS</NavLink>
           <NavLink to="/ourteam">OUR TEAM</NavLink>
           <NavLink to="/forum">FAQ</NavLink>
-          <NavLink to="/login"><User size={32} /></NavLink>
+          {Profile}
         </Right>
       </Wrapper>
     </Container>

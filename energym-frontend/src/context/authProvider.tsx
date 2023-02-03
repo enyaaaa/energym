@@ -1,20 +1,17 @@
-import { createContext, useState, ReactNode } from "react";
+import { createContext, useState } from "react";
 
 const AuthContext = createContext({});
 
-interface Props {
-  children?: ReactNode;
+export const AuthProvider = ({ children }:any) => {
+
+    //set auth user when login
+    const [auth, setAuth] = useState({});
+
+    return (
+        <AuthContext.Provider value={{ auth, setAuth }}>
+            {children}
+        </AuthContext.Provider>
+    )
 }
-
-export const AuthProvider = ({ children }: Props) => {
-  //set auth user when login
-  const [auth, setAuth] = useState({});
-
-  return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
 
 export default AuthContext;
