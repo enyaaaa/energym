@@ -92,13 +92,17 @@ class ClassController extends Controller
                 ]);
             } else {
                 $validator  = Validator::make($request->all(), [
+                    "instructorName" => 'required',
                     "classTitle" => 'required',
                     "classImage" => 'image|mimes:jpg,png,bmp,jpeg',
                     "classType" => 'required',
+                    "classRoom" => 'required',
                     "classStartDateTime" => 'required',
                     "classEndDateTime" => 'required',
                     "classDuration" => 'required',
                     "price" => 'required|regex:/^\d+(\.\d{1,2})?$/',
+                    "purpose" => 'required',
+                    "slots" => 'required',
                 ]);
 
                 if ($validator->fails()) {
@@ -134,6 +138,7 @@ class ClassController extends Controller
                     $class->save();
                     return response()->json([
                         'status' => 200,
+                        'class' => $class,
                         'message' => 'Class Room Booking Added Successfully',
                     ]);
                 }

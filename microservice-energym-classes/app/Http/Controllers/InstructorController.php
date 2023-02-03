@@ -14,12 +14,14 @@ class InstructorController extends Controller
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            "username" => 'required|max:191|unique:users,username',
-            "email" => 'required|email|max:191|unique:users,email',
-            "mobile" => 'required|min:8|numeric|unique:users,mobile',
+            "username" => 'required|max:191|unique:instructors,username',
+            "name" => 'required|max:191',
+            "email" => 'required|email|max:191|unique:instructors,email',
+            "mobile" => 'required|digits:8|unique:instructors,mobile',
             "password" => 'required|min:8|same:confirmPassword',
-            "confirmPassword"=> 'required|same:password|min:8',
-            "code" => 'required'
+            "confirmPassword" => 'required|same:password|min:8',
+            "code" => 'required',
+            "category" => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -44,9 +46,11 @@ class InstructorController extends Controller
                 return response()->json([
                     'status' => 200,
                     'username' => $instuctor->username,
-                    'token' => $token,
+                    'name' => $instuctor->name,
                     'mobile' => $instuctor->mobile,
                     'profilePic' => $instuctor->profilePic,
+                    'category' => $instuctor ->category,
+                    'token' => $token,
                     'message' => 'Registered Successfully'
                 ]);
             } else {
@@ -81,11 +85,11 @@ class InstructorController extends Controller
 
                 return response()->json([
                     'status' => 200,
-                    'username' => $instructor->username,
-                    'token' => $token,
                     'instructor_id' => $instructor->id,
+                    'username' => $instructor->username,
                     'email' => $instructor->email,
                     'mobile' => $instructor->mobile,
+                    'token' => $token,
                     'message' => 'Logged in Successfully'
                 ]);
             }

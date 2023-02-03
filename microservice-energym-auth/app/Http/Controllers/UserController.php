@@ -16,10 +16,11 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             "username" => 'required|max:191|unique:users,username',
+            "name" => 'required|max:191',
             "email" => 'required|email|max:191|unique:users,email',
-            "mobile" => 'required|min:8|numeric|unique:users,mobile',
+            "mobile" => 'required|digits:8|unique:users,mobile',
             "password" => 'required|min:8|same:confirmPassword',
-            "confirmPassword"=> 'required|same:password|min:8'
+            "confirmPassword" => 'required|same:password|min:8'
         ]);
 
         if ($validator->fails()) {
@@ -32,8 +33,8 @@ class UserController extends Controller
                 'username' => $request->username,
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password),
                 'mobile' => $request->mobile,
+                'password' => Hash::make($request->password),
                 'profilePic' => 'https://www.nicepng.com/png/full/136-1366211_group-of-10-guys-login-user-icon-png.png',
             ]);
 
@@ -42,9 +43,10 @@ class UserController extends Controller
             return response()->json([
                 'status' => 200,
                 'username' => $user->username,
-                'token' => $token,
+                'name' => $user->name,
                 'mobile' => $user->mobile,
                 'profilePic' => $user->profilePic,
+                'token' => $token,
                 'message' => 'Registered Successfully'
             ]);
         }
@@ -73,11 +75,12 @@ class UserController extends Controller
 
                 return response()->json([
                     'status' => 200,
-                    'username' => $user->username,
-                    'token' => $token,
                     'user_id' => $user->id,
+                    'username' => $user->username,
+                    'name' => $user->name,
                     'email' => $user->email,
                     'mobile' => $user->mobile,
+                    'token' => $token,
                     'message' => 'Logged in Successfully'
                 ]);
             }
