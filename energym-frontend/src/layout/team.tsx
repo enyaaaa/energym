@@ -40,13 +40,18 @@ const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 30px;
-  background: linear-gradient(rgba(27, 27, 27, 0.562), rgba(19, 19, 19, 0.938)),
-    url("https://d1.awsstatic.com/events/aws-hosted-events/2020/APAC/Summit%202020/sydney/les-mills-image-800x513.b06735d502e32586d38197535b1cb26cc43993f9.png")
-      center;
+  margin: 20px;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.274),
+      rgba(207, 207, 207, 0.815)
+    ),
+    url("https://media.istockphoto.com/photos/3d-abstract-background-with-ultraviolet-neon-lights-empty-frame-picture-id1191719793?b=1&k=20&m=1191719793&s=612x612&w=0&h=OMpsFvr6bZiuBkj0HnFyNNTU401COhP317Q_QSwmVpg=")
+      center no-repeat;
+  background-size: cover;
 `;
 
 const Header = styled.div`
-  padding: 50px;
+  padding: 20px;
 `;
 
 const Title = styled.h1`

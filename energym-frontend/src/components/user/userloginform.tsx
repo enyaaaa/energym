@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { SyntheticEvent, useContext, useState } from "react";
 import styled from "styled-components";
 import { NavLink as Link, useNavigate, useLocation } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
-import { authapi, localauthapi } from "../../api/auth";
+import { useToast, Input } from "@chakra-ui/react";
+import { authapi } from "../../api/auth";
 import useAuth from "../../hooks/useAuth";
+import AuthContext from "../../context/authProvider";
 
 const login = ({}: {}) => {
   const { setAuth }:any = useAuth();
@@ -25,7 +26,7 @@ const login = ({}: {}) => {
     setLogin({ ...loginInput, [e.target.name]: e.target.value });
   };
 
-  const loginSubmit = (e: any) => {
+  const loginSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
     const data = {
       email: loginInput.email,
@@ -38,10 +39,11 @@ const login = ({}: {}) => {
         localStorage.setItem("user_id", res.data.user_id);
         localStorage.setItem("email", res.data.email);
         localStorage.setItem("mobile", res.data.mobile);
-        localStorage.setItem("auth_username", res.data.username);
+        localStorage.setItem("username", res.data.username);
+        localStorage.setItem("profilePic", res.data.profilePic);
         const token = res?.data?.token;
         console.log(res.data);
-        setAuth( token );
+        setAuth({token});
         toast({
           title: "Login Successfully",
           description: res.data.message,
@@ -76,6 +78,8 @@ const login = ({}: {}) => {
             placeholder="email"
             onChange={handleInput}
             value={loginInput.email}
+            margin="10px 0"
+            size="lg"
           />
           <Validation>{loginInput.error_list.email}</Validation>
           <Input
@@ -84,6 +88,8 @@ const login = ({}: {}) => {
             placeholder="password"
             onChange={handleInput}
             value={loginInput.password}
+            margin="10px 0"
+            size="lg"
           />
           <Validation>{loginInput.error_list.password}</Validation>
           <ForgetPasswowrdLink to="/">FORGET PASSWORD?</ForgetPasswowrdLink>
@@ -98,7 +104,6 @@ const login = ({}: {}) => {
 const Container = styled.div`
   padding: 30px;
   display: flex;
-  align-items: center;
   justify-content: center;
 `;
 
@@ -118,16 +123,6 @@ const Form = styled.form`
   flex-direction: column;
 `;
 
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-  color: black;
-`;
-
 const Validation = styled.span`
   font-size: 12px;
   color: #6bbbb4;
@@ -145,16 +140,15 @@ const Button = styled.button`
 `;
 
 const ForgetPasswowrdLink = styled(Link)`
-  color: #ffffff;
-  text-align: center;
+  text-align: end;
   font-size: 12px;
   text-decoration: none;
   cursor: pointer;
+  padding-top: 10px;
   padding-bottom: 10px;
 `;
 
 const CreateAccountLink = styled(Link)`
-  color: #ffffff;
   font-size: 12px;
   text-decoration: none;
   cursor: pointer;

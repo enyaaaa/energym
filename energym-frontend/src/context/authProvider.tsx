@@ -1,8 +1,12 @@
-import { createContext, useState } from "react";
+import { createContext, PropsWithChildren, useState } from "react";
 
 const AuthContext = createContext({});
 
-export const AuthProvider = ({ children }:any) => {
+interface props {
+    children: JSX.Element | JSX.Element[]
+}
+
+export const AuthProvider = ({ children }: props) => {
 
     //set auth user when login
     const [auth, setAuth] = useState({});

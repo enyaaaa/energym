@@ -80,6 +80,7 @@ class UserController extends Controller
                     'name' => $user->name,
                     'email' => $user->email,
                     'mobile' => $user->mobile,
+                    'profilePic' => $user->profilePic,
                     'token' => $token,
                     'message' => 'Logged in Successfully'
                 ]);

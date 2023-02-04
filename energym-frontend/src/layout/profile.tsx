@@ -14,7 +14,9 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { authapi, localauthapi } from "../api/auth";
+import { authapi } from "../api/auth";
+import UserProfile from '../components/user/userprofile'
+import { UserProfileInfo } from "../utils/types";
 
 type Props = {};
 
@@ -22,7 +24,7 @@ const profile = (props: Props) => {
   // navigate users to another route
   const navigate = useNavigate();
 
-  const [profile, setProfile] = useState<any>([]);
+  const [profile, setProfile] = useState([]);
 
   useEffect(() => {
     authapi.get("/profile").then((res) => {
@@ -38,113 +40,10 @@ const profile = (props: Props) => {
     <Container>
       <Wrapper>
         <Title>PROFILE</Title>
-
         <Center py={6}>
-          {profile.map((item:any, idx:number) => {
+          {profile.map((Profile: UserProfileInfo) => {
             return (
-              <Stack key={idx}
-                w={{ sm: "100%", md: "540px" }}
-                height={{ sm: "476px", md: "20rem" }}
-                direction={{ base: "column", md: "row" }}
-                bg={useColorModeValue("#000000e", "gray.900")}
-                boxShadow={"2xl"}
-                padding={4}
-              >
-                <Flex flex={1} bg="blue.200">
-                  <Image
-                    objectFit="cover"
-                    boxSize="100%"
-                    src={
-                      item.profilePic
-                    }
-                  />
-                </Flex>
-                <Stack
-                  flex={1}
-                  flexDirection="column"
-                  justifyContent="center"
-                  alignItems="center"
-                  p={1}
-                  pt={2}
-                >
-                  <Text fontWeight={600} fontSize={"2xl"}>
-                    {item.name}
-                  </Text>
-                  <Text
-                    fontWeight={600}
-                    fontSize={"2xl"}
-                    color={"#ffffff"}
-                    size="sm"
-                    mb={4}
-                  >
-                    @{item.username}
-                  </Text>
-                  <Text
-                    fontWeight={500}
-                    fontSize={"xl"}
-                    color={"#ffffff"}
-                    size="sm"
-                    mb={4}
-                  >
-                    {item.email}
-                  </Text>
-                  <Text
-                    fontWeight={500}
-                    fontSize={"xl"}
-                    color={"#ffffff"}
-                    size="sm"
-                    mb={4}
-                  >
-                    {item.mobile}
-                  </Text>
-                  <Stack
-                    width={"100%"}
-                    mt={"2rem"}
-                    direction={"row"}
-                    padding={2}
-                    justifyContent={"space-between"}
-                    alignItems={"center"}
-                    paddingTop={"30px"}
-                  >
-                    <Button
-                      flex={1}
-                      fontSize={"sm"}
-                      rounded={"full"}
-                      bg={"#6bbbb4"}
-                      color={"#ffffff"}
-                      boxShadow={
-                        "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-                      }
-                      _hover={{
-                        bg: "blue.500",
-                      }}
-                      _focus={{
-                        bg: "blue.500",
-                      }}
-                    >
-                      edit
-                    </Button>
-                    <Button
-                      flex={1}
-                      fontSize={"sm"}
-                      rounded={"full"}
-                      bg={"#6bbbb4"}
-                      color={"#ffffff"}
-                      boxShadow={
-                        "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-                      }
-                      _hover={{
-                        bg: "blue.500",
-                      }}
-                      _focus={{
-                        bg: "blue.500",
-                      }}
-                    >
-                      Logout
-                    </Button>
-                  </Stack>
-                </Stack>
-              </Stack>
+              <UserProfile Profile={Profile} key={Profile.id}></UserProfile>
             );
           })}
         </Center>
@@ -154,18 +53,22 @@ const profile = (props: Props) => {
 };
 
 const Container = styled.div`
-  background: linear-gradient(rgba(0, 0, 0, 0.158), rgba(0, 0, 0, 0.034)),
+  margin: 1%;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.274),
+      rgba(207, 207, 207, 0.815)
+    ),
     url("https://img.freepik.com/premium-photo/gym-equpment-dark-background-3d-rendering_256339-185.jpg?w=1380")
-      center;
+      center no-repeat;
+  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 5%;
+  padding: 4%;
 `;
 
 const Wrapper = styled.div`
   width: 50%;
-  background-color: rgba(29, 29, 29, 0.733);
   border-radius: 20px;
   text-align: center;
   padding: 3%;

@@ -1,27 +1,20 @@
 import axios from "axios";
-import { BASE_URL } from "./api";
+import { BASE_URL, LOCAL_URL } from "./api";
+
+const user = JSON.parse(localStorage.getItem("persist:root")!)?.user;
+const currentUser = user && JSON.parse(user).currentUser;
+const TOKEN = currentUser?.accessToken;
 
 
 export const authapi = axios.create({
-    baseURL: BASE_URL.AUTH
+    baseURL: import.meta.env.VITE_ENVIRONMENT_KEY == 'local' ? LOCAL_URL.LOCALAUTH : BASE_URL.AUTH
 });
 
-export const authapiToken = (token: string) => axios.create({
-    baseURL: BASE_URL.AUTH,
+export const authapiToken = axios.create({
+    baseURL: import.meta.env.VITE_ENVIRONMENT_KEY == 'local' ? LOCAL_URL.LOCALAUTH : BASE_URL.AUTH,
     headers: {
-        "content-type": "multipart/form-data",
-        authorization: "Bearer " + token,
-    },
-});
-
-export const localauthapi = axios.create({
-    baseURL: BASE_URL.LOCALAUTH
-});
-
-export const localauthapiToken = (token: string) => axios.create({
-    baseURL: BASE_URL.LOCALAUTH,
-    headers: {
-        "content-type": "multipart/form-data",
-        authorization: "Bearer " + token,
+        "content-type": "application/json",
+        "Accept": "application/json",
+        token: `Bearer ${TOKEN}`
     },
 });

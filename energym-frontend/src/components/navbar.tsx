@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Avatar } from '@chakra-ui/react'
 import { NavLink as Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { User } from "phosphor-react";
@@ -10,14 +11,14 @@ type Props = {};
 
 const navbar = (props: Props) => {
     //if user is not logged in it will relocate the user to login page else it will go to the profile page
-    var Profile:any;
+    var Profile;
     if (!localStorage.getItem('auth_token')) {
       Profile = (
         <NavLink to='/login'><User size={32} /></NavLink>
       );
     } else {
       Profile = (
-        <NavLink to='/profile'><User size={32} /></NavLink>
+        <NavLink to='/profile'><Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' /></NavLink>
       );
     }
 
@@ -44,11 +45,11 @@ const navbar = (props: Props) => {
 const Image = styled.img`
   height: 80px;
   width: auto;
-  ${mobile({ height: "35px" })}
 `;
 
 const Container = styled.div`
   height: 90px;
+  ${mobile({ height: "150px" })}
 `;
 
 const Wrapper = styled.div`
@@ -56,7 +57,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  ${mobile({ padding: "20px 0"})}
+  ${mobile({ padding: "20px 0", flexDirection: "column"})}
 `;
 
 const Left = styled.div`
@@ -73,6 +74,7 @@ export const NavLink = styled(Link)`
   &:hover {
     color: #6bbbb4;
   }
+  ${mobile({ padding: "0 0.5rem "})}
 `;
 
 const Right = styled.div`

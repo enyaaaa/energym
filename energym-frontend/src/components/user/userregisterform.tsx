@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { SyntheticEvent, useState } from "react";
 import styled from "styled-components";
 import { NavLink as Link, useNavigate } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
+import { useToast, Input } from "@chakra-ui/react";
 import { authapi } from "../../api/auth";
 
 const registerform = () => {
@@ -28,7 +28,7 @@ const registerform = () => {
   };
 
   //function when users submit the form and add it into datebase
-  const registerSubmit = (e: any) => {
+  const registerSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
 
     const data = {
@@ -73,6 +73,8 @@ const registerform = () => {
         <Title>REGISTER</Title>
         <Form onSubmit={registerSubmit}>
           <Input
+            margin="10px 0"
+            size="lg"
             type="text"
             name="username"
             placeholder="username"
@@ -81,6 +83,8 @@ const registerform = () => {
           />
           <Validation>{registerInput.error_list.username}</Validation>
           <Input
+            margin="10px 0"
+            size="lg"
             type="text"
             name="name"
             placeholder="name"
@@ -89,6 +93,8 @@ const registerform = () => {
           />
           <Validation>{registerInput.error_list.name}</Validation>
           <Input
+            margin="10px 0"
+            size="lg"
             type="text"
             name="email"
             placeholder="email"
@@ -97,6 +103,8 @@ const registerform = () => {
           />
           <Validation>{registerInput.error_list.email}</Validation>
           <Input
+            margin="10px 0"
+            size="lg"
             type="tel"
             name="mobile"
             placeholder="mobile"
@@ -105,6 +113,8 @@ const registerform = () => {
           />
           <Validation>{registerInput.error_list.mobile}</Validation>
           <Input
+            margin="10px 0"
+            size="lg"
             type="password"
             name="password"
             placeholder="password"
@@ -113,6 +123,8 @@ const registerform = () => {
           />
           <Validation>{registerInput.error_list.password}</Validation>
           <Input
+            margin="10px 0"
+            size="lg"
             type="password"
             name="confirmPassword"
             placeholder="confirm password"
@@ -151,16 +163,6 @@ const Form = styled.form`
   flex-direction: column;
 `;
 
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 10px 0;
-  padding: 10px;
-  border-radius: 10px;
-  text-align: center;
-  color: #000000;
-`;
-
 const Validation = styled.span`
   font-size: 12px;
   color: #6bbbb4;
@@ -179,7 +181,6 @@ const Button = styled.button`
 `;
 
 const LoginLink = styled(Link)`
-  color: #ffffff;
   font-size: 12px;
   text-decoration: none;
   cursor: pointer;
