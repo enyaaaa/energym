@@ -26,6 +26,6 @@ jobs:
           command_timeout: 200m
           script: |
             cd energym
-            git pull origin main
+            git pull
             docker-compose up -d --build microservice-energym-booking
             echo 'Booking Service Updated'
