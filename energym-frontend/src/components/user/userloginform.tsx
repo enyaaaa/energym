@@ -5,10 +5,11 @@ import { useToast, Input } from "@chakra-ui/react";
 import { authapi } from "../../api/auth";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import { useDispatch } from "react-redux/es/exports";
+import { setUser } from "../../redux/userSlice";
 
 const login = () => {
-
-  const { setAuth }:any = useAuth();
+  // const auth = useAuth();
 
   const toast = useToast();
 
@@ -22,6 +23,7 @@ const login = () => {
     error_list: [],
   });
 
+  const dispatch = useDispatch();
   const handleInput = (e: any) => {
     e.persist();
     setLogin({ ...loginInput, [e.target.name]: e.target.value });
@@ -33,37 +35,32 @@ const login = () => {
       email: loginInput.email,
       password: loginInput.password,
     };
-    authapi.get("/sanctum/csrf-cookie").then((response) => {
-      authapi.post(`api/login`, data).then((res) => {
-        if (res.data.status === 200) {
-          localStorage.setItem("auth_token", res.data.token);
-          localStorage.setItem("user_id", res.data.user_id);
-          localStorage.setItem("email", res.data.email);
-          localStorage.setItem("mobile", res.data.mobile);
-          localStorage.setItem("auth_username", res.data.username);
-          localStorage.setItem("profilePic", res.data.profilePic);
-          setAuth(res.data.token)
-          toast({
-            title: "Login Successfully",
-            description: res.data.message,
-            status: "success",
-            duration: 9000,
-            isClosable: true,
-          });
+    authapi.post(`api/login`, data).then((res) => {
+      if (res.data.status === 200) {
+        dispatch(setUser(res.data));
+        localStorage.setItem("auth_token", res.data.token);
+        console.log(res.data);
 
-          navigate(from, { replace: true });
-        } else if (res.data.status === 404) {
-          toast({
-            title: "Try Again, Email or Password Invalid",
-            description: res.data.message,
-            status: "error",
-            duration: 9000,
-            isClosable: true,
-          });
-        } else {
-          setLogin({ ...loginInput, error_list: res.data.validation_errors });
-        }
-      });
+        toast({
+          title: "Login Successfully",
+          description: res.data.message,
+          status: "success",
+          duration: 9000,
+          isClosable: true,
+        });
+
+        navigate(from, { replace: true });
+      } else if (res.data.status === 404) {
+        toast({
+          title: "Try Again, Email or Password Invalid",
+          description: res.data.message,
+          status: "error",
+          duration: 9000,
+          isClosable: true,
+        });
+      } else {
+        setLogin({ ...loginInput, error_list: res.data.validation_errors });
+      }
     });
   };
 
