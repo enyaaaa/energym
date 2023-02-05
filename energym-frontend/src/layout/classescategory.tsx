@@ -18,7 +18,7 @@ const classescategory = () => {
 
   //getting all orders that users has made
   useEffect(() => {
-    classesapi.get(`classes/${category}`).then(({ data }) => {
+    classesapi.get(`api/classes/${category}`).then(({ data }) => {
       console.log(data);
       setClasses(data);
     });
@@ -46,9 +46,14 @@ const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 30px;
-  background: linear-gradient(rgba(27, 27, 27, 0.562), rgba(19, 19, 19, 0.938)),
-    url("https://www.i-fitness.be/system/location_images/images/000/000/396/original/BBB_0470.jpg?1645025968")
-      center;
+  margin: 20px;
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.274),
+      rgba(207, 207, 207, 0.815)
+    ),
+    url("https://media.istockphoto.com/photos/3d-abstract-background-with-ultraviolet-neon-lights-empty-frame-picture-id1191719793?b=1&k=20&m=1191719793&s=612x612&w=0&h=OMpsFvr6bZiuBkj0HnFyNNTU401COhP317Q_QSwmVpg=")
+      center no-repeat;
+  background-size: cover;
 `;
 
 const Header = styled.div`

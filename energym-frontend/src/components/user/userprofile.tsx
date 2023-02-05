@@ -10,6 +10,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { CloudFog } from "phosphor-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authapi } from "../../api/auth";
@@ -26,14 +27,15 @@ const userprofile = ({ Profile }: ProfileProps) => {
   const [profile, setProfile] = useState<ProfileProps[]>([]);
 
   useEffect(() => {
-    authapi.get("/profile").then((res) => {
+    authapi.get("api/profile").then((res) => {
       if (res.data.status === 200) {
         setProfile(res.data.profile);
       } else if (res.data.status === 401) {
-        navigate("/login");
+        /* navigate("/login"); */
+        console.log("test")
       }
     });
-  }, [setProfile]);
+  }, []);
 
   return (
     <Stack

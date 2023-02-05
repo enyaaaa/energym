@@ -27,7 +27,7 @@ const profile = (props: Props) => {
   const [profile, setProfile] = useState([]);
 
   useEffect(() => {
-    authapi.get("/profile").then((res) => {
+    authapi.get("api/profile").then((res) => {
       if (res.data.status === 200) {
         setProfile(res.data.profile);
       } else if (res.data.status === 401) {

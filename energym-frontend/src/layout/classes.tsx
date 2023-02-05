@@ -22,7 +22,7 @@ const classes = (props: Props) => {
 
   //getting products from api
   useEffect(() => {
-    classesapi.get(`classes`).then(({ data }) => {
+    classesapi.get(`api/classes`).then(({ data }) => {
       console.log(data);
       setClasses(data);
     });

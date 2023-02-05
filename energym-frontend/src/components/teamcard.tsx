@@ -13,7 +13,7 @@ const teamcard = ({ instructor }: InstructorProps) => {
 
   //getting all orders that users has made
   useEffect(() => {
-    classesapi.get(`instructors`).then(({ data }) => {
+    classesapi.get(`api/instructors`).then(({ data }) => {
       console.log(data);
       setInstructors(data);
     });

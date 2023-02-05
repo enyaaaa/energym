@@ -17,7 +17,7 @@ const classcard = ({ Classes }: ClassProps) => {
 
   //getting all orders that users has made
   useEffect(() => {
-    classesapi.get(`classes/${category}`).then(({ data }) => {
+    classesapi.get(`api/classes/${category}`).then(({ data }) => {
       console.log(data);
       setClasses(data);
     });

@@ -40,7 +40,7 @@ const registerform = () => {
       confirmPassword: registerInput.confirmPassword,
     };
 
-    authapi.post(`/register`, data).then((res) => {
+    authapi.post(`api/register`, data).then((res) => {
       if (res.data.status === 200) {
         console.log(res.data);
         toast({
