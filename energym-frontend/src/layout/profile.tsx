@@ -15,72 +15,41 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { authapi, authapiToken } from "../api/auth";
-import { UserProfileInfo } from "../utils/types";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
 import { resetUser } from "../redux/userSlice";
 
-type Props = {};
-
-const profile = (props: Props) => {
+const profile = () => {
   // navigate users to another route
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const profile = useSelector((state: RootState) => state.user.user);
-  const authuser= useSelector((state: RootState) => state.user);
+  const authuser = useSelector((state: RootState) => state.user);
 
   const toast = useToast();
 
-  const logout = () => {
-    // console.log(token);
-    dispatch(resetUser());
-    // authapiToken(authuser.token)
-    //   .post("api/logout")
-    //   .then(
-    //     (res) => {
-    //       console.log(res.data)
-    //       dispatch(resetUser());
-    //     },
-    //     (error) => {
-    //       console.log(error.response.data);
-    //     }
-    //   );
-  };
+  //function when user click on logout
+  const logoutSubmit = (e: any) => {
+    e.preventDefault();
 
- //function when user click on logout
- const logoutSubmit = (e:any) => {
-  e.preventDefault();
-
-  authapiToken(authuser.token).post(`api/logout`).then(res => {
-    if (res.data.status === 200) {
-      dispatch(resetUser());
-      toast({
-        title: "Logout Successfully",
-        description: res.data.message,
-        status: "success",
-        duration: 9000,
-        isClosable: true,
-      });
-      navigate("/", { replace: true });
-    }
-  });
-}
-  /* const [profile, setProfile] = useState<Array<UserProfileInfo>>([]);
-  const token = localStorage.getItem("auth_token"); */
-
-  /* useEffect(() => {
-    authapiToken(token)
-      .get("api/profile")
+    authapiToken(authuser.token)
+      .post(`api/logout`)
       .then((res) => {
         if (res.data.status === 200) {
-          console.log("test");
-          setProfile(res.data.profile);
-        } else if (res.data.status === 401) {
-          console.log("test");
-          navigate("/login");
+          dispatch(resetUser());
+          toast({
+            title: res.data.message,
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+          navigate("/", { replace: true });
+        } else {
+          console.log(authuser.token);
         }
       });
-  }, [setProfile]); */
+  };
+
   useEffect(() => {
     if (authuser.token == "") {
       navigate("/login");
@@ -90,8 +59,9 @@ const profile = (props: Props) => {
   return (
     <Container>
       <Wrapper>
-        <Title>PROFILE</Title>
-        <Center py={6}>
+          <Title>PROFILE</Title>
+      </Wrapper>
+      <Center>
           <Stack
             w={{ sm: "100%", md: "540px" }}
             height={{ sm: "476px", md: "20rem" }}
@@ -99,10 +69,10 @@ const profile = (props: Props) => {
             boxShadow={"2xl"}
             padding={4}
           >
-            <Flex flex={1} bg="blue.200">
+            <Flex>
               <Image
                 objectFit="cover"
-                boxSize="100%"
+                borderRadius={'100%'}
                 src={profile?.profilePic}
               />
             </Flex>
@@ -175,44 +145,29 @@ const profile = (props: Props) => {
               </Stack>
             </Stack>
           </Stack>
-          {/* <UserProfile Profile={profile[0]}></UserProfile> */}
-          {/* {profile.map((Profile: UserProfileInfo) => {
-            return (
-              <UserProfile Profile={Profile} key={Profile.id}></UserProfile>
-            );
-          })} */}
         </Center>
-      </Wrapper>
     </Container>
   );
 };
 
-const Container = styled.div`
-  margin: 1%;
+const Container = styled.div``;
+
+const Wrapper = styled.div`
+  padding: 30px;
+  margin: 20px;
   background: linear-gradient(
       rgba(255, 255, 255, 0.274),
       rgba(207, 207, 207, 0.815)
     ),
-    url("https://img.freepik.com/premium-photo/gym-equpment-dark-background-3d-rendering_256339-185.jpg?w=1380")
+    url("https://media.istockphoto.com/photos/3d-abstract-background-with-ultraviolet-neon-lights-empty-frame-picture-id1191719793?b=1&k=20&m=1191719793&s=612x612&w=0&h=OMpsFvr6bZiuBkj0HnFyNNTU401COhP317Q_QSwmVpg=")
       center no-repeat;
   background-size: cover;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 4%;
-`;
-
-const Wrapper = styled.div`
-  width: 50%;
-  border-radius: 20px;
-  text-align: center;
-  padding: 3%;
-  ${mobile({ paddingLeft: "20%", paddingRight: "20%", width: "90%" })}
 `;
 
 const Title = styled.h1`
-  font-size: 24px;
-  font-weight: 400;
+  text-align: center;
+  font-size: 80px;
+  ${mobile({ fontSize: "50px" })}
 `;
 
 export default profile;

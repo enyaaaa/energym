@@ -7,9 +7,9 @@ export const forumapi = axios.create({
 });
 
 export const forumapiToken = (token: string) => axios.create({
-    baseURL: BASE_URL.FORUM,
+    baseURL: import.meta.env.VITE_ENVIRONMENT_KEY == 'local' ? LOCAL_URL.LOCALFORUM : BASE_URL.FORUM,
     headers: {
         "content-type": "multipart/form-data",
-        authorization: "Bearer " + token,
+        authorization: token ? `Bearer ${token}` : '',
     },
 });

@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Banner from "../components/banner";
 
-type Props = {};
-
-const home = (props: Props) => {
+const home = () => {
   return (
     <Container>
       <Banner />
@@ -12,8 +10,6 @@ const home = (props: Props) => {
   );
 };
 
-const Container = styled.div`
-
-`;
+const Container = styled.div``;
 
 export default home;

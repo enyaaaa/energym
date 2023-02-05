@@ -12,9 +12,7 @@ import { CircleWavyCheck } from "phosphor-react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
-type Props = {};
-
-const getstarted = (props: Props) => {
+const getstarted = () => {
   return (
     <Container>
       <Center py={6} width={"100%"}>

@@ -1,15 +1,12 @@
-import React, { SyntheticEvent, useContext, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import styled from "styled-components";
 import { NavLink as Link, useNavigate, useLocation } from "react-router-dom";
 import { useToast, Input } from "@chakra-ui/react";
 import { authapi } from "../../api/auth";
-import useAuth from "../../hooks/useAuth";
-import axios from "axios";
 import { useDispatch } from "react-redux/es/exports";
 import { setUser } from "../../redux/userSlice";
 
 const login = () => {
-  // const auth = useAuth();
 
   const toast = useToast();
 
@@ -40,20 +37,16 @@ const login = () => {
         dispatch(setUser(res.data));
         localStorage.setItem("auth_token", res.data.token);
         console.log(res.data);
-
         toast({
-          title: "Login Successfully",
-          description: res.data.message,
+          title: res.data.message,
           status: "success",
           duration: 9000,
           isClosable: true,
         });
-
         navigate(from, { replace: true });
       } else if (res.data.status === 404) {
         toast({
           title: "Try Again, Email or Password Invalid",
-          description: res.data.message,
           status: "error",
           duration: 9000,
           isClosable: true,

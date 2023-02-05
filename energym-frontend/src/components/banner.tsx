@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import energymvideo from "../assets/video/energym.mp4";
 
-type Props = {};
-
-const banner = (props: Props) => {
+const banner = () => {
   return (
     <Container>
       <video controls width="100%" loop autoPlay muted>

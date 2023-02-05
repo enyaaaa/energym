@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import styled from "styled-components";
 import { NavLink as Link, useNavigate } from "react-router-dom";
 import { useToast, Input } from "@chakra-ui/react";
@@ -44,8 +44,7 @@ const registerform = () => {
       if (res.data.status === 200) {
         console.log(res.data);
         toast({
-          title: "Account created.",
-          description: res.data.message,
+          title: res.data.message,
           status: "success",
           duration: 9000,
           isClosable: true,
@@ -57,8 +56,7 @@ const registerform = () => {
           error_list: res.data.validation_errors,
         });
         toast({
-          title: "Registation Not Successful",
-          description: res.data.message,
+          title: res.data.message,
           status: "error",
           duration: 9000,
           isClosable: true,

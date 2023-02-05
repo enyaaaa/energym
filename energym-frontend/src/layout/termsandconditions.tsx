@@ -1,10 +1,7 @@
-import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
-type Props = {};
-
-const termsandconditions = (props: Props) => {
+const termsandconditions = () => {
   return (
     <Container>
       <Wrapper>

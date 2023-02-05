@@ -7,10 +7,10 @@ export const bookingsapi = axios.create({
 });
 
 export const bookingsapiToken = (token: string) => axios.create({
-    baseURL: BASE_URL.BOOKINGS,
+    baseURL: import.meta.env.VITE_ENVIRONMENT_KEY == 'local' ? LOCAL_URL.LOCALBOOKINGS : BASE_URL.BOOKINGS,
     headers: {
         "content-type": "multipart/form-data",
-        authorization: "Bearer " + token,
+        authorization: token ? `Bearer ${token}` : '',
         
     },
 });

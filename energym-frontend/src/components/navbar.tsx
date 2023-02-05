@@ -1,26 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { Avatar } from '@chakra-ui/react'
+import { Avatar } from "@chakra-ui/react";
 import { NavLink as Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { User } from "phosphor-react";
 import { mobile } from "../responsive";
 import { ColorModeSwitcher } from "../utils/colormodeswitch";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
-type Props = {};
+const navbar = () => {
+  //if user is not logged in it will relocate the user to login page else it will go to the profile page
+  const authuser = useSelector((state: RootState) => state.user);
+  const profile = useSelector((state: RootState) => state.user.user);
+  var Profile;
 
-const navbar = (props: Props) => {
-    //if user is not logged in it will relocate the user to login page else it will go to the profile page
-    var Profile;
-    if (!localStorage.getItem('auth_token')) {
-      Profile = (
-        <NavLink to='/login'><User size={32} /></NavLink>
-      );
-    } else {
-      Profile = (
-        <NavLink to='/profile'><Avatar name='Dan Abrahmov' src='https://bit.ly/dan-abramov' /></NavLink>
-      );
-    }
+  if (authuser.token == "") {
+    Profile = (
+      <NavLink to="/login">
+        <User size={32} />
+      </NavLink>
+    );
+  } else {
+    Profile = (
+      <NavLink to="/profile">
+        <Avatar name={profile?.name} src={profile?.profilePic} />
+      </NavLink>
+    );
+  }
 
   return (
     <Container>
@@ -31,7 +38,7 @@ const navbar = (props: Props) => {
           </NavLink>
         </Left>
         <Right>
-          <ColorModeSwitcher/>
+          <ColorModeSwitcher />
           <NavLink to="/ourclass">BOOK A CLASS</NavLink>
           <NavLink to="/ourteam">OUR TEAM</NavLink>
           <NavLink to="/forum">FAQ</NavLink>
@@ -57,7 +64,7 @@ const Wrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  ${mobile({ padding: "20px 0", flexDirection: "column"})}
+  ${mobile({ padding: "20px 0", flexDirection: "column" })}
 `;
 
 const Left = styled.div`
@@ -74,7 +81,7 @@ export const NavLink = styled(Link)`
   &:hover {
     color: #6bbbb4;
   }
-  ${mobile({ padding: "0 0.5rem "})}
+  ${mobile({ padding: "0 0.5rem " })}
 `;
 
 const Right = styled.div`

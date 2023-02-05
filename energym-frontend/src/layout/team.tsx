@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import TeamCard from "../components/teamcard";
+import { Image, Box, Center, Badge } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
 import { classesapi } from "../api/classes";
 import { Instructor } from "../utils/types";
@@ -28,7 +28,40 @@ const team = () => {
       <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
         {instructors.map((instructor: Instructor) => {
           return (
-            <TeamCard instructor={instructor} key={instructor.id}></TeamCard>
+            <Box
+              key={instructor.id}
+              maxW="sm"
+              borderRadius="full"
+              overflow="hidden"
+            >
+              <Image
+                width="100%"
+                height="300px"
+                objectFit="cover"
+                src={instructor.profilePic}
+                alt={instructor.name}
+              />
+              <Box p="1">
+                <Center>
+                  <Box
+                    mt="1"
+                    as="h1"
+                    lineHeight="tight"
+                    noOfLines={1}
+                    fontWeight="semibold"
+                    fontSize="20px"
+                    textTransform="uppercase"
+                  >
+                    {instructor.name}
+                  </Box>
+                </Center>
+              </Box>
+              <Center>
+                <Badge borderRadius="full" px="2" colorScheme="teal">
+                  {instructor.category}
+                </Badge>
+              </Center>
+            </Box>
           );
         })}
       </SimpleGrid>

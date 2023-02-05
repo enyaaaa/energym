@@ -1,9 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 
-type Props = {}
-
-const joinourteam = (props: Props) => {
+const joinourteam = () => {
   return (
     <Container>joinourteam</Container>
   )

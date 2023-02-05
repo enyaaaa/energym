@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import {
-  SimpleGrid
-} from "@chakra-ui/react";
+import { Image, Box, Badge } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import ClassCard from "../components/classcard";
 import { classesapi } from "../api/classes";
 import { Class } from "../utils/types";
 
@@ -34,7 +32,48 @@ const classescategory = () => {
       <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
         {classes.map((Classes: Class) => {
           return (
-            <ClassCard Classes={Classes} key={Classes.id}></ClassCard>
+            <Box key={Classes.id}
+              maxW="sm"
+              borderWidth="1px"
+              borderRadius="lg"
+              overflow="hidden"
+            >
+              <Image src={Classes.classImage} alt={Classes.classTitle} />
+
+              <Box p="6">
+                <Box display="flex" alignItems="baseline">
+                  <Badge borderRadius="full" px="2" colorScheme="teal">
+                    {Classes.classType}
+                  </Badge>
+                  <Box
+                    color="gray.500"
+                    fontWeight="semibold"
+                    letterSpacing="wide"
+                    fontSize="xs"
+                    textTransform="uppercase"
+                    ml="2"
+                  >
+                    {Classes.slots} slots &bull; {Classes.classDuration}
+                  </Box>
+                </Box>
+
+                <Box
+                  mt="1"
+                  as="h4"
+                  lineHeight="tight"
+                  noOfLines={1}
+                  textTransform="uppercase"
+                >
+                  {Classes.classTitle}
+                </Box>
+                <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
+                  {Classes.classStartDateTime}
+                </Box>
+                <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
+                  {Classes.classStartDateTime}
+                </Box>
+              </Box>
+            </Box>
           );
         })}
       </SimpleGrid>

@@ -7,9 +7,9 @@ export const classesapi = axios.create({
 });
 
 export const classesapiToken = (token: string) => axios.create({
-    baseURL: BASE_URL.CLASSES,
+    baseURL: import.meta.env.VITE_ENVIRONMENT_KEY == 'local' ? LOCAL_URL.LOCALCLASSES : BASE_URL.CLASSES,
     headers: {
         "content-type": "multipart/form-data",
-        authorization: "Bearer " + token,
+        authorization: token ? `Bearer ${token}` : '',
     },
 });

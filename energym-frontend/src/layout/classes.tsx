@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { classesapi } from "../api/classes";
 import { NavLink as Link } from "react-router-dom";
 import {
   Card,
@@ -12,21 +9,9 @@ import {
   Image,
   Text,
   Stack,
-  Button,
 } from "@chakra-ui/react";
 
-type Props = {};
-
-const classes = (props: Props) => {
-  const [classes, setClasses] = useState([]);
-
-  //getting products from api
-  useEffect(() => {
-    classesapi.get(`api/classes`).then(({ data }) => {
-      console.log(data);
-      setClasses(data);
-    });
-  }, []);
+const classes = () => {
 
   const category = [
     {
