@@ -26,6 +26,8 @@ jobs:
           command_timeout: 200m
           script: |
             cd energym
-            git pull
+            git pull origin main
+            docker-compose stop microservice-energym-forum
+            docker rm microservice-energym-forum
             docker-compose up -d --build microservice-energym-forum
             echo 'Forum Service Updated'

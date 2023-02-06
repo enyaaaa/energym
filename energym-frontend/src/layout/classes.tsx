@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { mobile } from "../utils/responsive";
 import { NavLink as Link } from "react-router-dom";
 import {
   Card,

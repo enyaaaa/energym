@@ -117,6 +117,7 @@ class ForumController extends Controller
         $comment->update();
         return response()->json([
             'status' => 200,
+            'comment' => $comment,
             'message' => 'Comment Updated Successfully',
         ]);
     }

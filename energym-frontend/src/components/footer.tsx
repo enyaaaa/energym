@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 import { Envelope, Phone, MapPin } from "phosphor-react";
 import logo from "../assets/logo_icon.png";
-import { mobile } from "../responsive";
+import { mobile } from "../utils/responsive";
 
 type Props = {};
 

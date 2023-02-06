@@ -73,6 +73,7 @@ class BookingController extends Controller
 
                 return response()->json([
                     'status' => 201,
+                    'booking' => $booking,
                     'message' => 'Booked class Successfully',
                 ]);
             }

@@ -42,10 +42,7 @@ class UserController extends Controller
 
             return response()->json([
                 'status' => 200,
-                'username' => $user->username,
-                'name' => $user->name,
-                'mobile' => $user->mobile,
-                'profilePic' => $user->profilePic,
+                'user' => $user,
                 'token' => $token,
                 'message' => 'Registered Successfully'
             ]);
@@ -117,7 +114,8 @@ class UserController extends Controller
             $profile = User::where('id', $user_id)->first();
             $validator  = Validator::make($request->all(), [
                 "username" => ['required', Rule::unique('users', 'username')->ignore($profile->id),],
-                "mobile" => ['required', Rule::unique('users', 'mobile')->ignore($profile->id),],
+                "email" => ['required','email', Rule::unique('users', 'email')->ignore($profile->id),],
+                "mobile" => ['required','digits:8', Rule::unique('users', 'mobile')->ignore($profile->id),],
                 "profilePic" => 'image|mimes:jpg,png,bmp,jpeg',
             ]);
 
@@ -131,6 +129,7 @@ class UserController extends Controller
 
                 $profile->username = $request->input('username');
                 $profile->name = $request->input('name');
+                $profile->email = $request->input('email');
                 $profile->mobile = $request->input('mobile');
 
                 if ($request->hasFile('profilePic')) {
@@ -159,6 +158,7 @@ class UserController extends Controller
                 $profile->update();
                 return response()->json([
                     'status' => 200,
+                    'user' => $profile,
                     'message' => 'Profile Updated Successfully',
                 ]);
             }

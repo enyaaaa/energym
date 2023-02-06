@@ -45,12 +45,9 @@ class InstructorController extends Controller
 
                 return response()->json([
                     'status' => 200,
-                    'username' => $instuctor->username,
-                    'name' => $instuctor->name,
-                    'mobile' => $instuctor->mobile,
-                    'profilePic' => $instuctor->profilePic,
-                    'category' => $instuctor ->category,
+                    'user' => $instuctor,
                     'token' => $token,
+                    'code' => 'Q6FfficNa7vfXzHP5LSMB06iu2sJuXh',
                     'message' => 'Registered Successfully'
                 ]);
             } else {
@@ -85,11 +82,9 @@ class InstructorController extends Controller
 
                 return response()->json([
                     'status' => 200,
-                    'instructor_id' => $instructor->id,
-                    'username' => $instructor->username,
-                    'email' => $instructor->email,
-                    'mobile' => $instructor->mobile,
+                    'instructor' => $instructor,
                     'token' => $token,
+                    'code' => 'Q6FfficNa7vfXzHP5LSMB06iu2sJuXh',
                     'message' => 'Logged in Successfully'
                 ]);
             }
@@ -172,6 +167,7 @@ class InstructorController extends Controller
                 $profile->update();
                 return response()->json([
                     'status' => 200,
+                    'profile' => $profile,
                     'message' => 'Profile Updated Successfully',
                 ]);
             }

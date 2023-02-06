@@ -17,15 +17,6 @@ export interface RegisterForm {
     arror_list: [];
 }
 
-export interface UserProfileInfo {
-    id: number;
-    username: string;
-    name: string;
-    email: string;
-    mobile: number;
-    profilePic: string;
-}
-
 export interface Booking {
     id: number;
     user_id: number;
@@ -43,6 +34,7 @@ export interface Instructor {
     mobile: number;
     profilePic: string;
     category: string;
+    code:string;
 }
 
 export interface Class {

@@ -4,7 +4,7 @@ import { Avatar } from "@chakra-ui/react";
 import { NavLink as Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { User } from "phosphor-react";
-import { mobile } from "../responsive";
+import { mobile } from "../utils/responsive";
 import { ColorModeSwitcher } from "../utils/colormodeswitch";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
@@ -12,19 +12,38 @@ import { RootState } from "../store";
 const navbar = () => {
   //if user is not logged in it will relocate the user to login page else it will go to the profile page
   const authuser = useSelector((state: RootState) => state.user);
-  const profile = useSelector((state: RootState) => state.user.user);
-  var Profile;
+  const Uprofile = useSelector((state: RootState) => state.user.user);
+  var UProfile;
+  const authinstructor = useSelector((state: RootState) => state.instructor);
+  const Iprofile = useSelector(
+    (state: RootState) => state.instructor.instructor
+  );
+  var IProfile;
 
   if (authuser.token == "") {
-    Profile = (
+    UProfile = (
       <NavLink to="/login">
         <User size={32} />
       </NavLink>
     );
+  } else if (authinstructor.token != "") {
+    <NavLink to="/login"></NavLink>;
   } else {
-    Profile = (
+    UProfile = (
       <NavLink to="/profile">
-        <Avatar name={profile?.name} src={profile?.profilePic} />
+        <Avatar name={Uprofile?.name} src={Uprofile?.profilePic} />
+      </NavLink>
+    );
+  }
+
+  if (authinstructor.token == "") {
+    IProfile = <NavLink to="/login"></NavLink>;
+  } else if (authuser.token != "") {
+    <NavLink to="/login"></NavLink>;
+  } else {
+    IProfile = (
+      <NavLink to="/instructorprofile">
+        <Avatar name={Iprofile?.name} src={Iprofile?.profilePic} />
       </NavLink>
     );
   }
@@ -42,7 +61,8 @@ const navbar = () => {
           <NavLink to="/ourclass">BOOK A CLASS</NavLink>
           <NavLink to="/ourteam">OUR TEAM</NavLink>
           <NavLink to="/forum">FAQ</NavLink>
-          {Profile}
+          {UProfile}
+          {IProfile}
         </Right>
       </Wrapper>
     </Container>

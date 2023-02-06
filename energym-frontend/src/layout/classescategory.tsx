@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { mobile } from "../utils/responsive";
 import { Image, Box, Badge } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";

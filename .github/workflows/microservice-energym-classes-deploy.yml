@@ -26,6 +26,8 @@ jobs:
           command_timeout: 200m
           script: |
             cd energym
-            git pull
+            git pull origin main
+            docker-compose stop microservice-energym-classes
+            docker rm microservice-energym-classes
             docker-compose up -d --build microservice-energym-classes
             echo 'Classes Service Updated'

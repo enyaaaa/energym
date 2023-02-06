@@ -10,7 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { CircleWavyCheck } from "phosphor-react";
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { mobile } from "../utils/responsive";
 
 const getstarted = () => {
   return (

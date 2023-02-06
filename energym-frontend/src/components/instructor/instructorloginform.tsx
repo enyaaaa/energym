@@ -2,13 +2,12 @@ import { SyntheticEvent, useState } from "react";
 import styled from "styled-components";
 import { NavLink as Link, useNavigate, useLocation } from "react-router-dom";
 import { useToast, Input } from "@chakra-ui/react";
-import { authapi } from "../../api/auth";
 import { useDispatch } from "react-redux/es/exports";
-import { setUser } from "../../redux/userSlice";
+import { setInstructor } from "../../redux/instructorSlice";
+import { classesapi } from "../../api/classes";
 
-const userloginform = () => {
-
-  const toast = useToast();
+const instructorloginform = () => {
+    const toast = useToast();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -32,9 +31,9 @@ const userloginform = () => {
       email: loginInput.email,
       password: loginInput.password,
     };
-    authapi.post(`api/login`, data).then((res) => {
+    classesapi.post(`api/login`, data).then((res) => {
       if (res.data.status === 200) {
-        dispatch(setUser(res.data));
+        dispatch(setInstructor(res.data));
         localStorage.setItem("auth_token", res.data.token);
         console.log(res.data);
         toast({
@@ -60,7 +59,7 @@ const userloginform = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>LOGIN AS USER</Title>
+        <Title>LOGIN AS INSTRUCTOR</Title>
         <Form onSubmit={loginSubmit}>
           <Input
             type="email"
@@ -84,12 +83,12 @@ const userloginform = () => {
           <Validation>{loginInput.error_list.password}</Validation>
           <ForgetPasswowrdLink to="/">FORGET PASSWORD?</ForgetPasswowrdLink>
           <Button type="submit">SIGN IN</Button>
-          <CreateAccountLink to="/register">CREATE ACCOUNT</CreateAccountLink>
+          <CreateAccountLink to="/instructorregister">CREATE ACCOUNT</CreateAccountLink>
         </Form>
       </Wrapper>
     </Container>
-  );
-};
+  )
+}
 
 const Container = styled.div`
   padding: 30px;
@@ -145,4 +144,4 @@ const CreateAccountLink = styled(Link)`
   text-align: center;
 `;
 
-export default userloginform;
+export default instructorloginform

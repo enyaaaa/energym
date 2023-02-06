@@ -1,10 +1,17 @@
 import { SyntheticEvent, useState } from "react";
 import styled from "styled-components";
 import { NavLink as Link, useNavigate } from "react-router-dom";
-import { useToast, Input } from "@chakra-ui/react";
+import {
+  useToast,
+  Input,
+  FormControl,
+  FormLabel,
+  Select,
+} from "@chakra-ui/react";
 import { authapi } from "../../api/auth";
+import { classesapi } from "../../api/classes";
 
-const userregisterform = () => {
+const instructorregisterform = () => {
   //navigate user to another page
   const navigate = useNavigate();
 
@@ -18,6 +25,8 @@ const userregisterform = () => {
     mobile: "",
     password: "",
     confirmPassword: "",
+    category: "",
+    code: "",
     error_list: [],
   });
 
@@ -38,9 +47,11 @@ const userregisterform = () => {
       mobile: registerInput.mobile,
       password: registerInput.password,
       confirmPassword: registerInput.confirmPassword,
+      category: registerInput.category,
+      code: registerInput.code,
     };
 
-    authapi.post(`api/register`, data).then((res) => {
+    classesapi.post(`api/register`, data).then((res) => {
       if (res.data.status === 200) {
         console.log(res.data);
         toast({
@@ -68,10 +79,10 @@ const userregisterform = () => {
   return (
     <Container>
       <Wrapper>
-        <Title>REGISTER AS USER</Title>
+        <Title>REGISTER AS INSTRUCTOR</Title>
         <Form onSubmit={registerSubmit}>
           <Input
-            margin="10px 0"
+            margin="8px 0"
             size="lg"
             type="text"
             name="username"
@@ -81,7 +92,7 @@ const userregisterform = () => {
           />
           <Validation>{registerInput.error_list.username}</Validation>
           <Input
-            margin="10px 0"
+            margin="8px 0"
             size="lg"
             type="text"
             name="name"
@@ -91,7 +102,7 @@ const userregisterform = () => {
           />
           <Validation>{registerInput.error_list.name}</Validation>
           <Input
-            margin="10px 0"
+            margin="8px 0"
             size="lg"
             type="text"
             name="email"
@@ -101,7 +112,7 @@ const userregisterform = () => {
           />
           <Validation>{registerInput.error_list.email}</Validation>
           <Input
-            margin="10px 0"
+            margin="8px 0"
             size="lg"
             type="tel"
             name="mobile"
@@ -110,8 +121,24 @@ const userregisterform = () => {
             value={registerInput.mobile}
           />
           <Validation>{registerInput.error_list.mobile}</Validation>
+          <FormControl>
+            <Select
+              name="category"
+              id="category"
+              margin="8px 0"
+              value={registerInput.category}
+              onChange={handleInput}
+            >
+              <option value="--">---</option>
+              <option value="yoga">yoga</option>
+              <option value="spin">spin</option>
+              <option value="pilates">pilates</option>
+              <option value="hiit">hiit</option>
+            </Select>
+          </FormControl>
+          <Validation>{registerInput.error_list.category}</Validation>
           <Input
-            margin="10px 0"
+            margin="8px 0"
             size="lg"
             type="password"
             name="password"
@@ -121,7 +148,7 @@ const userregisterform = () => {
           />
           <Validation>{registerInput.error_list.password}</Validation>
           <Input
-            margin="10px 0"
+            margin="8px 0"
             size="lg"
             type="password"
             name="confirmPassword"
@@ -130,8 +157,18 @@ const userregisterform = () => {
             value={registerInput.confirmPassword}
           />
           <Validation>{registerInput.error_list.comfirmPassword}</Validation>
+          <Input
+            margin="8px 0"
+            size="lg"
+            type="password"
+            name="code"
+            placeholder="verification code"
+            onChange={handleInput}
+            value={registerInput.code}
+          />
+          <Validation>{registerInput.error_list.code}</Validation>
           <Button type="submit">REGISTER</Button>
-          <LoginLink to="/login">AREADY HAVE AN ACCOUNT?</LoginLink>
+          <LoginLink to="/instructorlogin">AREADY HAVE AN ACCOUNT?</LoginLink>
         </Form>
       </Wrapper>
     </Container>
@@ -139,7 +176,6 @@ const userregisterform = () => {
 };
 
 const Container = styled.div`
-  padding: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -183,5 +219,4 @@ const LoginLink = styled(Link)`
   text-decoration: none;
   cursor: pointer;
 `;
-
-export default userregisterform;
+export default instructorregisterform;
