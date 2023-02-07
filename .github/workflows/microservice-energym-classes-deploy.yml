@@ -12,7 +12,7 @@ on:
       - Dockerfile
 
 jobs:
-  deployment:
+  deploy:
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -24,8 +24,8 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           command_timeout: 200m
-          run: |
-            cd energym
+          script: |
+            cd ~/energym
             git pull origin main
             docker-compose stop microservice-energym-classes
             docker rm microservice-energym-classes
