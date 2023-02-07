@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import Home from "./layout/home";
-import Classes from "./layout/classes";
-import ClassesCategory from "./layout/classescategory";
+import Classes from "./layout/user/classes";
+import ClassesCategory from "./layout/user/classescategory";
 import Team from "./layout/team";
 import Forum from "./layout/forum";
 import UserProfile from "./components/user/userprofile";
@@ -17,10 +17,11 @@ import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import ScrollToTop from "./components/scrolltotop";
 import RequireAuth from "./components/RequireAuth";
-import Instructorlogin from './components/instructor/instructorloginform'
+import Instructorlogin from "./components/instructor/instructorloginform";
 import Instructorregister from "./components/instructor/instructorregisterform";
 import Instructorprofile from "./components/instructor/instructorprofile";
-import Instructoreditprofile from './components/instructor/instructoreditprofile'
+import Instructoreditprofile from "./components/instructor/instructoreditprofile";
+import Classrooms from "./layout/instructor/classrooms";
 
 function App() {
   return (
@@ -44,18 +45,13 @@ function App() {
         <Route path="/instructorregister" element={<Instructorregister />} />
         <Route path="/instructorprofile" element={<Instructorprofile />} />
         <Route path="/instructoreditprofile" element={<Instructoreditprofile />} />
-
-        <Route element={<RequireAuth/>}>
-
-        </Route>
+        <Route path="/classrooms" element={<Classrooms />} />
       </Routes>
       <Footer />
     </Container>
   );
 }
 
-const Container = styled.div`
- 
-`;
+const Container = styled.div``;
 
 export default App;

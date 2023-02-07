@@ -28,6 +28,7 @@ const instructorregisterform = () => {
     category: "",
     code: "",
     error_list: [],
+    code_error:[]
   });
 
   //handing users input
@@ -60,7 +61,7 @@ const instructorregisterform = () => {
           duration: 4000,
           isClosable: true,
         });
-        navigate("/login", { replace: true });
+        navigate("/instructorlogin", { replace: true });
       } else {
         setRegister({
           ...registerInput,

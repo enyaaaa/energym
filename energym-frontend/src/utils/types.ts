@@ -41,6 +41,7 @@ export interface Class {
     length: any;
     id: number;
     instructor_id: number;
+    instructorName:string;
     classTitle: string;
     classImage: string;
     classType: string;

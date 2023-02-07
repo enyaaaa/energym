@@ -14,6 +14,7 @@ import { authapiToken } from "../../api/auth";
 import { updateUser } from "../../redux/userSlice";
 import { RootState } from "../../store";
 import { mobile } from "../../utils/responsive";
+import { Alert } from "../alert";
 
 const usereditprofile = () => {
   // navigate users to another route
@@ -24,6 +25,24 @@ const usereditprofile = () => {
   const toast = useToast();
 
   const [img, setImg] = useState<any>();
+  const [view, setView] = useState<any>();
+
+  function onImageChange(e: any) {
+    console.log(e.target.files);
+    setImg(e.target.files[0]);
+  }
+
+  useEffect(() => {
+    if (img) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setView(reader.result);
+      };
+      reader.readAsDataURL(img);
+    } else {
+      setView(authuser.user?.profilePic);
+    }
+  }, [img]);
 
   //input of forms
   const [formData, setFormData] = useState<any>({
@@ -31,7 +50,6 @@ const usereditprofile = () => {
     name: authuser.user?.name,
     email: authuser.user?.email,
     mobile: authuser.user?.mobile,
-    profilePic: authuser.user?.profilePic,
     error_list: [],
   });
 
@@ -42,14 +60,14 @@ const usereditprofile = () => {
   };
 
   //function when user press on the submit button and edit the product and update on database
-  const profileUpdate = (e:any) => {
+  const profileUpdate = (e: any) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('username', formData.username);
-    data.append('name', formData.name);
-    data.append('email', formData.email);
-    data.append('mobile', formData.mobile);
-    data.append('profilePic', img!);
+    data.append("username", formData.username);
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("mobile", formData.mobile);
+    data.append("profilePic", img!);
 
     authapiToken(authuser.token)
       .post(`api/updateprofile`, data)
@@ -96,21 +114,15 @@ const usereditprofile = () => {
               height={"150px"}
               objectFit="cover"
               borderRadius={"100%"}
-              src={authuser.user?.profilePic}
+              src={view}
             />
             <Input
               type="file"
               name="profilePic"
-              onChange={(event: any) => {
-                const file: File = event.target.files[0];
-                if (file) {
-                  setImg(file);
-                } else {
-                  setImg(authuser.user?.profilePic);
-                }
-              }}
+              padding={"5px"}
+              accept="image/*"
+              onChange={onImageChange}
             />
-            <Validation>{formData.error_list.profilePic}</Validation>
             <Stack flex={1} flexDirection="column" p={1} pt={2}>
               <Label>username</Label>
               <Input
@@ -161,25 +173,11 @@ const usereditprofile = () => {
                 alignItems={"center"}
                 paddingTop={"30px"}
               >
-                <Button
-                  type="submit"
-                  flex={1}
-                  fontSize={"sm"}
-                  rounded={"full"}
-                  bg={"#6bbbb4"}
-                  color={"#ffffff"}
-                  boxShadow={
-                    "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-                  }
-                  _hover={{
-                    bg: "blue.500",
-                  }}
-                  _focus={{
-                    bg: "blue.500",
-                  }}
-                >
-                  update
-                </Button>
+                <Alert
+                  action="update"
+                  title="Want to make the chnages?"
+                  trigger={profileUpdate}
+                />
               </Stack>
             </Stack>
           </Stack>

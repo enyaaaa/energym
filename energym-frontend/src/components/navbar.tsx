@@ -12,6 +12,8 @@ import { RootState } from "../store";
 const navbar = () => {
   //if user is not logged in it will relocate the user to login page else it will go to the profile page
   var Profile;
+  var Booking;
+  var Classes;
   const authuser = useSelector((state: RootState) => state.user);
   const Uprofile = useSelector((state: RootState) => state.user.user);
 
@@ -40,6 +42,20 @@ const navbar = () => {
     );
   }
 
+  if (authuser.token == "" && authinstructor.token == "") {
+    Booking = (
+      <NavLink to="/ourclass">BOOK A CLASS</NavLink>
+    );
+  } else if (authinstructor.token != "") {
+    Booking = (
+      <NavLink to="/classrooms">BOOK A STUDIO</NavLink>
+    );
+  } else if (authuser.token != "") {
+    Booking = (
+      <NavLink to="/ourclass">BOOK A CLASS</NavLink>
+    );
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -50,7 +66,7 @@ const navbar = () => {
         </Left>
         <Right>
           <ColorModeSwitcher />
-          <NavLink to="/ourclass">BOOK A CLASS</NavLink>
+          {Booking}
           <NavLink to="/ourteam">OUR TEAM</NavLink>
           <NavLink to="/forum">FAQ</NavLink>
           {Profile}

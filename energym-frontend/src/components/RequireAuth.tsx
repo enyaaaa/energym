@@ -4,12 +4,12 @@ import { RootState } from "../store";
 
 const RequireAuth = () => {
     
-    const authuser = useSelector((state: RootState) => state.user);
+    const authinstructor = useSelector((state: RootState) => state.instructor);
 
     return (
         localStorage.getItem('code') == "Q6FfficNa7vfXzHP5LSMB06iu2sJuXh"
             ? <Outlet/>
-            : authuser?.token
+            : authinstructor?.token
                 ? <Navigate to="/" state={{ from: location }} replace />
                 : <Navigate to="/login" state={{ from: location }} replace />
 

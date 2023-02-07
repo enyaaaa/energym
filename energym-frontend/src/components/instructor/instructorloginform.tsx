@@ -35,6 +35,7 @@ const instructorloginform = () => {
       if (res.data.status === 200) {
         dispatch(setInstructor(res.data));
         localStorage.setItem("auth_token", res.data.token);
+        localStorage.setItem("code", res.data.code);
         console.log(res.data);
         toast({
           title: res.data.message,

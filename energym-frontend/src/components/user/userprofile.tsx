@@ -15,6 +15,7 @@ import { authapiToken } from "../../api/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { resetUser } from "../../redux/userSlice";
+import { Alert } from "../alert";
 
 const profile = () => {
   // navigate users to another route
@@ -38,6 +39,7 @@ const profile = () => {
       .then((res) => {
         if (res.data.status === 200) {
           dispatch(resetUser());
+          localStorage.removeItem('auth_token');
           toast({
             title: res.data.message,
             status: "success",
@@ -104,7 +106,7 @@ const profile = () => {
               {profile?.mobile}
             </Text>
             <Stack
-              width={"100%"}
+              width={"70%"}
               mt={"2rem"}
               direction={"row"}
               padding={"10px"}
@@ -126,19 +128,7 @@ const profile = () => {
               >
                 edit
               </Button>
-              <Button
-                bg={"#6bbbb4"}
-                color={"#ffffff"}
-                boxShadow={
-                  "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-                }
-                _hover={{
-                  bg: "blue.500",
-                }}
-                onClick={logoutSubmit}
-              >
-                Logout
-              </Button>
+              <Alert action="logout" title="Are you sure you want to logout?" trigger={logoutSubmit} />
             </Stack>
           </Stack>
         </Stack>

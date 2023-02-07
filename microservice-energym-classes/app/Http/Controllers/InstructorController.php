@@ -13,6 +13,7 @@ class InstructorController extends Controller
 {
     public function register(Request $request)
     {
+
         $validator = Validator::make($request->all(), [
             "username" => 'required|max:191|unique:instructors,username',
             "name" => 'required|max:191',
@@ -20,7 +21,7 @@ class InstructorController extends Controller
             "mobile" => 'required|digits:8|unique:instructors,mobile',
             "password" => 'required|min:8|same:confirmPassword',
             "confirmPassword" => 'required|same:password|min:8',
-            "code" => 'required',
+            "code" => 'required|in:Q6FfficNa7vfXzHP5LSMB06iu2sJuXh',
             "category" => 'required',
         ]);
 
@@ -30,32 +31,25 @@ class InstructorController extends Controller
                 'validation_errors' => $validator->errors(),
             ]);
         } else {
-            if ($request->code == "Q6FfficNa7vfXzHP5LSMB06iu2sJuXh") {
-                $instuctor = instructors::create([
-                    'username' => $request->username,
-                    'name' => $request->name,
-                    'email' => $request->email,
-                    'password' => Hash::make($request->password),
-                    'mobile' => $request->mobile,
-                    'profilePic' => 'https://www.nicepng.com/png/full/136-1366211_group-of-10-guys-login-user-icon-png.png',
-                    'category' => $request->category,
-                ]);
+            $instuctor = instructors::create([
+                'username' => $request->username,
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'mobile' => $request->mobile,
+                'profilePic' => 'https://www.nicepng.com/png/full/136-1366211_group-of-10-guys-login-user-icon-png.png',
+                'category' => $request->category,
+            ]);
 
-                $token = $instuctor->createToken($instuctor->email . 'token')->plainTextToken;
+            $token = $instuctor->createToken($instuctor->email . 'token')->plainTextToken;
 
-                return response()->json([
-                    'status' => 200,
-                    'user' => $instuctor,
-                    'token' => $token,
-                    'code' => 'Q6FfficNa7vfXzHP5LSMB06iu2sJuXh',
-                    'message' => 'Registered Successfully'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 404,
-                    'message' => 'Invalid',
-                ]);
-            }
+            return response()->json([
+                'status' => 200,
+                'user' => $instuctor,
+                'token' => $token,
+                'code' => 'Q6FfficNa7vfXzHP5LSMB06iu2sJuXh',
+                'message' => 'Registered Successfully'
+            ]);
         }
     }
 
@@ -126,8 +120,8 @@ class InstructorController extends Controller
             $validator  = Validator::make($request->all(), [
                 "username" => ['required', Rule::unique('instructors', 'username')->ignore($profile->id),],
                 "name" => ['required'],
-                "email" => ['required','email', Rule::unique('instructors', 'email')->ignore($profile->id),],
-                "mobile" => ['required','digits:8', Rule::unique('instructors', 'mobile')->ignore($profile->id),],
+                "email" => ['required', 'email', Rule::unique('instructors', 'email')->ignore($profile->id),],
+                "mobile" => ['required', 'digits:8', Rule::unique('instructors', 'mobile')->ignore($profile->id),],
             ]);
 
             if ($validator->fails()) {

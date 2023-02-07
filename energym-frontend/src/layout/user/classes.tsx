@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mobile } from "../utils/responsive";
+import { mobile } from "../../utils/responsive";
 import { NavLink as Link } from "react-router-dom";
 import {
   Card,
@@ -130,9 +130,9 @@ export const NavLink = styled(Link)`
   text-decoration: none;
   cursor: pointer;
   padding: 10px;
-  background-color: #7fb9b3;
+  background-color: #a8cecb;
   &:hover {
-    color: #6bbbb4;
+    background-color: #a1e2dd;
   }
 `;
 

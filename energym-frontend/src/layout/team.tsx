@@ -1,7 +1,16 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../utils/responsive";
-import { Image, Box, Center, Badge } from "@chakra-ui/react";
+import {
+  Image,
+  Box,
+  Center,
+  Badge,
+  useColorModeValue,
+  Heading,
+  Text,
+  Stack,
+} from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
 import { classesapi } from "../api/classes";
 import { Instructor } from "../utils/types";
@@ -28,40 +37,72 @@ const team = () => {
       <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
         {instructors.map((instructor: Instructor) => {
           return (
-            <Box
-              key={instructor.id}
-              maxW="sm"
-              borderRadius="full"
-              overflow="hidden"
-            >
-              <Image
-                width="100%"
-                height="300px"
-                objectFit="cover"
-                src={instructor.profilePic}
-                alt={instructor.name}
-              />
-              <Box p="1">
-                <Center>
-                  <Box
-                    mt="1"
-                    as="h1"
-                    lineHeight="tight"
-                    noOfLines={1}
-                    fontWeight="semibold"
-                    fontSize="20px"
-                    textTransform="uppercase"
+            <Center py={12}>
+              <Box
+                key={instructor.id}
+                role={"group"}
+                p={6}
+                maxW={"330px"}
+                w={"full"}
+                bg={useColorModeValue("white", "gray.800")}
+                boxShadow={"2xl"}
+                rounded={"lg"}
+                pos={"relative"}
+                zIndex={1}
+              >
+                <Box
+                  rounded={'lg'}
+                  mt={-12}
+                  pos={'relative'}
+                  height={'230px'}
+                  _after={{
+                    transition: 'all .3s ease',
+                    content: '""',
+                    w: 'full',
+                    h: 'full',
+                    pos: 'absolute',
+                    top: 5,
+                    left: 0,
+                    backgroundImage: instructor.profilePic,
+                    filter: 'blur(15px)',
+                    zIndex: -1,
+                  }}
+                  _groupHover={{
+                    _after: {
+                      filter: "blur(20px)",
+                    },
+                  }}
+                >
+                  <Image
+                    rounded={'lg'}
+                    height={230}
+                    width={282}
+                    objectFit={'cover'}
+                    src={instructor.profilePic}
+                    alt={instructor.name}
+                  />
+                </Box>
+                <Stack pt={10} align={"center"}>
+                  <Text
+                    color={"gray.500"}
+                    fontSize={"sm"}
+                    textTransform={"uppercase"}
+                  >
+                    @{instructor.username}
+                  </Text>
+                  <Heading
+                    fontSize={"2xl"}
+                    fontFamily={"body"}
+                    fontWeight={500}
                   >
                     {instructor.name}
-                  </Box>
-                </Center>
+                  </Heading>
+                  <Badge borderRadius="full" px="2" colorScheme="teal">
+                    {instructor.category}
+                  </Badge>
+                </Stack>
               </Box>
-              <Center>
-                <Badge borderRadius="full" px="2" colorScheme="teal">
-                  {instructor.category}
-                </Badge>
-              </Center>
-            </Box>
+            </Center>
           );
         })}
       </SimpleGrid>

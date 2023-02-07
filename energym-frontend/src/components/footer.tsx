@@ -31,8 +31,8 @@ const footer = (props: Props) => {
           <NavLink to="/ourteam">OUR TEAM</NavLink>
           <NavLink to="/forum">FAQ</NavLink>
           <NavLink to="/joinourteam">JOIN OUR TEAM</NavLink>
-          <NavLink to="/getstarted">GET STARTED</NavLink>
           <NavLink to="/termsandconditions">TERMS & CONDITIONS</NavLink>
+          <NavLink to="/instructorlogin">LOGIN AS INSTRUCTOR</NavLink>
         </List>
       </Center>
       <Right>

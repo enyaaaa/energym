@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { mobile } from "../utils/responsive";
+import { mobile } from "../../utils/responsive";
 import { Image, Box, Badge } from "@chakra-ui/react";
 import { SimpleGrid } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import { classesapi } from "../api/classes";
-import { Class } from "../utils/types";
+import { classesapi } from "../../api/classes";
+import { Class } from "../../utils/types";
+import moment from "moment";
 
 const classescategory = () => {
   //using params to find type
@@ -32,7 +33,8 @@ const classescategory = () => {
       <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
         {classes.map((Classes: Class) => {
           return (
-            <Box key={Classes.id}
+            <Box
+              key={Classes.id}
               maxW="sm"
               borderWidth="1px"
               borderRadius="lg"
@@ -56,7 +58,6 @@ const classescategory = () => {
                     {Classes.slots} slots &bull; {Classes.classDuration}
                   </Box>
                 </Box>
-
                 <Box
                   mt="1"
                   as="h4"
@@ -66,11 +67,29 @@ const classescategory = () => {
                 >
                   {Classes.classTitle}
                 </Box>
-                <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
-                  {Classes.classStartDateTime}
+                <Box
+                  mt="1"
+                  as="h4"
+                  lineHeight="tight"
+                  noOfLines={1}
+                  textTransform="uppercase"
+                >
+                  INSTRUCTOR: {Classes.instructorName}
+                </Box>
+                <Box
+                  mt="1"
+                  as="h4"
+                  lineHeight="tight"
+                  noOfLines={1}
+                  textTransform="uppercase"
+                >
+                  CLASS ROOM: {Classes.classRoom}
                 </Box>
                 <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
-                  {Classes.classStartDateTime}
+                TIME: {moment(Classes.classStartDateTime).format("h:mm A")}
+                </Box>
+                <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
+                  DATE: {moment(Classes.classStartDateTime).format("YYYY-MM-DD")}
                 </Box>
               </Box>
             </Box>

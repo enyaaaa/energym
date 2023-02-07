@@ -6,19 +6,17 @@ import {
   Stack,
   useToast,
   FormControl,
-  FormLabel,
   Select,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { authapiToken } from "../../api/auth";
 import { classesapiToken } from "../../api/classes";
 import { updateInstructor } from "../../redux/instructorSlice";
-import { updateUser } from "../../redux/userSlice";
 import { RootState } from "../../store";
 import { mobile } from "../../utils/responsive";
+import { Alert } from "../alert";
 
 const instructoreditprofile = () => {
   // navigate users to another route
@@ -29,6 +27,24 @@ const instructoreditprofile = () => {
   const toast = useToast();
 
   const [img, setImg] = useState<any>();
+  const [view, setView] = useState<any>();
+
+  function onImageChange(e: any) {
+    console.log(e.target.files);
+    setImg(e.target.files[0]);
+  }
+
+  useEffect(() => {
+    if (img) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setView(reader.result);
+      };
+      reader.readAsDataURL(img);
+    } else {
+      setView(authinstructor.instructor?.profilePic);
+    }
+  }, [img]);
 
   //input of forms
   const [formData, setFormData] = useState<any>({
@@ -36,7 +52,6 @@ const instructoreditprofile = () => {
     name: authinstructor.instructor?.name,
     email: authinstructor.instructor?.email,
     mobile: authinstructor.instructor?.mobile,
-    profilePic: authinstructor.instructor?.profilePic,
     category: authinstructor.instructor?.category,
     error_list: [],
   });
@@ -48,15 +63,15 @@ const instructoreditprofile = () => {
   };
 
   //function when user press on the submit button and edit the product and update on database
-  const profileUpdate = (e:any) => {
+  const profileUpdate = (e: any) => {
     e.preventDefault();
     const data = new FormData();
-    data.append('username', formData.username);
-    data.append('name', formData.name);
-    data.append('email', formData.email);
-    data.append('mobile', formData.mobile);
-    data.append('category', formData.category);
-    data.append('profilePic', img!);
+    data.append("username", formData.username);
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("mobile", formData.mobile);
+    data.append("category", formData.category);
+    data.append("profilePic", img!);
 
     classesapiToken(authinstructor.token)
       .post(`api/updateprofile`, data)
@@ -103,19 +118,14 @@ const instructoreditprofile = () => {
               height={"150px"}
               objectFit="cover"
               borderRadius={"100%"}
-              src={authinstructor.instructor?.profilePic}
+              src={view}
             />
             <Input
               type="file"
               name="profilePic"
-              onChange={(event: any) => {
-                const file: File = event.target.files[0];
-                if (file) {
-                  setImg(file);
-                } else {
-                  setImg(authinstructor.instructor?.profilePic);
-                }
-              }}
+              padding={"5px"}
+              accept="image/*"
+              onChange={onImageChange}
             />
             <Validation>{formData.error_list.profilePic}</Validation>
             <Stack flex={1} flexDirection="column" p={1} pt={2}>
@@ -161,21 +171,21 @@ const instructoreditprofile = () => {
               <Validation>{formData.error_list.mobile}</Validation>
               <Label>category</Label>
               <FormControl>
-            <Select
-              name="category"
-              id="category"
-              margin="8px 0"
-              value={formData.category}
-              onChange={handleInput}
-            >
-              <option value="--">---</option>
-              <option value="yoga">yoga</option>
-              <option value="spin">spin</option>
-              <option value="pilates">pilates</option>
-              <option value="hiit">hiit</option>
-            </Select>
-          </FormControl>
-          <Validation>{formData.error_list.category}</Validation>
+                <Select
+                  name="category"
+                  id="category"
+                  margin="8px 0"
+                  value={formData.category}
+                  onChange={handleInput}
+                >
+                  <option value="--">---</option>
+                  <option value="yoga">yoga</option>
+                  <option value="spin">spin</option>
+                  <option value="pilates">pilates</option>
+                  <option value="hiit">hiit</option>
+                </Select>
+              </FormControl>
+              <Validation>{formData.error_list.category}</Validation>
               <Stack
                 width={"100%"}
                 mt={"2rem"}
@@ -185,25 +195,11 @@ const instructoreditprofile = () => {
                 alignItems={"center"}
                 paddingTop={"30px"}
               >
-                <Button
-                  type="submit"
-                  flex={1}
-                  fontSize={"sm"}
-                  rounded={"full"}
-                  bg={"#6bbbb4"}
-                  color={"#ffffff"}
-                  boxShadow={
-                    "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-                  }
-                  _hover={{
-                    bg: "blue.500",
-                  }}
-                  _focus={{
-                    bg: "blue.500",
-                  }}
-                >
-                  update
-                </Button>
+                <Alert
+                  action="update"
+                  title="Want to make the chnages?"
+                  trigger={profileUpdate}
+                />
               </Stack>
             </Stack>
           </Stack>
