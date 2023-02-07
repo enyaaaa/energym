@@ -24,7 +24,7 @@ jobs:
           key: ${{ secrets.PRIVATE_KEY }}
           port: 22
           command_timeout: 200m
-          script: |
+          run: |
             cd energym
             git pull origin main
             docker-compose stop microservice-energym-classes
