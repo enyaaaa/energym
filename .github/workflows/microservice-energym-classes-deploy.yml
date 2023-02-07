@@ -12,7 +12,7 @@ on:
       - Dockerfile
 
 jobs:
-  deploy:
+  deployment:
     runs-on: ubuntu-latest
     environment: production
     steps:
