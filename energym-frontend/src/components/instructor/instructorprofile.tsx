@@ -6,23 +6,14 @@ import {
   Stack,
   Text,
   useToast,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
+  Badge,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../../utils/responsive";
-import { authapi, authapiToken } from "../../api/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
-import { resetUser } from "../../redux/userSlice";
 import { classesapiToken } from "../../api/classes";
 import { resetInstructor } from "../../redux/instructorSlice";
 
@@ -30,13 +21,15 @@ const profile = () => {
   // navigate users to another route
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const profile = useSelector((state: RootState) => state.instructor.instructor);
+  const profile = useSelector(
+    (state: RootState) => state.instructor.instructor
+  );
   const authinstructor = useSelector((state: RootState) => state.instructor);
 
   const toast = useToast();
-  
-  const toEditProfile = () => {
-    navigate("/editprofile", { state: profile });
+
+  const toInstructorEditProfile = () => {
+    navigate("/instructoreditprofile", { state: profile });
   };
 
   //function when user click on logout
@@ -63,7 +56,7 @@ const profile = () => {
 
   useEffect(() => {
     if (authinstructor.token == "") {
-      navigate("/login");
+      navigate("/instructorlogin");
     }
   }, []);
 
@@ -75,20 +68,21 @@ const profile = () => {
       <Center>
         <Stack
           w={{ sm: "100%", md: "540px" }}
-          height={{ sm: "476px", md: "20rem" }}
+          height={{ sm: "476px", md: "25rem" }}
           direction={{ base: "column", md: "row" }}
           boxShadow={"2xl"}
-          padding={"40px"}
+          padding={"20px"}
         >
           <Flex>
             <Image
-              width={"200px"}
-              height={"200px"}
+              width={"250px"}
+              height={"250px"}
               objectFit="cover"
               borderRadius={"100%"}
               src={profile?.profilePic}
             />
           </Flex>
+
           <Stack
             flex={1}
             flexDirection="column"
@@ -113,6 +107,10 @@ const profile = () => {
             <Text fontWeight={500} fontSize={"xl"} size="sm" mb={4}>
               {profile?.mobile}
             </Text>
+            <Label>category</Label>
+            <Badge borderRadius="full" px="2" colorScheme="teal">
+              {profile?.category}
+            </Badge>
             <Stack
               width={"100%"}
               mt={"2rem"}
@@ -123,7 +121,7 @@ const profile = () => {
             >
               <Button
                 onClick={() => {
-                  toEditProfile();
+                  toInstructorEditProfile();
                 }}
                 bg={"#6bbbb4"}
                 color={"#ffffff"}
@@ -148,19 +146,6 @@ const profile = () => {
                 onClick={logoutSubmit}
               >
                 Logout
-              </Button>
-              <Button
-                bg={"#6bbbb4"}
-                color={"#ffffff"}
-                boxShadow={
-                  "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-                }
-                _hover={{
-                  bg: "blue.500",
-                }}
-                onClick={logoutSubmit}
-              >
-                Delete
               </Button>
             </Stack>
           </Stack>

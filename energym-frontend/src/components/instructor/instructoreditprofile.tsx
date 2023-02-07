@@ -5,21 +5,26 @@ import {
   Input,
   Stack,
   useToast,
+  FormControl,
+  FormLabel,
+  Select,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { authapiToken } from "../../api/auth";
+import { classesapiToken } from "../../api/classes";
+import { updateInstructor } from "../../redux/instructorSlice";
 import { updateUser } from "../../redux/userSlice";
 import { RootState } from "../../store";
 import { mobile } from "../../utils/responsive";
 
-const usereditprofile = () => {
+const instructoreditprofile = () => {
   // navigate users to another route
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const authuser = useSelector((state: RootState) => state.user);
+  const authinstructor = useSelector((state: RootState) => state.instructor);
 
   const toast = useToast();
 
@@ -27,11 +32,12 @@ const usereditprofile = () => {
 
   //input of forms
   const [formData, setFormData] = useState<any>({
-    username: authuser.user?.username,
-    name: authuser.user?.name,
-    email: authuser.user?.email,
-    mobile: authuser.user?.mobile,
-    profilePic: authuser.user?.profilePic,
+    username: authinstructor.instructor?.username,
+    name: authinstructor.instructor?.name,
+    email: authinstructor.instructor?.email,
+    mobile: authinstructor.instructor?.mobile,
+    profilePic: authinstructor.instructor?.profilePic,
+    category: authinstructor.instructor?.category,
     error_list: [],
   });
 
@@ -49,22 +55,23 @@ const usereditprofile = () => {
     data.append('name', formData.name);
     data.append('email', formData.email);
     data.append('mobile', formData.mobile);
+    data.append('category', formData.category);
     data.append('profilePic', img!);
 
-    authapiToken(authuser.token)
+    classesapiToken(authinstructor.token)
       .post(`api/updateprofile`, data)
       .then((res) => {
         console.log(res.data);
         if (res.data.status === 200) {
           console.log(res.data);
-          dispatch(updateUser(res.data));
+          dispatch(updateInstructor(res.data));
           toast({
             title: res.data.message,
             status: "success",
             duration: 4000,
             isClosable: true,
           });
-          navigate("/userprofile", { replace: true });
+          navigate("/instructorprofile", { replace: true });
         } else if (res.data.status === 404) {
           setFormData({ ...formData, error_list: res.data.validation_errors });
         } else if (res.data.status === 422) {
@@ -96,7 +103,7 @@ const usereditprofile = () => {
               height={"150px"}
               objectFit="cover"
               borderRadius={"100%"}
-              src={authuser.user?.profilePic}
+              src={authinstructor.instructor?.profilePic}
             />
             <Input
               type="file"
@@ -106,7 +113,7 @@ const usereditprofile = () => {
                 if (file) {
                   setImg(file);
                 } else {
-                  setImg(authuser.user?.profilePic);
+                  setImg(authinstructor.instructor?.profilePic);
                 }
               }}
             />
@@ -118,7 +125,7 @@ const usereditprofile = () => {
                 name="username"
                 id="username"
                 placeholder="username"
-                defaultValue={authuser.user?.username}
+                defaultValue={authinstructor.instructor?.username}
                 onChange={handleInput}
               />
               <Validation>{formData.error_list.username}</Validation>
@@ -128,7 +135,7 @@ const usereditprofile = () => {
                 name="name"
                 id="name"
                 placeholder="name"
-                defaultValue={authuser.user?.name}
+                defaultValue={authinstructor.instructor?.name}
                 onChange={handleInput}
               />
               <Validation>{formData.error_list.name}</Validation>
@@ -138,7 +145,7 @@ const usereditprofile = () => {
                 name="email"
                 id="email"
                 placeholder="email"
-                defaultValue={authuser.user?.email}
+                defaultValue={authinstructor.instructor?.email}
                 onChange={handleInput}
               />
               <Validation>{formData.error_list.email}</Validation>
@@ -148,10 +155,27 @@ const usereditprofile = () => {
                 name="mobile"
                 id="mobile"
                 placeholder="mobile"
-                defaultValue={authuser.user?.mobile}
+                defaultValue={authinstructor.instructor?.mobile}
                 onChange={handleInput}
               />
               <Validation>{formData.error_list.mobile}</Validation>
+              <Label>category</Label>
+              <FormControl>
+            <Select
+              name="category"
+              id="category"
+              margin="8px 0"
+              value={formData.category}
+              onChange={handleInput}
+            >
+              <option value="--">---</option>
+              <option value="yoga">yoga</option>
+              <option value="spin">spin</option>
+              <option value="pilates">pilates</option>
+              <option value="hiit">hiit</option>
+            </Select>
+          </FormControl>
+          <Validation>{formData.error_list.category}</Validation>
               <Stack
                 width={"100%"}
                 mt={"2rem"}
@@ -220,4 +244,4 @@ const Validation = styled.span`
   color: #6bbbb4;
 `;
 
-export default usereditprofile;
+export default instructoreditprofile;

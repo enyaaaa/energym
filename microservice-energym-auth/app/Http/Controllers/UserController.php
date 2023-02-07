@@ -114,9 +114,9 @@ class UserController extends Controller
             $profile = User::where('id', $user_id)->first();
             $validator  = Validator::make($request->all(), [
                 "username" => ['required', Rule::unique('users', 'username')->ignore($profile->id),],
+                "name" => ['required'],
                 "email" => ['required','email', Rule::unique('users', 'email')->ignore($profile->id),],
                 "mobile" => ['required','digits:8', Rule::unique('users', 'mobile')->ignore($profile->id),],
-                "profilePic" => 'image|mimes:jpg,png,bmp,jpeg',
             ]);
 
             if ($validator->fails()) {

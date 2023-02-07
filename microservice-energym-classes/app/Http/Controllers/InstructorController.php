@@ -108,7 +108,7 @@ class InstructorController extends Controller
             $profile = instructors::where('id', $instructor_id)->get();
             return response()->json([
                 'status' => 200,
-                'profile' => $profile,
+                'instructor' => $profile,
             ]);
         } else {
             return response()->json([
@@ -125,21 +125,23 @@ class InstructorController extends Controller
             $profile = instructors::where('id', $instructor_id)->first();
             $validator  = Validator::make($request->all(), [
                 "username" => ['required', Rule::unique('instructors', 'username')->ignore($profile->id),],
-                "mobile" => ['required', Rule::unique('instructors', 'mobile')->ignore($profile->id),],
-                "profilePic" => 'image|mimes:jpg,png,bmp,jpeg',
+                "name" => ['required'],
+                "email" => ['required','email', Rule::unique('instructors', 'email')->ignore($profile->id),],
+                "mobile" => ['required','digits:8', Rule::unique('instructors', 'mobile')->ignore($profile->id),],
             ]);
 
             if ($validator->fails()) {
                 return response()->json([
                     'status' => 404,
-                    'message' => $validator->errors(),
                     'validation_errors' => $validator->errors(),
                 ]);
             } else {
 
                 $profile->username = $request->input('username');
                 $profile->name = $request->input('name');
+                $profile->email = $request->input('email');
                 $profile->mobile = $request->input('mobile');
+                $profile->category = $request->input('category');
 
                 if ($request->hasFile('profilePic')) {
                     if ($profile->profilePic) {
@@ -167,7 +169,7 @@ class InstructorController extends Controller
                 $profile->update();
                 return response()->json([
                     'status' => 200,
-                    'profile' => $profile,
+                    'instructor' => $profile,
                     'message' => 'Profile Updated Successfully',
                 ]);
             }

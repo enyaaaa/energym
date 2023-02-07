@@ -12,7 +12,7 @@ import Getstarted from "./layout/getstarted";
 import Termsandconditions from "./layout/termsandconditions";
 import Register from "./components/user/userregisterform";
 import Login from "./components/user/userloginform";
-import Editprofile from './components/user/usereditprofile'
+import Usereditprofile from "./components/user/usereditprofile";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import ScrollToTop from "./components/scrolltotop";
@@ -20,6 +20,7 @@ import RequireAuth from "./components/RequireAuth";
 import Instructorlogin from './components/instructor/instructorloginform'
 import Instructorregister from "./components/instructor/instructorregisterform";
 import Instructorprofile from "./components/instructor/instructorprofile";
+import Instructoreditprofile from './components/instructor/instructoreditprofile'
 
 function App() {
   return (
@@ -32,16 +33,17 @@ function App() {
         <Route path="/ourclass/:category" element={<ClassesCategory />} />
         <Route path="/ourteam" element={<Team />} />
         <Route path="/forum" element={<Forum />} />
-        <Route path="/profile" element={<UserProfile />} />
+        <Route path="/userprofile" element={<UserProfile />} />
         <Route path="/joinourteam" element={<Joinourteam />} />
         <Route path="/getstarted" element={<Getstarted />} />
         <Route path="/termsandconditions" element={<Termsandconditions />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/editprofile" element={<Editprofile />} />
+        <Route path="/usereditprofile" element={<Usereditprofile />} />
         <Route path="/instructorlogin" element={<Instructorlogin />} />
         <Route path="/instructorregister" element={<Instructorregister />} />
         <Route path="/instructorprofile" element={<Instructorprofile />} />
+        <Route path="/instructoreditprofile" element={<Instructoreditprofile />} />
 
         <Route element={<RequireAuth/>}>
 

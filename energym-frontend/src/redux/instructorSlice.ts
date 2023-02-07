@@ -5,13 +5,13 @@ import { Instructor } from "../utils/types";
 interface InstructorState {
   instructor?: Instructor;
   token: string;
-  code: string
+  code: string;
 }
 
 const initialState: InstructorState = {
   instructor: undefined,
   token: "",
-  code: ""
+  code: "Q6FfficNa7vfXzHP5LSMB06iu2sJuXh"
 };
 
 const instructorSlice = createSlice({
@@ -21,7 +21,6 @@ const instructorSlice = createSlice({
     setInstructor: (state, action: PayloadAction<InstructorState>) => {
       state.instructor = action.payload.instructor;
       state.token = action.payload.token;
-      state.code = action.payload.code
     },
     resetInstructor: (state) => {
       state.instructor = undefined;

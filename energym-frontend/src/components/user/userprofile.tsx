@@ -6,20 +6,12 @@ import {
   Stack,
   Text,
   useToast,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
 } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { mobile } from "../../utils/responsive";
-import { authapi, authapiToken } from "../../api/auth";
+import { authapiToken } from "../../api/auth";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../store";
 import { resetUser } from "../../redux/userSlice";
@@ -33,8 +25,8 @@ const profile = () => {
 
   const toast = useToast();
   
-  const toEditProfile = () => {
-    navigate("/editprofile", { state: profile });
+  const toUserEditProfile = () => {
+    navigate("/usereditprofile", { state: profile });
   };
 
   //function when user click on logout
@@ -76,12 +68,12 @@ const profile = () => {
           height={{ sm: "476px", md: "20rem" }}
           direction={{ base: "column", md: "row" }}
           boxShadow={"2xl"}
-          padding={"40px"}
+          padding={"20px"}
         >
           <Flex>
             <Image
-              width={"200px"}
-              height={"200px"}
+              width={"250px"}
+              height={"250px"}
               objectFit="cover"
               borderRadius={"100%"}
               src={profile?.profilePic}
@@ -121,7 +113,7 @@ const profile = () => {
             >
               <Button
                 onClick={() => {
-                  toEditProfile();
+                  toUserEditProfile();
                 }}
                 bg={"#6bbbb4"}
                 color={"#ffffff"}
@@ -146,19 +138,6 @@ const profile = () => {
                 onClick={logoutSubmit}
               >
                 Logout
-              </Button>
-              <Button
-                bg={"#6bbbb4"}
-                color={"#ffffff"}
-                boxShadow={
-                  "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-                }
-                _hover={{
-                  bg: "blue.500",
-                }}
-                onClick={logoutSubmit}
-              >
-                Delete
               </Button>
             </Stack>
           </Stack>

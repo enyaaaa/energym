@@ -23,7 +23,7 @@ const joinourteam = () => {
       >
         <Heading
           fontWeight={700}
-          fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
+          fontSize={{ base: "4xl", md: "6xl" }}
           lineHeight={"110%"}
         >
           JOIN THE TEAM <br />

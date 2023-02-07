@@ -11,39 +11,31 @@ import { RootState } from "../store";
 
 const navbar = () => {
   //if user is not logged in it will relocate the user to login page else it will go to the profile page
+  var Profile;
   const authuser = useSelector((state: RootState) => state.user);
   const Uprofile = useSelector((state: RootState) => state.user.user);
-  var UProfile;
+
   const authinstructor = useSelector((state: RootState) => state.instructor);
   const Iprofile = useSelector(
     (state: RootState) => state.instructor.instructor
   );
-  var IProfile;
 
-  if (authuser.token == "") {
-    UProfile = (
+  if (authuser.token == "" && authinstructor.token == "") {
+    Profile = (
       <NavLink to="/login">
         <User size={32} />
       </NavLink>
     );
   } else if (authinstructor.token != "") {
-    <NavLink to="/login"></NavLink>;
-  } else {
-    UProfile = (
-      <NavLink to="/profile">
-        <Avatar name={Uprofile?.name} src={Uprofile?.profilePic} />
-      </NavLink>
-    );
-  }
-
-  if (authinstructor.token == "") {
-    IProfile = <NavLink to="/login"></NavLink>;
-  } else if (authuser.token != "") {
-    <NavLink to="/login"></NavLink>;
-  } else {
-    IProfile = (
+    Profile = (
       <NavLink to="/instructorprofile">
         <Avatar name={Iprofile?.name} src={Iprofile?.profilePic} />
+      </NavLink>
+    );
+  } else if (authuser.token != "") {
+    Profile = (
+      <NavLink to="/userprofile">
+        <Avatar name={Uprofile?.name} src={Uprofile?.profilePic} />
       </NavLink>
     );
   }
@@ -61,8 +53,7 @@ const navbar = () => {
           <NavLink to="/ourclass">BOOK A CLASS</NavLink>
           <NavLink to="/ourteam">OUR TEAM</NavLink>
           <NavLink to="/forum">FAQ</NavLink>
-          {UProfile}
-          {IProfile}
+          {Profile}
         </Right>
       </Wrapper>
     </Container>
