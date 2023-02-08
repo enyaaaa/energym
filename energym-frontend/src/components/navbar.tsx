@@ -56,6 +56,20 @@ const navbar = () => {
     );
   }
 
+  if (authuser.token == "" && authinstructor.token == "") {
+    Classes = (
+      <NavLink to="/ourteam">OUR TEAM</NavLink>
+    );
+  } else if (authinstructor.token != "") {
+    Classes = (
+      <NavLink to="/yourstudiobookings">BOOKINGS</NavLink>
+    );
+  } else if (authuser.token != "") {
+    Classes = (
+      <NavLink to="/yourclassbookings">BOOKINGS</NavLink>
+    );
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -67,7 +81,7 @@ const navbar = () => {
         <Right>
           <ColorModeSwitcher />
           {Booking}
-          <NavLink to="/ourteam">OUR TEAM</NavLink>
+          {Classes}
           <NavLink to="/forum">FAQ</NavLink>
           {Profile}
         </Right>

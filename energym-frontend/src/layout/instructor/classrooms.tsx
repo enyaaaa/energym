@@ -5,11 +5,7 @@ import { RootState } from "../../store";
 import styled from "styled-components";
 import { mobile } from "../../utils/responsive";
 import {
-  Card,
-  CardBody,
-  CardFooter,
   Heading,
-  Image,
   Text,
   Box,
   Img,
@@ -30,31 +26,36 @@ const classrooms = () => {
       navigate("/instructorlogin");
     }
   }, []);
+
   const category = [
     {
       id: 1,
-      header: "SPIN STUDIO",
+      badge: "spin",
+      header: "STUDIO 1",
       desc: "Indoor cycling, classes focus on endurance, strength, intervals, high intensity, and recuperation.",
       img: "https://voguesg.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2022/01/13133338/spin-studios-crnk.jpg",
       link: "spinstudio",
     },
     {
       id: 2,
-      header: "YOGA STUDIO",
+      badge: "yoga",
+      header: "STUDIO 2",
       desc: "Physical exercise that consists of postures, frequently connected by flowing sequences.",
       img: "https://www.fitnessfirst.com.sg/-/media/project/evolution-wellness/fitness-first/south-east-asia/malaysia/classes/gentle-flow-yoga/gentle-flow-yoga-class-malaysia.jpg",
       link: "yogastudio",
     },
     {
       id: 3,
-      header: "PILATES STUDIO",
+      badge: "pilates",
+      header: "STUDIO 3",
       desc: "Pilates is a set of repetitive movements done on a mat or other apparatus to increase flexibility, strength, and balance. Pilates movements strengthen the body by putting physical effort from the core outward.",
       img: "https://www.verywellfit.com/thmb/cuTXaANkoMHc1yH7AEPuchMe1jM=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/82301405-56b35cc13df78cdfa004c35a.jpg",
       link: "pilatesstudio",
     },
     {
       id: 4,
-      header: "HIIT STUDIO",
+      badge: "hiit",
+      header: "STUDIO 4",
       desc: "Exercise plan that mixes brief bursts of vigorous exercise with less vigorous but still active 'recovery' periods. In an HIIT class, the objective is to maintain a target heart rate for exercise, which enables you to burn fat quickly in a short period of time.",
       img: "https://img.livestrong.com/630x/photos.demandstudios.com/getty/article/79/22/175558978.jpg?type=webp",
       link: "hiitstudio",
@@ -74,7 +75,6 @@ const classrooms = () => {
           </Desc>
         </Header>
       </Wrapper>
-
       <Content>
         {category.map((item) => (
           <Center py={6} key={item.id}>
@@ -103,7 +103,19 @@ const classrooms = () => {
                 />
               </Box>
               <Box p={4}>
-                <Heading color={"black"} fontSize={"2xl"} noOfLines={1}>
+                <Box
+                  bg="black"
+                  display={"inline-block"}
+                  px={2}
+                  py={1}
+                  color="white"
+                  mb={2}
+                >
+                  <Text textTransform={'uppercase'} fontSize={"xs"} fontWeight="medium">
+                    {item.badge}
+                  </Text>
+                </Box>
+                <Heading textTransform={'uppercase'} color={"black"} fontSize={"2xl"} noOfLines={1}>
                   {item.header}
                 </Heading>
                 <Text color={"gray.500"} noOfLines={3}>
@@ -119,7 +131,7 @@ const classrooms = () => {
                   cursor={"pointer"}
                   w="full"
                 >
-                  <Bookingclassmodel classroom={item.header} />
+                  <Bookingclassmodel classroom={item.header} classType={item.badge} classImage={item.img} />
                 </Flex>
               </HStack>
             </Box>

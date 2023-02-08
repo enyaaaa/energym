@@ -1,43 +1,72 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../../utils/responsive";
-import {
-  SimpleGrid,
-  Image,
-  Box,
-  Badge,
-} from "@chakra-ui/react";
-import { useParams } from "react-router-dom";
-import { classesapi } from "../../api/classes";
+import { Image, Box, Badge, useToast } from "@chakra-ui/react";
+import { SimpleGrid } from "@chakra-ui/react";
+import { classesapi, classesapiToken } from "../../api/classes";
 import { Class } from "../../utils/types";
 import moment from "moment";
-import { Classinfomodel } from "../../components/classinfomodel";
+import { RootState } from "../../store";
+import { useSelector } from "react-redux";
+import { Alert } from "../../components/alert";
 
-const classescategory = () => {
-  //using params to find type
-  const { category } = useParams();
-
+const instructorbookings = () => {
   //using state
-  const [classes, setClasses] = useState<Array<Class>>([]);
+  const [bookings, setBookings] = useState<Array<Class>>([]);
+
+  const instructor_id = useSelector(
+    (state: RootState) => state.instructor.instructor?.id
+  );
+
+  const authinstructor = useSelector((state: RootState) => state.instructor);
+
+  const toast = useToast();
 
   //getting all orders that users has made
   useEffect(() => {
-    classesapi.get(`api/classes/${category}`).then((res) => {
+    classesapi.get(`api/classesbyinstructor/${instructor_id}`).then((res) => {
       if (res.data.status === 200) {
-        setClasses(res.data.classes);
+        setBookings(res.data.classes);
       }
     });
   });
+
+  //function when user press on delete
+  const handleDelete = (e: any, id: any) => {
+    e.preventDefault();
+    const thisClicked = id.currentTarget;
+
+    classesapiToken(authinstructor.token)
+      .delete(`/api/class/${id}`)
+      .then((res) => {
+        if (res.data.status === 200) {
+          toast({
+            title: res.data.message,
+            status: "success",
+            duration: 4000,
+            isClosable: true,
+          });
+          thisClicked.closest("roles").remove();
+        } else if (res.data.status === 404) {
+          toast({
+            title: res.data.message,
+            status: "error",
+            duration: 4000,
+            isClosable: true,
+          });
+        }
+      });
+  };
 
   return (
     <Container>
       <Wrapper>
         <Header>
-          <Title>{category} CLASSES</Title>
+          <Title>MY CLASSES</Title>
         </Header>
       </Wrapper>
       <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
-        {classes.map((Classes: Class) => {
+        {bookings.map((Classes: Class) => {
           return (
             <Box
               key={Classes.id}
@@ -103,9 +132,15 @@ const classescategory = () => {
                 <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
                   DATE:{" "}
                   {moment(Classes.classStartDateTime).format("YYYY-MM-DD")}
-                </Box><Classinfomodel title={Classes.classTitle} message={Classes.classRoom} action={Classes.classType} trigger ={Classes.instructorName}/>
+                </Box>
+                <Box paddingTop={"10px"}>
+                  <Alert
+                    action="delete booking"
+                    title="Are you sure you want to delete your booking?"
+                    trigger={(e: any) => handleDelete(e, Classes.id)}
+                  />
+                </Box>
               </Box>
-              
             </Box>
           );
         })}
@@ -140,4 +175,4 @@ const Title = styled.h1`
   ${mobile({ fontSize: "50px" })}
 `;
 
-export default classescategory;
+export default instructorbookings;

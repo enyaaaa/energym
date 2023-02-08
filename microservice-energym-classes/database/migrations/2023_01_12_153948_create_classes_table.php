@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('classImage') ->nullable();
             $table->text('classType');
             $table->string('classRoom');
-            $table->timestamp('classStartDateTime');
-            $table->timestamp('classEndDateTime');
+            $table->dateTime('classStartDateTime');
+            $table->dateTime('classEndDateTime');
             $table->string('classDuration');
             $table->decimal('price', 6,2);
             $table->text('purpose');

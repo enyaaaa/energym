@@ -9,37 +9,42 @@ import {
   Image,
   Text,
   Stack,
+  Box,
+  Img,
+  Flex,
+  Center,
+  useColorModeValue,
+  HStack,
 } from "@chakra-ui/react";
 
 const classes = () => {
-
   const category = [
     {
       id: 1,
       header: "SPIN",
       desc: "Indoor cycling, often known as spinning, is a type of exercise that involves using a specific stationary exercise bike with a weighted flywheel in a classroom setting. Classes focus on endurance, strength, intervals, high intensity, and recuperation.",
-      img: "https://voguesg.s3.ap-southeast-1.amazonaws.com/wp-content/uploads/2022/01/13133338/spin-studios-crnk.jpg",
+      img: "https://mountainsidefitness.com/wp-content/uploads/2019/10/Cycle-v2.jpg",
       link: "spin",
     },
     {
       id: 2,
       header: "YOGA",
       desc: "Physical exercise that primarily consists of postures, frequently connected by flowing sequences, occasionally including breathing exercises, and frequently concluding with lying down relaxation or meditation.",
-      img: "https://www.fitnessfirst.com.sg/-/media/project/evolution-wellness/fitness-first/south-east-asia/malaysia/classes/gentle-flow-yoga/gentle-flow-yoga-class-malaysia.jpg",
+      img: "https://www.peerspace.com/resources/wp-content/uploads/yoga-studio-2048x1365.webp",
       link: "yoga",
     },
     {
       id: 3,
       header: "PILATES",
       desc: "Pilates is a set of repetitive movements done on a mat or other apparatus to increase flexibility, strength, and balance. Pilates movements strengthen the body by putting physical effort from the core outward.",
-      img: "https://www.verywellfit.com/thmb/cuTXaANkoMHc1yH7AEPuchMe1jM=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/82301405-56b35cc13df78cdfa004c35a.jpg",
+      img: "https://images.squarespace-cdn.com/content/v1/5c78b226ab1a621a891f6cfa/1610474147710-HDJ4ADJ7MKRABTS9GUGS/3PaxOneLegBridgeLandscape.jpg?format=750w",
       link: "pilates",
     },
     {
       id: 4,
       header: "HIIT",
       desc: "Exercise plan that mixes brief bursts of vigorous exercise with less vigorous but still active 'recovery' periods. In an HIIT class, the objective is to maintain a target heart rate for exercise, which enables you to burn fat quickly in a short period of time.",
-      img: "https://img.livestrong.com/630x/photos.demandstudios.com/getty/article/79/22/175558978.jpg?type=webp",
+      img: "https://media1.popsugar-assets.com/files/thumbor/Zk7XXXTUDwaIG9GXjtIJL4yqUpY/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2020/02/11/715/n/1922729/tmp_WFB1tt_359ee710b2f3a82f_image.jpg",
       link: "hiit",
     },
   ];
@@ -59,35 +64,39 @@ const classes = () => {
       </Wrapper>
       <Content>
         {category.map((item) => (
-          <Card
-            direction={{ base: "column", sm: "row" }}
-            overflow="hidden"
-            padding={"2%"}
-            key={item.id}
-            marginBottom="30px"
-          >
-            <Image
-              objectFit="cover"
-              maxW={{ base: "100%", sm: "500px" }}
-              src={item.img}
-              alt={item.header}
-            />
-            <Stack>
-              <CardBody>
-                <Heading
-                  fontFamily={"'Urbanist', sans-serif"}
-                  fontWeight={"400"}
-                  fontSize={"50px"}
-                >
+          <Center py={6} key={item.id}>
+            <Box
+              w="xs"
+              rounded={"sm"}
+              my={5}
+              mx={[0, 5]}
+              overflow={"hidden"}
+              bg="#dbf8f6"
+            >
+              <Box h={"200px"}>
+                <Img
+                  src={item.img}
+                  alt={item.header}
+                  roundedTop={"sm"}
+                  objectFit="cover"
+                  h="full"
+                  w="full"
+                />
+              </Box>
+              <Box p={4}>
+                <Heading color={"black"} fontSize={"2xl"} noOfLines={1}>
                   {item.header}
                 </Heading>
-                <Text py="3">{item.desc}</Text>
-              </CardBody>
-              <CardFooter>
+                <Text color={"gray.500"} noOfLines={2}>
+                  In this post, we will give an overview of what is new in React
+                  18, and what it means for the future.
+                </Text>
+              </Box>
+              <HStack>
                 <NavLink to={item.link}>EXPLORE {item.header} CLASSES</NavLink>
-              </CardFooter>
-            </Stack>
-          </Card>
+              </HStack>
+            </Box>
+          </Center>
         ))}
       </Content>
     </Container>
@@ -129,6 +138,7 @@ const Desc = styled.p`
 export const NavLink = styled(Link)`
   text-decoration: none;
   cursor: pointer;
+  width: 100%;
   padding: 10px;
   background-color: #a8cecb;
   &:hover {
@@ -137,7 +147,12 @@ export const NavLink = styled(Link)`
 `;
 
 const Content = styled.div`
-  padding: 20px;
+  display: flex;
+  padding-left: 3%;
+  padding-right: 3%;
+  width: 100%;
+  justify-content: space-between;
+  ${mobile({ flexDirection: "column" })}
 `;
 
 export default classes;

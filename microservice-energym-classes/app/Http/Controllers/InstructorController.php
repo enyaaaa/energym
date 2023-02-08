@@ -28,6 +28,7 @@ class InstructorController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'status' => 404,
+                'message' => 'Some fields are invald',
                 'validation_errors' => $validator->errors(),
             ]);
         } else {

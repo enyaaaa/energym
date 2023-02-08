@@ -16,12 +16,12 @@ import Usereditprofile from "./components/user/usereditprofile";
 import Navbar from "./components/navbar";
 import Footer from "./components/footer";
 import ScrollToTop from "./components/scrolltotop";
-import RequireAuth from "./components/RequireAuth";
 import Instructorlogin from "./components/instructor/instructorloginform";
 import Instructorregister from "./components/instructor/instructorregisterform";
 import Instructorprofile from "./components/instructor/instructorprofile";
 import Instructoreditprofile from "./components/instructor/instructoreditprofile";
 import Classrooms from "./layout/instructor/classrooms";
+import Instructorbooking from "./layout/instructor/instructorbookings";
 
 function App() {
   return (
@@ -46,6 +46,7 @@ function App() {
         <Route path="/instructorprofile" element={<Instructorprofile />} />
         <Route path="/instructoreditprofile" element={<Instructoreditprofile />} />
         <Route path="/classrooms" element={<Classrooms />} />
+        <Route path="/yourstudiobookings" element={<Instructorbooking />} />
       </Routes>
       <Footer />
     </Container>

@@ -11,7 +11,7 @@ interface InstructorState {
 const initialState: InstructorState = {
   instructor: undefined,
   token: "",
-  code: "Q6FfficNa7vfXzHP5LSMB06iu2sJuXh"
+  code: ""
 };
 
 const instructorSlice = createSlice({
@@ -21,6 +21,7 @@ const instructorSlice = createSlice({
     setInstructor: (state, action: PayloadAction<InstructorState>) => {
       state.instructor = action.payload.instructor;
       state.token = action.payload.token;
+      state.code = action.payload.code;
     },
     resetInstructor: (state) => {
       state.instructor = undefined;

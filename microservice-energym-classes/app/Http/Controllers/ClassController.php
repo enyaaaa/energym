@@ -16,16 +16,21 @@ class ClassController extends Controller
      */
     public function index()
     {
-        return classes::all();
+        $classes = classes::all();
+
+        return response()->json([
+            'status' => 200,
+            "classes" => $classes
+        ]);
     }
 
     public function getclass($id)
     {
-        $class = classes::find($id);
-        if ($class) {
+        $classes = classes::find($id);
+        if ($classes) {
             return response()->json([
                 'status' => 200,
-                "class" => $class
+                "classes" => $classes
             ]);
         } else {
             return response()->json([
@@ -33,6 +38,15 @@ class ClassController extends Controller
                 "message" => 'No classes found'
             ]);
         }
+    }
+
+    public function getclassbyinstructor($instructor_id)
+    {
+        $class = classes::where("instructor_id", $instructor_id)->get();
+        return response()->json([
+            'status' => 200,
+            "classes" => $class
+        ]);
     }
 
     /**
@@ -55,61 +69,60 @@ class ClassController extends Controller
     {
         if (auth('sanctum')->check()) {
 
-            $instructor_id = auth('sanctum')->user()->id;
-            $instructorName = $request->instructorName;
-            $classTitle = $request->classTitle;
-            $classType = $request->input('classType');
-            $classRoom = $request->input('classRoom');
-            $classStartDateTime = $request->input('classStartDateTime');
-            $classEndDateTime = $request->input('classEndDateTime');
-            $classDuration = $request->input('classDuration');
-            $price = $request->input('price');
-            $purpose = $request->input('purpose');
-            $description = $request->input('description');
-            $slots = $request->input('slots');
+            $validator  = Validator::make($request->all(), [
+                "instructorName" => 'required',
+                "classTitle" => 'required',
+                "classType" => 'required',
+                "classRoom" => 'required',
+                "classStartDateTime" => 'required',
+                "classEndDateTime" => 'required',
+                "classDuration" => 'required',
+                "price" => 'required|regex:/^\d+(\.\d{1,2})?$/',
+                "purpose" => 'required',
+                "slots" => 'required',
+            ]);
 
-            if (classes::where('classRoom', $request->classRoom)
-                ->where(function ($query) use ($classStartDateTime, $classEndDateTime) {
-                    $query->where(function ($q) use ($classStartDateTime, $classEndDateTime) {
-                        $q->where('classStartDateTime', '>=', $classStartDateTime)
-                            ->where('classStartDateTime', '<', $classEndDateTime);
-                    })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
-                        $q->where('classStartDateTime', '<=', $classStartDateTime)
-                            ->where('classEndDateTime', '>', $classEndDateTime);
-                    })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
-                        $q->where('classEndDateTime', '>', $classStartDateTime)
-                            ->where('classEndDateTime', '<=', $classEndDateTime);
-                    })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
-                        $q->where('classStartDateTime', '>=', $classStartDateTime)
-                            ->where('classEndDateTime', '<=', $classEndDateTime);
-                    });
-                })
-                ->exists()
-            ) {
+            if ($validator->fails()) {
                 return response()->json([
-                    'status' => 409,
-                    'message' => 'Classroom already taken',
+                    'status' => 404,
+                    'message' => 'Some fields are missing',
+                    'validation_errors' => $validator->errors(),
                 ]);
             } else {
-                $validator  = Validator::make($request->all(), [
-                    "instructorName" => 'required',
-                    "classTitle" => 'required',
-                    "classImage" => 'image|mimes:jpg,png,bmp,jpeg',
-                    "classType" => 'required',
-                    "classRoom" => 'required',
-                    "classStartDateTime" => 'required',
-                    "classEndDateTime" => 'required',
-                    "classDuration" => 'required',
-                    "price" => 'required|regex:/^\d+(\.\d{1,2})?$/',
-                    "purpose" => 'required',
-                    "slots" => 'required',
-                ]);
+                $instructor_id = auth('sanctum')->user()->id;
+                $instructorName = $request->input('instructorName');
+                $classTitle = $request->input('classTitle');
+                $classType = $request->input('classType');
+                $classRoom = $request->input('classRoom');
+                $classStartDateTime = $request->input('classStartDateTime');
+                $classEndDateTime = $request->input('classEndDateTime');
+                $classDuration = $request->input('classDuration');
+                $price = $request->input('price');
+                $purpose = $request->input('purpose');
+                $description = $request->input('description');
+                $slots = $request->input('slots');
 
-                if ($validator->fails()) {
+                if (classes::where('classRoom', $request->classRoom)
+                    ->where(function ($query) use ($classStartDateTime, $classEndDateTime) {
+                        $query->where(function ($q) use ($classStartDateTime, $classEndDateTime) {
+                            $q->where('classStartDateTime', '>=', $classStartDateTime)
+                                ->where('classStartDateTime', '<', $classEndDateTime);
+                        })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
+                            $q->where('classStartDateTime', '<=', $classStartDateTime)
+                                ->where('classEndDateTime', '>', $classEndDateTime);
+                        })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
+                            $q->where('classEndDateTime', '>', $classStartDateTime)
+                                ->where('classEndDateTime', '<=', $classEndDateTime);
+                        })->orWhere(function ($q) use ($classStartDateTime, $classEndDateTime) {
+                            $q->where('classStartDateTime', '>=', $classStartDateTime)
+                                ->where('classEndDateTime', '<=', $classEndDateTime);
+                        });
+                    })
+                    ->exists()
+                ) {
                     return response()->json([
-                        'status' => 404,
-                        'message' => 'Some fields are missing',
-                        'validation_errors' => $validator->errors(),
+                        'status' => 409,
+                        'message' => 'Classroom already taken',
                     ]);
                 } else {
                     $class = new classes();
@@ -164,7 +177,10 @@ class ClassController extends Controller
     public function show($classType)
     {
         $class = classes::where("classType", $classType)->get();
-        return $class;
+        return response()->json([
+            'status' => 200,
+            "classes" => $class
+        ]);
     }
 
     /**
