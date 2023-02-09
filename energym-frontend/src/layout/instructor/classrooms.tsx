@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate, NavLink as Link } from "react-router-dom";
 import { RootState } from "../../store";
@@ -14,8 +14,9 @@ import {
   useColorModeValue,
   HStack,
   Stack,
+  SimpleGrid,
 } from "@chakra-ui/react";
-import { Bookingclassmodel } from "../../components/classroombookingmodel";
+import { Bookingclassroommodel } from "../../components/instructor/classroombookingmodel";
 
 const classrooms = () => {
   const navigate = useNavigate();
@@ -41,7 +42,7 @@ const classrooms = () => {
       badge: "yoga",
       header: "STUDIO 2",
       desc: "Physical exercise that consists of postures, frequently connected by flowing sequences.",
-      img: "https://www.fitnessfirst.com.sg/-/media/project/evolution-wellness/fitness-first/south-east-asia/malaysia/classes/gentle-flow-yoga/gentle-flow-yoga-class-malaysia.jpg",
+      img: "https://i.pinimg.com/564x/36/c9/75/36c975202f5af6b38b421e85da705651.jpg",
       link: "yogastudio",
     },
     {
@@ -49,15 +50,23 @@ const classrooms = () => {
       badge: "pilates",
       header: "STUDIO 3",
       desc: "Pilates is a set of repetitive movements done on a mat or other apparatus to increase flexibility, strength, and balance. Pilates movements strengthen the body by putting physical effort from the core outward.",
-      img: "https://www.verywellfit.com/thmb/cuTXaANkoMHc1yH7AEPuchMe1jM=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/82301405-56b35cc13df78cdfa004c35a.jpg",
+      img: "https://i.pinimg.com/564x/f2/84/d8/f284d8ba819f691a44f07614c33869e2.jpg",
       link: "pilatesstudio",
     },
     {
       id: 4,
-      badge: "hiit",
+      badge: "dance",
       header: "STUDIO 4",
+      desc: "Dance, the movement of the body in a rhythmic way, usually to music and within a given space, for the purpose of expressing an idea or emotion, releasing energy, or simply taking delight in the movement itself.",
+      img: "https://i.pinimg.com/564x/ab/4b/5f/ab4b5f222cd6c7e81c5f86c1138821cf.jpg",
+      link: "hiitstudio",
+    },
+    {
+      id: 5,
+      badge: "hiit",
+      header: "STUDIO 5",
       desc: "Exercise plan that mixes brief bursts of vigorous exercise with less vigorous but still active 'recovery' periods. In an HIIT class, the objective is to maintain a target heart rate for exercise, which enables you to burn fat quickly in a short period of time.",
-      img: "https://img.livestrong.com/630x/photos.demandstudios.com/getty/article/79/22/175558978.jpg?type=webp",
+      img: "https://i.pinimg.com/564x/7f/7d/fe/7f7dfe129b8a7f56f3734d49318a250c.jpg",
       link: "hiitstudio",
     },
   ];
@@ -76,13 +85,14 @@ const classrooms = () => {
         </Header>
       </Wrapper>
       <Content>
+      <SimpleGrid minChildWidth="300px">
         {category.map((item) => (
           <Center py={6} key={item.id}>
             <Box
               w="xs"
               rounded={"sm"}
               my={5}
-              mx={[0, 5]}
+              mx={[0, 3]}
               overflow={"hidden"}
               bg="white"
               border={"1px"}
@@ -111,11 +121,20 @@ const classrooms = () => {
                   color="white"
                   mb={2}
                 >
-                  <Text textTransform={'uppercase'} fontSize={"xs"} fontWeight="medium">
+                  <Text
+                    textTransform={"uppercase"}
+                    fontSize={"xs"}
+                    fontWeight="medium"
+                  >
                     {item.badge}
                   </Text>
                 </Box>
-                <Heading textTransform={'uppercase'} color={"black"} fontSize={"2xl"} noOfLines={1}>
+                <Heading
+                  textTransform={"uppercase"}
+                  color={"black"}
+                  fontSize={"2xl"}
+                  noOfLines={1}
+                >
                   {item.header}
                 </Heading>
                 <Text color={"gray.500"} noOfLines={3}>
@@ -131,12 +150,17 @@ const classrooms = () => {
                   cursor={"pointer"}
                   w="full"
                 >
-                  <Bookingclassmodel classroom={item.header} classType={item.badge} classImage={item.img} />
+                  <Bookingclassroommodel
+                    classroom={item.header}
+                    classType={item.badge}
+                    classImage={item.img}
+                  />
                 </Flex>
               </HStack>
             </Box>
           </Center>
         ))}
+        </SimpleGrid>
       </Content>
     </Container>
   );
@@ -184,13 +208,6 @@ export const NavLink = styled(Link)`
   }
 `;
 
-const Content = styled.div`
-  display: flex;
-  padding-left: 3%;
-  padding-right: 3%;
-  width: 100%;
-  justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
-`;
+const Content = styled.div``;
 
 export default classrooms;

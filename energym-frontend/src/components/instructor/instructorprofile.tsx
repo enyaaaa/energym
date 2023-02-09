@@ -42,8 +42,8 @@ const profile = () => {
       .then((res) => {
         if (res.data.status === 200) {
           dispatch(resetInstructor());
-          localStorage.removeItem('auth_token');
-        localStorage.removeItem('code');
+          localStorage.removeItem("auth_token");
+          localStorage.removeItem("code");
           toast({
             title: res.data.message,
             status: "success",
@@ -137,7 +137,11 @@ const profile = () => {
               >
                 edit
               </Button>
-              <Alert action="logout" title="Are you sure you want to logout?" trigger={logoutSubmit} />
+              <Alert
+                action="logout"
+                title="Are you sure you want to logout?"
+                trigger={logoutSubmit}
+              />
             </Stack>
           </Stack>
         </Stack>

@@ -1,16 +1,35 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../../utils/responsive";
-import { Image, Box, Badge, useToast } from "@chakra-ui/react";
-import { SimpleGrid } from "@chakra-ui/react";
+import {
+  Image,
+  Box,
+  Badge,
+  useToast,
+  Flex,
+  SimpleGrid,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  PopoverCloseButton,
+} from "@chakra-ui/react";
 import { classesapi, classesapiToken } from "../../api/classes";
 import { Class } from "../../utils/types";
 import moment from "moment";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
-import { Alert } from "../../components/alert";
+import { Alert } from "../alert";
+import { Classinfomodel } from "../class/classinfomodel";
+import { FileText } from "phosphor-react";
+import { useNavigate } from "react-router-dom";
+import { Viewusersbookingmodel } from "./viewuserbookingmodel";
 
 const instructorbookings = () => {
+  const navigate = useNavigate();
+
   //using state
   const [bookings, setBookings] = useState<Array<Class>>([]);
 
@@ -29,12 +48,11 @@ const instructorbookings = () => {
         setBookings(res.data.classes);
       }
     });
-  });
+  }, []);
 
   //function when user press on delete
   const handleDelete = (e: any, id: any) => {
     e.preventDefault();
-    const thisClicked = id.currentTarget;
 
     classesapiToken(authinstructor.token)
       .delete(`/api/class/${id}`)
@@ -46,7 +64,6 @@ const instructorbookings = () => {
             duration: 4000,
             isClosable: true,
           });
-          thisClicked.closest("roles").remove();
         } else if (res.data.status === 404) {
           toast({
             title: res.data.message,
@@ -57,6 +74,12 @@ const instructorbookings = () => {
         }
       });
   };
+
+  useEffect(() => {
+    if (authinstructor.token == "") {
+      navigate("/instructorlogin");
+    }
+  }, []);
 
   return (
     <Container>
@@ -84,21 +107,50 @@ const instructorbookings = () => {
               />
 
               <Box p="6">
-                <Box display="flex" alignItems="baseline">
-                  <Badge borderRadius="full" px="2" colorScheme="teal">
-                    {Classes.classType}
-                  </Badge>
-                  <Box
-                    color="gray.500"
-                    fontWeight="semibold"
-                    letterSpacing="wide"
-                    fontSize="xs"
-                    textTransform="uppercase"
-                    ml="2"
-                  >
-                    {Classes.slots} slots &bull; {Classes.classDuration}
+                <Flex justifyContent={"space-between"}>
+                  <Box display="flex" alignItems="baseline">
+                    <Badge borderRadius="full" px="2" colorScheme="teal">
+                      {Classes.classType}
+                    </Badge>
+                    <Box
+                      color="gray.500"
+                      fontWeight="semibold"
+                      letterSpacing="wide"
+                      fontSize="xs"
+                      textTransform="uppercase"
+                      ml="2"
+                    >
+                      {Classes.slots} slots &bull; {Classes.classDuration}
+                    </Box>
                   </Box>
-                </Box>
+                  <Box display={"flex"}>
+                    <Classinfomodel
+                      instructorName={Classes.instructorName}
+                      classTitle={Classes.classTitle}
+                      classImage={Classes.classImage}
+                      classType={Classes.classType}
+                      classRoom={Classes.classRoom}
+                      classStartDateTime={Classes.classStartDateTime}
+                      classEndDateTime={Classes.classEndDateTime}
+                      classDuration={Classes.classDuration}
+                      price={Classes.price}
+                      purpose={Classes.purpose}
+                      description={Classes.description}
+                      slots={Classes.slots}
+                    />
+                    <Popover>
+                      <PopoverTrigger>
+                        <FileText size={25} />
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverHeader>Description</PopoverHeader>
+                        <PopoverBody>{Classes.description}</PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                  </Box>
+                </Flex>
                 <Box
                   mt="1"
                   as="h4"
@@ -134,11 +186,14 @@ const instructorbookings = () => {
                   {moment(Classes.classStartDateTime).format("YYYY-MM-DD")}
                 </Box>
                 <Box paddingTop={"10px"}>
-                  <Alert
-                    action="delete booking"
-                    title="Are you sure you want to delete your booking?"
-                    trigger={(e: any) => handleDelete(e, Classes.id)}
-                  />
+                  <Flex justifyContent={"space-between"}>
+                    <Viewusersbookingmodel id={Classes.id} />
+                    <Alert
+                      action="delete booking"
+                      title="Are you sure you want to delete your booking?"
+                      trigger={(e: any) => handleDelete(e, Classes.id)}
+                    />
+                  </Flex>
                 </Box>
               </Box>
             </Box>

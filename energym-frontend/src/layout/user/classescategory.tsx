@@ -6,19 +6,29 @@ import {
   Image,
   Box,
   Badge,
+  Flex,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverArrow,
+  PopoverCloseButton,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { classesapi } from "../../api/classes";
 import { Class } from "../../utils/types";
 import moment from "moment";
-import { Classinfomodel } from "../../components/classinfomodel";
+import { Classinfomodel } from "../../components/class/classinfomodel";
+import { FileText } from "phosphor-react";
+import { Bookingclassmodel } from "../../components/user/userbookingmodel";
 
 const classescategory = () => {
   //using params to find type
   const { category } = useParams();
 
   //using state
-  const [classes, setClasses] = useState<Array<Class>>([]);
+  const [classes, setClasses] = useState([]);
 
   //getting all orders that users has made
   useEffect(() => {
@@ -27,7 +37,7 @@ const classescategory = () => {
         setClasses(res.data.classes);
       }
     });
-  });
+  }, []);
 
   return (
     <Container>
@@ -53,23 +63,51 @@ const classescategory = () => {
                 src={Classes.classImage}
                 alt={Classes.classTitle}
               />
-
               <Box p="6">
-                <Box display="flex" alignItems="baseline">
-                  <Badge borderRadius="full" px="2" colorScheme="teal">
-                    {Classes.classType}
-                  </Badge>
-                  <Box
-                    color="gray.500"
-                    fontWeight="semibold"
-                    letterSpacing="wide"
-                    fontSize="xs"
-                    textTransform="uppercase"
-                    ml="2"
-                  >
-                    {Classes.slots} slots &bull; {Classes.classDuration}
+                <Flex justifyContent={"space-between"}>
+                  <Box display="flex" alignItems="baseline">
+                    <Badge borderRadius="full" px="2" colorScheme="teal">
+                      {Classes.classType}
+                    </Badge>
+                    <Box
+                      color="gray.500"
+                      fontWeight="semibold"
+                      letterSpacing="wide"
+                      fontSize="xs"
+                      textTransform="uppercase"
+                      ml="2"
+                    >
+                      {Classes.slots} slots &bull; {Classes.classDuration}
+                    </Box>
                   </Box>
-                </Box>
+                  <Box display={"flex"}>
+                    <Classinfomodel
+                      instructorName={Classes.instructorName}
+                      classTitle={Classes.classTitle}
+                      classImage={Classes.classImage}
+                      classType={Classes.classType}
+                      classRoom={Classes.classRoom}
+                      classStartDateTime={Classes.classStartDateTime}
+                      classEndDateTime={Classes.classEndDateTime}
+                      classDuration={Classes.classDuration}
+                      price={Classes.price}
+                      purpose={Classes.purpose}
+                      description={Classes.description}
+                      slots={Classes.slots}
+                    />
+                    <Popover>
+                      <PopoverTrigger>
+                        <FileText size={25} />
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverHeader>Description</PopoverHeader>
+                        <PopoverBody>{Classes.description}</PopoverBody>
+                      </PopoverContent>
+                    </Popover>
+                  </Box>
+                </Flex>
                 <Box
                   mt="1"
                   as="h4"
@@ -88,24 +126,25 @@ const classescategory = () => {
                 >
                   INSTRUCTOR: {Classes.instructorName}
                 </Box>
-                <Box
-                  mt="1"
-                  as="h4"
-                  lineHeight="tight"
-                  noOfLines={1}
-                  textTransform="uppercase"
-                >
-                  CLASS ROOM: {Classes.classRoom}
-                </Box>
                 <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
                   TIME: {moment(Classes.classStartDateTime).format("h:mm A")}
                 </Box>
                 <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
                   DATE:{" "}
                   {moment(Classes.classStartDateTime).format("YYYY-MM-DD")}
-                </Box><Classinfomodel title={Classes.classTitle} message={Classes.classRoom} action={Classes.classType} trigger ={Classes.instructorName}/>
+                </Box>
+                <Box paddingTop={"15px"}>
+                  <Bookingclassmodel
+                    class_id={Classes.id}
+                    classTitle={Classes.classTitle}
+                    classType={Classes.classType}
+                    classRoom={Classes.classRoom}
+                    classStartDateTime={Classes.classStartDateTime}
+                    classEndDateTime={Classes.classEndDateTime}
+                    classDuration={Classes.classDuration}
+                  />
+                </Box>
               </Box>
-              
             </Box>
           );
         })}

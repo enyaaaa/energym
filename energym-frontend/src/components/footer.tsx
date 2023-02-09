@@ -1,13 +1,10 @@
-import React from "react";
 import styled from "styled-components";
 import { NavLink as Link } from "react-router-dom";
 import { Envelope, Phone, MapPin } from "phosphor-react";
 import logo from "../assets/logo_icon.png";
 import { mobile } from "../utils/responsive";
 
-type Props = {};
-
-const footer = (props: Props) => {
+const footer = () => {
   return (
     <Container>
       <Left>
@@ -29,7 +26,9 @@ const footer = (props: Props) => {
         <List>
           <NavLink to="/ourclass">BOOK A CLASS</NavLink>
           <NavLink to="/ourteam">OUR TEAM</NavLink>
-          <NavLink to="/forum">FAQ</NavLink>
+          <NavLink to="/forum">FORUM</NavLink>
+          <NavLink to="/forum">LEAVE A REVIEW</NavLink>
+          <NavLink to="/login">GET STARTED</NavLink>
           <NavLink to="/joinourteam">JOIN OUR TEAM</NavLink>
           <NavLink to="/termsandconditions">TERMS & CONDITIONS</NavLink>
           <NavLink to="/instructorlogin">LOGIN AS INSTRUCTOR</NavLink>
@@ -82,7 +81,7 @@ const Logotitle = styled.h1`
 `;
 
 const Desc = styled.p`
-padding: 10px;
+  padding: 10px;
 `;
 
 const Center = styled.div`

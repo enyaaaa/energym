@@ -11,7 +11,7 @@ interface InstructorState {
 const initialState: InstructorState = {
   instructor: undefined,
   token: "",
-  code: ""
+  code: "",
 };
 
 const instructorSlice = createSlice({

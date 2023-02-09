@@ -1,5 +1,4 @@
 import {
-  Button,
   Center,
   Image,
   Input,
@@ -61,6 +60,12 @@ const instructoreditprofile = () => {
     e.persist();
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
+  useEffect(() => {
+    if (authinstructor.token == "") {
+      navigate("/instructorlogin");
+    }
+  }, []);
 
   //function when user press on the submit button and edit the product and update on database
   const profileUpdate = (e: any) => {

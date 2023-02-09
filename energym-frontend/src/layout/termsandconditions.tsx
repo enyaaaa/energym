@@ -173,5 +173,4 @@ const UL = styled.ul`
   padding-left: 60px;
 `;
 
-
 export default termsandconditions;

@@ -1,17 +1,10 @@
-import {
-  Button,
-  Center,
-  Image,
-  Input,
-  Stack,
-  useToast,
-} from "@chakra-ui/react";
+import { Center, Image, Input, Stack, useToast } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { authapiToken } from "../../api/auth";
-import { updateUser } from "../../redux/userSlice";
+import { resetUser, updateUser } from "../../redux/userSlice";
 import { RootState } from "../../store";
 import { mobile } from "../../utils/responsive";
 import { Alert } from "../alert";
@@ -59,6 +52,12 @@ const usereditprofile = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  useEffect(() => {
+    if (authuser.token == "") {
+      navigate("/login");
+    }
+  }, []);
+
   //function when user press on the submit button and edit the product and update on database
   const profileUpdate = (e: any) => {
     e.preventDefault();
@@ -93,6 +92,33 @@ const usereditprofile = () => {
             isClosable: true,
           });
           navigate("/userprofile", { replace: true });
+        }
+      });
+  };
+
+  //function when user press on delete
+  const handleDelete = (e: any, id: any) => {
+    e.preventDefault();
+
+    authapiToken(authuser.token)
+      .delete(`/api/profile/${id}`)
+      .then((res) => {
+        if (res.data.status === 200) {
+          dispatch(resetUser());
+          toast({
+            title: res.data.message,
+            status: "success",
+            duration: 4000,
+            isClosable: true,
+          });
+          navigate("/login", { replace: true });
+        } else if (res.data.status === 404) {
+          toast({
+            title: res.data.message,
+            status: "error",
+            duration: 4000,
+            isClosable: true,
+          });
         }
       });
   };
@@ -177,6 +203,11 @@ const usereditprofile = () => {
                   action="update"
                   title="Want to make the chnages?"
                   trigger={profileUpdate}
+                />
+                <Alert
+                  action="delete account"
+                  title="Are you sure you want to delete your account? All data will be wiped 😢"
+                  trigger={(e: any) => handleDelete(e, authuser.user?.id)}
                 />
               </Stack>
             </Stack>

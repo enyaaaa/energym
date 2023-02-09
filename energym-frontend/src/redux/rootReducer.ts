@@ -4,7 +4,7 @@ import InstructorReducer from "./instructorSlice";
 import ClassReducer from "./classSlice";
 
 export default combineReducers({
-    user: UserReducer,
-    instructor: InstructorReducer,
-    class: ClassReducer
-})
+  user: UserReducer,
+  instructor: InstructorReducer,
+  class: ClassReducer,
+});

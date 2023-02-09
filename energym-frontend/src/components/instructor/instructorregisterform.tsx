@@ -1,14 +1,7 @@
 import { SyntheticEvent, useState } from "react";
 import styled from "styled-components";
 import { NavLink as Link, useNavigate } from "react-router-dom";
-import {
-  useToast,
-  Input,
-  FormControl,
-  FormLabel,
-  Select,
-} from "@chakra-ui/react";
-import { authapi } from "../../api/auth";
+import { useToast, Input, FormControl, Select } from "@chakra-ui/react";
 import { classesapi } from "../../api/classes";
 
 const instructorregisterform = () => {
@@ -28,7 +21,7 @@ const instructorregisterform = () => {
     category: "",
     code: "",
     error_list: [],
-    code_error:[]
+    code_error: [],
   });
 
   //handing users input

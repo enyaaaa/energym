@@ -25,7 +25,7 @@ const profile = () => {
   const authuser = useSelector((state: RootState) => state.user);
 
   const toast = useToast();
-  
+
   const toUserEditProfile = () => {
     navigate("/usereditprofile", { state: profile });
   };
@@ -39,7 +39,7 @@ const profile = () => {
       .then((res) => {
         if (res.data.status === 200) {
           dispatch(resetUser());
-          localStorage.removeItem('auth_token');
+          localStorage.removeItem("auth_token");
           toast({
             title: res.data.message,
             status: "success",
@@ -128,7 +128,11 @@ const profile = () => {
               >
                 edit
               </Button>
-              <Alert action="logout" title="Are you sure you want to logout?" trigger={logoutSubmit} />
+              <Alert
+                action="logout"
+                title="Are you sure you want to logout?"
+                trigger={logoutSubmit}
+              />
             </Stack>
           </Stack>
         </Stack>

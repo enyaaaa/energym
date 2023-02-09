@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Avatar } from "@chakra-ui/react";
 import { NavLink as Link } from "react-router-dom";
@@ -43,31 +42,19 @@ const navbar = () => {
   }
 
   if (authuser.token == "" && authinstructor.token == "") {
-    Booking = (
-      <NavLink to="/ourclass">BOOK A CLASS</NavLink>
-    );
+    Booking = <NavLink to="/ourclass">BOOK A CLASS</NavLink>;
   } else if (authinstructor.token != "") {
-    Booking = (
-      <NavLink to="/classrooms">BOOK A STUDIO</NavLink>
-    );
+    Booking = <NavLink to="/classrooms">BOOK A STUDIO</NavLink>;
   } else if (authuser.token != "") {
-    Booking = (
-      <NavLink to="/ourclass">BOOK A CLASS</NavLink>
-    );
+    Booking = <NavLink to="/ourclass">BOOK A CLASS</NavLink>;
   }
 
   if (authuser.token == "" && authinstructor.token == "") {
-    Classes = (
-      <NavLink to="/ourteam">OUR TEAM</NavLink>
-    );
+    Classes = <NavLink to="/ourteam">OUR TEAM</NavLink>;
   } else if (authinstructor.token != "") {
-    Classes = (
-      <NavLink to="/yourstudiobookings">BOOKINGS</NavLink>
-    );
+    Classes = <NavLink to="/yourstudiobookings">BOOKINGS</NavLink>;
   } else if (authuser.token != "") {
-    Classes = (
-      <NavLink to="/yourclassbookings">BOOKINGS</NavLink>
-    );
+    Classes = <NavLink to="/yourclassbookings">BOOKINGS</NavLink>;
   }
 
   return (
@@ -82,7 +69,7 @@ const navbar = () => {
           <ColorModeSwitcher />
           {Booking}
           {Classes}
-          <NavLink to="/forum">FAQ</NavLink>
+          <NavLink to="/forum">FORUM</NavLink>
           {Profile}
         </Right>
       </Wrapper>
@@ -122,7 +109,7 @@ export const NavLink = styled(Link)`
   &:hover {
     color: #6bbbb4;
   }
-  ${mobile({ padding: "0 0.5rem " })}
+  ${mobile({ padding: "0 0.4rem " })}
 `;
 
 const Right = styled.div`

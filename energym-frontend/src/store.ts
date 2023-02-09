@@ -10,8 +10,8 @@ const store = configureStore({
   middleware: getDefaultMiddleware({ serializableCheck: false }),
 });
 const persistor = persistStore(store);
-export default store
-export {persistor}
+export default store;
+export { persistor };
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

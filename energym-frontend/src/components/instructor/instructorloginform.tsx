@@ -7,7 +7,7 @@ import { setInstructor } from "../../redux/instructorSlice";
 import { classesapi } from "../../api/classes";
 
 const instructorloginform = () => {
-    const toast = useToast();
+  const toast = useToast();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -84,12 +84,14 @@ const instructorloginform = () => {
           <Validation>{loginInput.error_list.password}</Validation>
           <ForgetPasswowrdLink to="/">FORGET PASSWORD?</ForgetPasswowrdLink>
           <Button type="submit">SIGN IN</Button>
-          <CreateAccountLink to="/instructorregister">CREATE ACCOUNT</CreateAccountLink>
+          <CreateAccountLink to="/instructorregister">
+            CREATE ACCOUNT
+          </CreateAccountLink>
         </Form>
       </Wrapper>
     </Container>
-  )
-}
+  );
+};
 
 const Container = styled.div`
   padding: 30px;
@@ -145,4 +147,4 @@ const CreateAccountLink = styled(Link)`
   text-align: center;
 `;
 
-export default instructorloginform
+export default instructorloginform;

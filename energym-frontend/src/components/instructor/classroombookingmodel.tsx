@@ -20,11 +20,15 @@ import {
 import { SyntheticEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { classesapiToken } from "../api/classes";
-import { RootState } from "../store";
+import { classesapiToken } from "../../api/classes";
+import { RootState } from "../../store";
 import styled from "styled-components";
 
-export function Bookingclassmodel({ classroom, classType, classImage }: any) {
+export function Bookingclassroommodel({
+  classroom,
+  classType,
+  classImage,
+}: any) {
   //navigate user to another page
   const navigate = useNavigate();
 
@@ -112,7 +116,7 @@ export function Bookingclassmodel({ classroom, classType, classImage }: any) {
             isClosable: true,
           });
           navigate("/yourstudiobookings", { replace: true });
-        }else if (res.data.status === 409) {
+        } else if (res.data.status === 409) {
           toast({
             title: res.data.message,
             status: "error",
@@ -173,7 +177,9 @@ export function Bookingclassmodel({ classroom, classType, classImage }: any) {
                     onChange={handleInput}
                     value={roombookingInput.classTitle}
                   />
-                  <Validation>{roombookingInput.error_list.classTitle}</Validation>
+                  <Validation>
+                    {roombookingInput.error_list.classTitle}
+                  </Validation>
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Start Date and Time</FormLabel>
@@ -183,7 +189,9 @@ export function Bookingclassmodel({ classroom, classType, classImage }: any) {
                     onChange={handleInput}
                     value={roombookingInput.classStartDateTime}
                   />
-                  <Validation>{roombookingInput.error_list.classStartDateTime}</Validation>
+                  <Validation>
+                    {roombookingInput.error_list.classStartDateTime}
+                  </Validation>
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>End Date and Time</FormLabel>
@@ -193,7 +201,9 @@ export function Bookingclassmodel({ classroom, classType, classImage }: any) {
                     onChange={handleInput}
                     value={roombookingInput.classEndDateTime}
                   />
-                  <Validation>{roombookingInput.error_list.classEndDateTime}</Validation>
+                  <Validation>
+                    {roombookingInput.error_list.classEndDateTime}
+                  </Validation>
                 </FormControl>
                 <FormControl mt={4}>
                   <Image
@@ -210,7 +220,9 @@ export function Bookingclassmodel({ classroom, classType, classImage }: any) {
                     accept="image/*"
                     onChange={onImageChange}
                   />
-                  <Validation>{roombookingInput.error_list.profilePic}</Validation>
+                  <Validation>
+                    {roombookingInput.error_list.profilePic}
+                  </Validation>
                 </FormControl>
               </ModalBody>
               <ModalBody>
@@ -222,7 +234,9 @@ export function Bookingclassmodel({ classroom, classType, classImage }: any) {
                     onChange={handleInput}
                     value={classType}
                   />
-                  <Validation>{roombookingInput.error_list.classType}</Validation>
+                  <Validation>
+                    {roombookingInput.error_list.classType}
+                  </Validation>
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Class Duration</FormLabel>
@@ -238,7 +252,9 @@ export function Bookingclassmodel({ classroom, classType, classImage }: any) {
                     <option value="1 hour">1 hour</option>
                     <option value="45 min">45 min</option>
                   </Select>
-                  <Validation>{roombookingInput.error_list.classDuration}</Validation>
+                  <Validation>
+                    {roombookingInput.error_list.classDuration}
+                  </Validation>
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Purpose</FormLabel>
@@ -259,7 +275,9 @@ export function Bookingclassmodel({ classroom, classType, classImage }: any) {
                     onChange={handleInput}
                     value={roombookingInput.description}
                   />
-                  <Validation>{roombookingInput.error_list.description}</Validation>
+                  <Validation>
+                    {roombookingInput.error_list.description}
+                  </Validation>
                 </FormControl>
                 <FormControl mt={4}>
                   <FormLabel>Slots</FormLabel>

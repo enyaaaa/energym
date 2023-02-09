@@ -28,6 +28,16 @@ class BookingController extends Controller
         //
     }
 
+
+    public function getallclassidbooking($class_id)
+    {
+        $class = bookings::where("class_id", $class_id)->get();
+        return response()->json([
+            'status' => 200,
+            "classes" => $class
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -36,43 +46,63 @@ class BookingController extends Controller
      */
     public function store(Request $request)
     {
-        $user_id = $request->user_id;
-        $class_id = $request->class_id;
-        $userFullName = $request->input('userFullName');
-        $userEmail = $request->input('userEmail');
-        $userMobile = $request->input('userMobile');
+        $validator  = Validator::make($request->all(), [
+            "classTitle" => 'required',
+            "classType" => 'required',
+            "classRoom" => 'required',
+            "classStartDateTime" => 'required',
+            "classEndDateTime" => 'required',
+            "classDuration" => 'required',
+            "userFullName" => 'required',
+            "userEmail" => 'required|email|max:191',
+            "userMobile" => 'required|max:8',
+        ]);
 
-        if (bookings::where('class_id', $class_id)->where('user_id', $user_id)->exists()) {
+        if ($validator->fails()) {
             return response()->json([
-                'status' => 409,
-                'message' => 'you have already booked a slot',
+                'status' => 404,
+                'message' => 'Some fields are missing',
+                'validation_errors' => $validator->errors(),
             ]);
         } else {
-            $validator  = Validator::make($request->all(), [
-                "userFullName" => 'required',
-                "userEmail" => 'required|email|max:191',
-                "userMobile" => 'required|max:8',
-            ]);
+            $user_id = $request->user_id;
+            $class_id = $request->class_id;
+            $classTitle = $request->input('classTitle');
+            $classType = $request->input('classType');
+            $classRoom = $request->input('classRoom');
+            $classStartDateTime = $request->input('classStartDateTime');
+            $classEndDateTime = $request->input('classEndDateTime');
+            $classDuration = $request->input('classDuration');
+            $userFullName = $request->input('userFullName');
+            $userEmail = $request->input('userEmail');
+            $userMobile = $request->input('userMobile');
+            $userProfilePic = $request->input('userProfilePic');
 
-            if ($validator->fails()) {
+            if (bookings::where('class_id', $class_id)->where('user_id', $user_id)->exists()) {
                 return response()->json([
-                    'status' => 404,
-                    'message' => 'Some fields are missing',
-                    'validation_errors' => $validator->errors(),
+                    'status' => 409,
+                    'message' => 'you have already booked a slot',
                 ]);
             } else {
                 $booking = new bookings;
 
                 $booking->user_id = $user_id;
                 $booking->class_id = $class_id;
+                $booking->classTitle = $classTitle;
+                $booking->classType = $classType;
+                $booking->classRoom = $classRoom;
+                $booking->classStartDateTime = $classStartDateTime;
+                $booking->classEndDateTime = $classEndDateTime;
+                $booking->classDuration = $classDuration;
                 $booking->userFullName = $userFullName;
                 $booking->userEmail = $userEmail;
                 $booking->userMobile = $userMobile;
+                $booking->userProfilePic = $userProfilePic;
 
                 $booking->save();
 
                 return response()->json([
-                    'status' => 201,
+                    'status' => 200,
                     'booking' => $booking,
                     'message' => 'Booked class Successfully',
                 ]);
@@ -89,7 +119,10 @@ class BookingController extends Controller
     public function show($id)
     {
         $booking = bookings::where("user_id", $id)->get();
-        return $booking;
+        return response()->json([
+            'status' => 200,
+            'booking' => $booking,
+        ]);
     }
 
     /**

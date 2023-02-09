@@ -197,6 +197,13 @@ class InstructorController extends Controller
     }
     public function index()
     {
-        return instructors::all();
+        $instructors = instructors::all();
+
+        return response()->json([
+            'status' => 200,
+            "instructors" => $instructors
+        ]);
+
+
     }
 }

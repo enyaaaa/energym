@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\forum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class ForumController extends Controller
 {
@@ -36,22 +37,48 @@ class ForumController extends Controller
      */
     public function store(Request $request)
     {
-        $comment = new forum();
+        $validator  = Validator::make($request->all(), [
+            "rating" => 'required',
+            "review" => 'required',
+        ]);
 
-        $comment->user_id = $request->input('user_id');
-        $comment->review = $request->input('review');
-        $comment->rating = $request->input('rating');
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 404,
+                'message' => 'Some fields are missing',
+                'validation_errors' => $validator->errors(),
+            ]);
+        } else {
+            $user_id = $request->user_id;
+            $name = $request->name;
+            $review = $request->input('review');
+            $rating = $request->input('rating');
 
-        $file = $request->file('commentImage');
-        $filename = $file->getClientOriginalName();
-        $file = $request->commentImage->storeAs('commentImage/' . $comment->user_id, $filename, "s3");
-        Storage::disk('s3')->setVisibility($file, 'public');
-        $url = Storage::disk('s3')->url($file);
 
-        $comment->commentImage = $url;
+            $comment = new forum;
 
-        if ($comment->save()) {
-            return $comment;
+            $comment->user_id = $user_id;
+            $comment->name = $name;
+            $comment->review = $review;
+            $comment->rating = $rating;
+
+            $file = $request->file('commentImage');
+            $filename = $file->getClientOriginalName();
+            $file = $request->commentImage->storeAs('commentImage/' . $comment->name, $filename, "s3");
+            Storage::disk('s3')->setVisibility($file, 'public');
+            $url = Storage::disk('s3')->url($file);
+
+            $comment->commentImage = $url;
+
+
+
+            $comment->save();
+
+            return response()->json([
+                'status' => 200,
+                'comment' => $comment,
+                'message' => 'Booked class Successfully',
+            ]);
         }
     }
 

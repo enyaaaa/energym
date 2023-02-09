@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('forums', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
+            $table->string('name');
             $table->text('review');
             $table->string('commentImage') ->nullable();
             $table->integer('rating');

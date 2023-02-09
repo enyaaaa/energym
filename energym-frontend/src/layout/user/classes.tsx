@@ -2,20 +2,15 @@ import styled from "styled-components";
 import { mobile } from "../../utils/responsive";
 import { NavLink as Link } from "react-router-dom";
 import {
-  Card,
-  CardBody,
-  CardFooter,
   Heading,
-  Image,
   Text,
-  Stack,
   Box,
   Img,
-  Flex,
   Center,
-  useColorModeValue,
   HStack,
+  SimpleGrid,
 } from "@chakra-ui/react";
+import { Classcategorymodel } from "../../components/class/classcategorymodel";
 
 const classes = () => {
   const category = [
@@ -42,6 +37,13 @@ const classes = () => {
     },
     {
       id: 4,
+      header: "DANCE",
+      desc: "Dance, the movement of the body in a rhythmic way, usually to music and within a given space, for the purpose of expressing an idea or emotion, releasing energy, or simply taking delight in the movement itself.",
+      img: "https://i.pinimg.com/564x/fd/85/61/fd8561f800eb7b10dfa8fef83d3500d8.jpg",
+      link: "dance",
+    },
+    {
+      id: 5,
       header: "HIIT",
       desc: "Exercise plan that mixes brief bursts of vigorous exercise with less vigorous but still active 'recovery' periods. In an HIIT class, the objective is to maintain a target heart rate for exercise, which enables you to burn fat quickly in a short period of time.",
       img: "https://media1.popsugar-assets.com/files/thumbor/Zk7XXXTUDwaIG9GXjtIJL4yqUpY/fit-in/2048xorig/filters:format_auto-!!-:strip_icc-!!-/2020/02/11/715/n/1922729/tmp_WFB1tt_359ee710b2f3a82f_image.jpg",
@@ -63,41 +65,56 @@ const classes = () => {
         </Header>
       </Wrapper>
       <Content>
-        {category.map((item) => (
-          <Center py={6} key={item.id}>
-            <Box
-              w="xs"
-              rounded={"sm"}
-              my={5}
-              mx={[0, 5]}
-              overflow={"hidden"}
-              bg="#dbf8f6"
-            >
-              <Box h={"200px"}>
-                <Img
-                  src={item.img}
-                  alt={item.header}
-                  roundedTop={"sm"}
-                  objectFit="cover"
-                  h="full"
-                  w="full"
-                />
+        <SimpleGrid minChildWidth="300px">
+          {category.map((item) => (
+            <Center py={6} key={item.id}>
+              <Box
+                w="xs"
+                rounded={"sm"}
+                my={5}
+                mx={[0, 5]}
+                overflow={"hidden"}
+                bg="#dbf8f6"
+              >
+                <Box h={"200px"}>
+                  <Img
+                    src={item.img}
+                    alt={item.header}
+                    roundedTop={"sm"}
+                    objectFit="cover"
+                    h="full"
+                    w="full"
+                  />
+                </Box>
+                <Box p={4}>
+                  <Heading
+                    color={"black"}
+                    fontSize={"2xl"}
+                    noOfLines={1}
+                    display={"flex"}
+                    justifyContent={"space-between"}
+                  >
+                    {item.header}
+                    <Classcategorymodel
+                      header={item.header}
+                      desc={item.desc}
+                      img={item.img}
+                      link={item.link}
+                    />
+                  </Heading>
+                  <Text color={"gray.500"} noOfLines={2}>
+                    {item.desc}
+                  </Text>
+                </Box>
+                <HStack>
+                  <NavLink to={item.link}>
+                    EXPLORE {item.header} CLASSES
+                  </NavLink>
+                </HStack>
               </Box>
-              <Box p={4}>
-                <Heading color={"black"} fontSize={"2xl"} noOfLines={1}>
-                  {item.header}
-                </Heading>
-                <Text color={"gray.500"} noOfLines={2}>
-                  In this post, we will give an overview of what is new in React
-                  18, and what it means for the future.
-                </Text>
-              </Box>
-              <HStack>
-                <NavLink to={item.link}>EXPLORE {item.header} CLASSES</NavLink>
-              </HStack>
-            </Box>
-          </Center>
-        ))}
+            </Center>
+          ))}
+        </SimpleGrid>
       </Content>
     </Container>
   );
@@ -137,22 +154,15 @@ const Desc = styled.p`
 
 export const NavLink = styled(Link)`
   text-decoration: none;
+  color: black;
   cursor: pointer;
   width: 100%;
-  padding: 10px;
-  background-color: #a8cecb;
+  padding: 15px;
   &:hover {
     background-color: #a1e2dd;
   }
 `;
 
-const Content = styled.div`
-  display: flex;
-  padding-left: 3%;
-  padding-right: 3%;
-  width: 100%;
-  justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
-`;
+const Content = styled.div``;
 
 export default classes;

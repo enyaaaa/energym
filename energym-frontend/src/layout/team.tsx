@@ -2,28 +2,28 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../utils/responsive";
 import {
+  SimpleGrid,
   Image,
   Box,
   Center,
-  Badge,
   useColorModeValue,
   Heading,
   Text,
   Stack,
+  Badge,
 } from "@chakra-ui/react";
-import { SimpleGrid } from "@chakra-ui/react";
 import { classesapi } from "../api/classes";
 import { Instructor } from "../utils/types";
 
-const team = () => {
+const classescategory = () => {
   //using state
   const [instructors, setInstructors] = useState([]);
 
-  //getting all orders that users has made
   useEffect(() => {
-    classesapi.get(`api/instructors`).then(({ data }) => {
-      console.log(data);
-      setInstructors(data);
+    classesapi.get(`api/instructors`).then((res) => {
+      if (res.data.status === 200) {
+        setInstructors(res.data.instructors);
+      }
     });
   }, []);
 
@@ -35,11 +35,10 @@ const team = () => {
         </Header>
       </Wrapper>
       <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
-        {instructors.map((instructor: Instructor) => {
+        {instructors.map((Instructors: Instructor) => {
           return (
-            <Center py={12}>
+            <Center py={12} key={Instructors.id}>
               <Box
-                key={instructor.id}
                 role={"group"}
                 p={6}
                 maxW={"330px"}
@@ -51,20 +50,20 @@ const team = () => {
                 zIndex={1}
               >
                 <Box
-                  rounded={'lg'}
+                  rounded={"lg"}
                   mt={-12}
-                  pos={'relative'}
-                  height={'230px'}
+                  pos={"relative"}
+                  height={"230px"}
                   _after={{
-                    transition: 'all .3s ease',
+                    transition: "all .3s ease",
                     content: '""',
-                    w: 'full',
-                    h: 'full',
-                    pos: 'absolute',
+                    w: "full",
+                    h: "full",
+                    pos: "absolute",
                     top: 5,
                     left: 0,
-                    backgroundImage: instructor.profilePic,
-                    filter: 'blur(15px)',
+                    backgroundImage: `url(${Instructors.profilePic})`,
+                    filter: "blur(15px)",
                     zIndex: -1,
                   }}
                   _groupHover={{
@@ -74,12 +73,11 @@ const team = () => {
                   }}
                 >
                   <Image
-                    rounded={'lg'}
+                    rounded={"lg"}
                     height={230}
                     width={282}
-                    objectFit={'cover'}
-                    src={instructor.profilePic}
-                    alt={instructor.name}
+                    objectFit={"cover"}
+                    src={Instructors.profilePic}
                   />
                 </Box>
                 <Stack pt={10} align={"center"}>
@@ -88,17 +86,17 @@ const team = () => {
                     fontSize={"sm"}
                     textTransform={"uppercase"}
                   >
-                    @{instructor.username}
+                    {Instructors.username}
                   </Text>
                   <Heading
                     fontSize={"2xl"}
                     fontFamily={"body"}
                     fontWeight={500}
                   >
-                    {instructor.name}
+                    {Instructors.name}
                   </Heading>
                   <Badge borderRadius="full" px="2" colorScheme="teal">
-                    {instructor.category}
+                    {Instructors.category}
                   </Badge>
                 </Stack>
               </Box>
@@ -125,13 +123,15 @@ const Wrapper = styled.div`
 `;
 
 const Header = styled.div`
-  padding: 20px;
+  padding: 50px;
+  ${mobile({ padding: "30px" })}
 `;
 
 const Title = styled.h1`
   text-align: center;
+  text-transform: uppercase;
   font-size: 80px;
   ${mobile({ fontSize: "50px" })}
 `;
 
-export default team;
+export default classescategory;

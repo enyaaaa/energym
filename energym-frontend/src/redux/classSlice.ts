@@ -3,11 +3,11 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { Class } from "../utils/types";
 
 interface ClassState {
-  classes: Array<Class>
+  classes: Array<Class>;
 }
 
 const initialState: ClassState = {
-  classes: []
+  classes: [],
 };
 
 const classSlice = createSlice({
