@@ -203,7 +203,7 @@ const instructoreditprofile = () => {
               >
                 <Alert
                   action="update"
-                  title="Want to make the chnages?"
+                  title="Want to make the changes?"
                   trigger={profileUpdate}
                 />
               </Stack>
