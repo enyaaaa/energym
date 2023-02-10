@@ -117,7 +117,6 @@ const userbooking = () => {
         <Header>
           <Title>MY BOOKINGS AND COMMENTS</Title>
         </Header>
-        <Reviewmodel />
       </Wrapper>
       <Box paddingLeft={"20px"} fontSize="3xl">
         Class Bookings
@@ -187,6 +186,9 @@ const userbooking = () => {
       </SimpleGrid>
       <Box paddingLeft={"20px"} fontSize="3xl">
         Reviews Posted
+      </Box>
+      <Box paddingLeft={"20px"} paddingBottom={"20px"}>
+        <Reviewmodel />
       </Box>
       <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
         {reviews.map((Reviews: Comment, index) => {
@@ -264,8 +266,8 @@ const userbooking = () => {
                   rating={Reviews.rating}
                 />
                 <Deletealert
-                  action="delete booking"
-                  title="Are you sure you want to delete your booking?"
+                  action="delete comment"
+                  title="Are you sure you want to delete your comment?"
                   trigger={(e: any) => handleReviewDelete(e, Reviews.id)}
                 />
               </Flex>

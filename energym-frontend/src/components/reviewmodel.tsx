@@ -50,7 +50,7 @@ export function Reviewmodel() {
 
     const data = {
       user_id: authuser.user?.id,
-      name: authuser.user?.name,
+      name: authuser.user?.username,
       profilePic: authuser.user?.profilePic,
       review: reviewInput.review,
       rating: reviewInput.rating,
@@ -67,7 +67,7 @@ export function Reviewmodel() {
           duration: 4000,
           isClosable: true,
         });
-        navigate("/yourclassbookings", { replace: true });
+        navigate("/forum", { replace: true });
       } else {
         setReviewInput({
           ...reviewInput,
@@ -110,7 +110,6 @@ export function Reviewmodel() {
         <ModalContent>
           <ModalHeader>Leave a Review to energym</ModalHeader>
           <ModalCloseButton />
-
           <ModalBody>
             <FormControl>
               <FormLabel>Review</FormLabel>
