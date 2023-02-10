@@ -15,9 +15,9 @@ import {
 import { classesapi } from "../api/classes";
 import { Instructor } from "../utils/types";
 
-const classescategory = () => {
+const team = () => {
   //using state
-  const [instructors, setInstructors] = useState([]);
+  const [instructors, setInstructors] = useState<any>([]);
 
   useEffect(() => {
     classesapi.get(`api/instructors`).then((res) => {
@@ -25,7 +25,7 @@ const classescategory = () => {
         setInstructors(res.data.instructors);
       }
     });
-  }, []);
+  }, [instructors]);
 
   return (
     <Container>
@@ -111,7 +111,6 @@ const classescategory = () => {
 const Container = styled.div``;
 
 const Wrapper = styled.div`
-  padding: 30px;
   margin: 20px;
   background: linear-gradient(
       rgba(255, 255, 255, 0.274),
@@ -134,4 +133,4 @@ const Title = styled.h1`
   ${mobile({ fontSize: "50px" })}
 `;
 
-export default classescategory;
+export default team;

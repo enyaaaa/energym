@@ -21,7 +21,7 @@ class InstructorController extends Controller
             "mobile" => 'required|digits:8|unique:instructors,mobile',
             "password" => 'required|min:8|same:confirmPassword',
             "confirmPassword" => 'required|same:password|min:8',
-            "code" => 'required|in:Q6FfficNa7vfXzHP5LSMB06iu2sJuXh',
+            "code" => 'required|in:energym',
             "category" => 'required',
         ]);
 
@@ -48,7 +48,7 @@ class InstructorController extends Controller
                 'status' => 200,
                 'user' => $instuctor,
                 'token' => $token,
-                'code' => 'Q6FfficNa7vfXzHP5LSMB06iu2sJuXh',
+                'code' => 'energym',
                 'message' => 'Registered Successfully'
             ]);
         }
@@ -79,7 +79,7 @@ class InstructorController extends Controller
                     'status' => 200,
                     'instructor' => $instructor,
                     'token' => $token,
-                    'code' => 'Q6FfficNa7vfXzHP5LSMB06iu2sJuXh',
+                    'code' => 'energym',
                     'message' => 'Logged in Successfully'
                 ]);
             }

@@ -41,11 +41,11 @@ export function Viewusersbookingmodel({ id }: any) {
         setClassbookings(res.data.classes);
       }
     });
-  }, []);
+  }, [classbookings]);
 
   return (
     <>
-      <AvatarGroup size="md" max={2} onClick={onOpen}>
+      <AvatarGroup size="sm" max={2} onClick={onOpen}>
         {classbookings.map((User: Students) => {
           return <Avatar src={User.userProfilePic} key={id} />;
         })}

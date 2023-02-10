@@ -57,8 +57,11 @@ export interface Class {
 
 export interface Comment {
   id: number;
-  user_id: number;
+  name: string;
+  profilePic: string;
   review: string;
-  commentImage: string;
   rating: number;
+  created_at: string;
+  index: number;
 }
+

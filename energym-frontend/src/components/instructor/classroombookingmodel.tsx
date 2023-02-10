@@ -207,21 +207,20 @@ export function Bookingclassroommodel({
                 </FormControl>
                 <FormControl mt={4}>
                   <Image
-                    width={"150px"}
+                    width={"200px"}
                     height={"150px"}
                     objectFit="cover"
-                    borderRadius={"100%"}
                     src={view}
                   />
                   <Input
                     type="file"
-                    name="profilePic"
+                    name="classImage"
                     padding={"5px"}
                     accept="image/*"
                     onChange={onImageChange}
                   />
                   <Validation>
-                    {roombookingInput.error_list.profilePic}
+                    {roombookingInput.error_list.classImage}
                   </Validation>
                 </FormControl>
               </ModalBody>

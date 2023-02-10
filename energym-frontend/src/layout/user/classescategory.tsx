@@ -14,13 +14,14 @@ import {
   PopoverBody,
   PopoverArrow,
   PopoverCloseButton,
+  Select,
 } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
 import { classesapi } from "../../api/classes";
-import { Class } from "../../utils/types";
+import { Instructor } from "../../utils/types";
 import moment from "moment";
 import { Classinfomodel } from "../../components/class/classinfomodel";
-import { FileText } from "phosphor-react";
+import { FileText, MagnifyingGlass } from "phosphor-react";
 import { Bookingclassmodel } from "../../components/user/userbookingmodel";
 
 const classescategory = () => {
@@ -28,13 +29,26 @@ const classescategory = () => {
   const { category } = useParams();
 
   //using state
-  const [classes, setClasses] = useState([]);
+  const [classes, setClasses] = useState<any>([]);
+  const [instructors, setInstructors] = useState([]);
+  const [datequery, setDateQuery] = useState<any>("");
+  const [instructorquery, setInstructorQuery] = useState<any>("");
 
   //getting all orders that users has made
   useEffect(() => {
     classesapi.get(`api/classes/${category}`).then((res) => {
       if (res.data.status === 200) {
         setClasses(res.data.classes);
+      }
+    });
+  }, [classes]);
+
+  //using state
+
+  useEffect(() => {
+    classesapi.get(`api/instructors`).then((res) => {
+      if (res.data.status === 200) {
+        setInstructors(res.data.instructors);
       }
     });
   }, []);
@@ -46,108 +60,130 @@ const classescategory = () => {
           <Title>{category} CLASSES</Title>
         </Header>
       </Wrapper>
-      <SimpleGrid minChildWidth="300px" spacing="40px" padding={"5%"}>
-        {classes.map((Classes: Class) => {
-          return (
-            <Box
-              key={Classes.id}
-              maxW="sm"
-              borderWidth="1px"
-              borderRadius="lg"
-              overflow="hidden"
-            >
-              <Image
-                height={"300px"}
-                width="100%"
-                objectFit={"cover"}
-                src={Classes.classImage}
-                alt={Classes.classTitle}
-              />
-              <Box p="6">
-                <Flex justifyContent={"space-between"}>
-                  <Box display="flex" alignItems="baseline">
-                    <Badge borderRadius="full" px="2" colorScheme="teal">
-                      {Classes.classType}
-                    </Badge>
-                    <Box
-                      color="gray.500"
-                      fontWeight="semibold"
-                      letterSpacing="wide"
-                      fontSize="xs"
-                      textTransform="uppercase"
-                      ml="2"
-                    >
-                      {Classes.slots} slots &bull; {Classes.classDuration}
+      <Flex>
+        <Search>
+          <MagnifyingGlass size={32} />
+          <Input type="date" onChange={(e) => setDateQuery(e.target.value)} />
+        </Search>
+        <Search>
+          <Select
+            onChange={(e) => setInstructorQuery(e.target.value)}
+            placeholder="Instructors"
+          >
+            {instructors.map((Instructors: Instructor) => {
+              return (
+                <option value={Instructors.name}>{Instructors.name}</option>
+              );
+            })}
+          </Select>
+        </Search>
+      </Flex>
+      <SimpleGrid minChildWidth="300px" spacing="40px" padding={"3%"}>
+        {classes
+          .filter((Classes: any) =>
+            Classes.classStartDateTime?.toLowerCase().includes(datequery) && Classes.instructorName?.toLowerCase().includes(instructorquery),
+          )
+          .map((Classes: any) => {
+            return (
+              <Box
+                key={Classes.id}
+                maxW="sm"
+                borderWidth="1px"
+                borderRadius="lg"
+                overflow="hidden"
+              >
+                <Image
+                  height={"300px"}
+                  width="100%"
+                  objectFit={"cover"}
+                  src={Classes.classImage}
+                  alt={Classes.classTitle}
+                />
+                <Box p="6">
+                  <Flex justifyContent={"space-between"}>
+                    <Box display="flex" alignItems="baseline">
+                      <Badge borderRadius="full" px="2" colorScheme="teal">
+                        {Classes.classType}
+                      </Badge>
+                      <Box
+                        color="gray.500"
+                        fontWeight="semibold"
+                        letterSpacing="wide"
+                        fontSize="xs"
+                        textTransform="uppercase"
+                        ml="2"
+                      >
+                        {Classes.slots} slots &bull; {Classes.classDuration}
+                      </Box>
                     </Box>
+                    <Box display={"flex"}>
+                      <Classinfomodel
+                        instructorName={Classes.instructorName}
+                        classTitle={Classes.classTitle}
+                        classImage={Classes.classImage}
+                        classType={Classes.classType}
+                        classRoom={Classes.classRoom}
+                        classStartDateTime={Classes.classStartDateTime}
+                        classEndDateTime={Classes.classEndDateTime}
+                        classDuration={Classes.classDuration}
+                        price={Classes.price}
+                        purpose={Classes.purpose}
+                        description={Classes.description}
+                        slots={Classes.slots}
+                      />
+                      <Popover>
+                        <PopoverTrigger>
+                          <FileText size={25} />
+                        </PopoverTrigger>
+                        <PopoverContent>
+                          <PopoverArrow />
+                          <PopoverCloseButton />
+                          <PopoverHeader>Description</PopoverHeader>
+                          <PopoverBody>{Classes.description}</PopoverBody>
+                        </PopoverContent>
+                      </Popover>
+                    </Box>
+                  </Flex>
+                  <Box
+                    mt="1"
+                    as="h4"
+                    lineHeight="tight"
+                    noOfLines={1}
+                    textTransform="uppercase"
+                  >
+                    {Classes.classTitle}
                   </Box>
-                  <Box display={"flex"}>
-                    <Classinfomodel
-                      instructorName={Classes.instructorName}
+                  <Box
+                    mt="1"
+                    as="h4"
+                    lineHeight="tight"
+                    noOfLines={1}
+                    textTransform="uppercase"
+                  >
+                    INSTRUCTOR: {Classes.instructorName}
+                  </Box>
+                  <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
+                    TIME: {moment(Classes.classStartDateTime).format("h:mm A")}
+                  </Box>
+                  <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
+                    DATE:{" "}
+                    {moment(Classes.classStartDateTime).format("YYYY-MM-DD")}
+                  </Box>
+                  <Box paddingTop={"15px"}>
+                    <Bookingclassmodel
+                      class_id={Classes.id}
                       classTitle={Classes.classTitle}
-                      classImage={Classes.classImage}
                       classType={Classes.classType}
                       classRoom={Classes.classRoom}
                       classStartDateTime={Classes.classStartDateTime}
                       classEndDateTime={Classes.classEndDateTime}
                       classDuration={Classes.classDuration}
-                      price={Classes.price}
-                      purpose={Classes.purpose}
-                      description={Classes.description}
-                      slots={Classes.slots}
                     />
-                    <Popover>
-                      <PopoverTrigger>
-                        <FileText size={25} />
-                      </PopoverTrigger>
-                      <PopoverContent>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <PopoverHeader>Description</PopoverHeader>
-                        <PopoverBody>{Classes.description}</PopoverBody>
-                      </PopoverContent>
-                    </Popover>
                   </Box>
-                </Flex>
-                <Box
-                  mt="1"
-                  as="h4"
-                  lineHeight="tight"
-                  noOfLines={1}
-                  textTransform="uppercase"
-                >
-                  {Classes.classTitle}
-                </Box>
-                <Box
-                  mt="1"
-                  as="h4"
-                  lineHeight="tight"
-                  noOfLines={1}
-                  textTransform="uppercase"
-                >
-                  INSTRUCTOR: {Classes.instructorName}
-                </Box>
-                <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
-                  TIME: {moment(Classes.classStartDateTime).format("h:mm A")}
-                </Box>
-                <Box mt="1" as="h4" lineHeight="tight" noOfLines={1}>
-                  DATE:{" "}
-                  {moment(Classes.classStartDateTime).format("YYYY-MM-DD")}
-                </Box>
-                <Box paddingTop={"15px"}>
-                  <Bookingclassmodel
-                    class_id={Classes.id}
-                    classTitle={Classes.classTitle}
-                    classType={Classes.classType}
-                    classRoom={Classes.classRoom}
-                    classStartDateTime={Classes.classStartDateTime}
-                    classEndDateTime={Classes.classEndDateTime}
-                    classDuration={Classes.classDuration}
-                  />
                 </Box>
               </Box>
-            </Box>
-          );
-        })}
+            );
+          })}
       </SimpleGrid>
     </Container>
   );
@@ -156,7 +192,6 @@ const classescategory = () => {
 const Container = styled.div``;
 
 const Wrapper = styled.div`
-  padding: 30px;
   margin: 20px;
   background: linear-gradient(
       rgba(255, 255, 255, 0.274),
@@ -177,6 +212,20 @@ const Title = styled.h1`
   text-transform: uppercase;
   font-size: 80px;
   ${mobile({ fontSize: "50px" })}
+`;
+
+const Search = styled.div`
+  display: flex;
+  width: 200px;
+  justify-content: space-between;
+  padding: 15px;
+  margin: 20px;
+`;
+
+const Input = styled.input`
+  border: none;
+  outline: none;
+  background: transparent;
 `;
 
 export default classescategory;

@@ -73,6 +73,7 @@ class ClassController extends Controller
                 "instructorName" => 'required',
                 "classTitle" => 'required',
                 "classType" => 'required',
+                "classImage" => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 "classRoom" => 'required',
                 "classStartDateTime" => 'required',
                 "classEndDateTime" => 'required',

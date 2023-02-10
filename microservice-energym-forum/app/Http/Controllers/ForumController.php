@@ -16,7 +16,11 @@ class ForumController extends Controller
      */
     public function index()
     {
-        return forum::all();
+        $comments = forum::all();
+        return response()->json([
+            'status' => 200,
+            'comments' => $comments,
+        ]);
     }
 
     /**
@@ -53,7 +57,7 @@ class ForumController extends Controller
             $name = $request->name;
             $review = $request->input('review');
             $rating = $request->input('rating');
-
+            $profilePic = $request->input('profilePic');
 
             $comment = new forum;
 
@@ -61,23 +65,14 @@ class ForumController extends Controller
             $comment->name = $name;
             $comment->review = $review;
             $comment->rating = $rating;
-
-            $file = $request->file('commentImage');
-            $filename = $file->getClientOriginalName();
-            $file = $request->commentImage->storeAs('commentImage/' . $comment->name, $filename, "s3");
-            Storage::disk('s3')->setVisibility($file, 'public');
-            $url = Storage::disk('s3')->url($file);
-
-            $comment->commentImage = $url;
-
-
+            $comment->profilePic = $profilePic;
 
             $comment->save();
 
             return response()->json([
                 'status' => 200,
                 'comment' => $comment,
-                'message' => 'Booked class Successfully',
+                'message' => 'Posted Review Successfully',
             ]);
         }
     }
@@ -90,7 +85,11 @@ class ForumController extends Controller
      */
     public function show($id)
     {
-        //
+        $comments = Forum::where("user_id", $id)->get();
+        return response()->json([
+            'status' => 200,
+            'comments' => $comments,
+        ]);
     }
 
     /**
@@ -117,29 +116,6 @@ class ForumController extends Controller
 
         $comment->review = $request->input('review');
         $comment->rating = $request->input('rating');
-
-        if ($request->hasFile('commentImage')) {
-            if ($comment->commentImage) {
-                $old_path = $comment->commentImage;
-                if (Storage::disk('s3')->exists($old_path)) {
-                    Storage::disk('s3')->delete($old_path);
-                }
-            }
-
-            $file = $request->file('commentImage');
-            $filename = $file->getClientOriginalName();
-            $file = $request->commentImage->storeAs('commentImage/user/' . $comment->email, $filename, "s3");
-            Storage::disk('s3')->setVisibility($file, 'public');
-            $url = Storage::disk('s3')->url($file);
-            $comment->update([
-                "commentImage" => $url,
-            ]);
-        } else {
-            $url = $comment->commentImage;
-            $comment->update([
-                "commentImage" => $url,
-            ]);
-        }
 
         $comment->update();
         return response()->json([

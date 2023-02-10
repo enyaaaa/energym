@@ -9,25 +9,13 @@ import {
   Button,
   useDisclosure,
 } from "@chakra-ui/react";
+import { TrashSimple } from "phosphor-react";
 
-export function Alert({ title, message, action, trigger }: any) {
+export function Deletealert({ title, message, action, trigger }: any) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <Button
-        bg={"#c29292"}
-        color={"#ffffff"}
-        boxShadow={
-          "0px 1px 25px -5px rgb(66 153 225 / 48%), 0 10px 10px -5px rgb(66 153 225 / 43%)"
-        }
-        _hover={{
-          bg: "blue.500",
-        }}
-        onClick={onOpen}
-      >
-        {action}
-      </Button>
-
+      <TrashSimple size={25} color="#75ccbb" onClick={onOpen} />
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>

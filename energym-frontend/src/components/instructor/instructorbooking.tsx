@@ -21,11 +21,11 @@ import { Class } from "../../utils/types";
 import moment from "moment";
 import { RootState } from "../../store";
 import { useSelector } from "react-redux";
-import { Alert } from "../alert";
 import { Classinfomodel } from "../class/classinfomodel";
 import { FileText } from "phosphor-react";
 import { useNavigate } from "react-router-dom";
 import { Viewusersbookingmodel } from "./viewuserbookingmodel";
+import { Deletealert } from "../user/deletecomment";
 
 const instructorbookings = () => {
   const navigate = useNavigate();
@@ -48,7 +48,7 @@ const instructorbookings = () => {
         setBookings(res.data.classes);
       }
     });
-  }, []);
+  }, [bookings]);
 
   //function when user press on delete
   const handleDelete = (e: any, id: any) => {
@@ -188,7 +188,7 @@ const instructorbookings = () => {
                 <Box paddingTop={"10px"}>
                   <Flex justifyContent={"space-between"}>
                     <Viewusersbookingmodel id={Classes.id} />
-                    <Alert
+                    <Deletealert
                       action="delete booking"
                       title="Are you sure you want to delete your booking?"
                       trigger={(e: any) => handleDelete(e, Classes.id)}
@@ -207,7 +207,6 @@ const instructorbookings = () => {
 const Container = styled.div``;
 
 const Wrapper = styled.div`
-  padding: 30px;
   margin: 20px;
   background: linear-gradient(
       rgba(255, 255, 255, 0.274),

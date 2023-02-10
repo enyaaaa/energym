@@ -127,6 +127,7 @@ const instructorregisterform = () => {
               <option value="yoga">yoga</option>
               <option value="spin">spin</option>
               <option value="pilates">pilates</option>
+              <option value="dance">dance</option>
               <option value="hiit">hiit</option>
             </Select>
           </FormControl>

@@ -96,32 +96,6 @@ const usereditprofile = () => {
       });
   };
 
-  //function when user press on delete
-  const handleDelete = (e: any, id: any) => {
-    e.preventDefault();
-
-    authapiToken(authuser.token)
-      .delete(`/api/profile/${id}`)
-      .then((res) => {
-        if (res.data.status === 200) {
-          dispatch(resetUser());
-          toast({
-            title: res.data.message,
-            status: "success",
-            duration: 4000,
-            isClosable: true,
-          });
-          navigate("/login", { replace: true });
-        } else if (res.data.status === 404) {
-          toast({
-            title: res.data.message,
-            status: "error",
-            duration: 4000,
-            isClosable: true,
-          });
-        }
-      });
-  };
   return (
     <Container>
       <Wrapper>
@@ -204,11 +178,6 @@ const usereditprofile = () => {
                   title="Want to make the chnages?"
                   trigger={profileUpdate}
                 />
-                <Alert
-                  action="delete account"
-                  title="Are you sure you want to delete your account? All data will be wiped 😢"
-                  trigger={(e: any) => handleDelete(e, authuser.user?.id)}
-                />
               </Stack>
             </Stack>
           </Stack>
@@ -221,7 +190,6 @@ const usereditprofile = () => {
 const Container = styled.div``;
 
 const Wrapper = styled.div`
-  padding: 30px;
   margin: 20px;
   background: linear-gradient(
       rgba(255, 255, 255, 0.274),

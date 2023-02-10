@@ -21,5 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('forum', ForumController::class);
+Route::get('commentbyuser/{id}', 'App\Http\Controllers\ForumController@show');
 Route::post('updatecomment/{id}', 'App\Http\Controllers\ForumController@update');
 Route::delete('comment/{id}', 'App\Http\Controllers\ForumController@destroy');

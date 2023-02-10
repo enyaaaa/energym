@@ -217,7 +217,6 @@ const instructoreditprofile = () => {
 const Container = styled.div``;
 
 const Wrapper = styled.div`
-  padding: 30px;
   margin: 20px;
   background: linear-gradient(
       rgba(255, 255, 255, 0.274),
