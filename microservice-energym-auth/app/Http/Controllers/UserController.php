@@ -27,7 +27,7 @@ class UserController extends Controller
             return response()->json([
                 'status' => 404,
                 'validation_errors' => $validator->errors(),
-                'message' => 'Some fields are invald'
+                'message' => 'Some fields are invalid'
             ]);
         } else {
             $user = User::create([

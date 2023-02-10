@@ -71,6 +71,7 @@ const userregisterform = () => {
         <Title>REGISTER AS USER</Title>
         <Form onSubmit={registerSubmit}>
           <Input
+          id="username"
             margin="10px 0"
             size="lg"
             type="text"
@@ -81,6 +82,7 @@ const userregisterform = () => {
           />
           <Validation>{registerInput.error_list.username}</Validation>
           <Input
+          id="name"
             margin="10px 0"
             size="lg"
             type="text"
@@ -91,6 +93,7 @@ const userregisterform = () => {
           />
           <Validation>{registerInput.error_list.name}</Validation>
           <Input
+          id="email"
             margin="10px 0"
             size="lg"
             type="text"
@@ -101,6 +104,7 @@ const userregisterform = () => {
           />
           <Validation>{registerInput.error_list.email}</Validation>
           <Input
+          id="mobile"
             margin="10px 0"
             size="lg"
             type="tel"
@@ -111,6 +115,7 @@ const userregisterform = () => {
           />
           <Validation>{registerInput.error_list.mobile}</Validation>
           <Input
+          id="password"
             margin="10px 0"
             size="lg"
             type="password"
@@ -121,6 +126,7 @@ const userregisterform = () => {
           />
           <Validation>{registerInput.error_list.password}</Validation>
           <Input
+          id="confirmpassword"
             margin="10px 0"
             size="lg"
             type="password"
@@ -130,7 +136,7 @@ const userregisterform = () => {
             value={registerInput.confirmPassword}
           />
           <Validation>{registerInput.error_list.comfirmPassword}</Validation>
-          <Button type="submit">REGISTER</Button>
+          <Button id="register" type="submit">REGISTER</Button>
           <LoginLink to="/login">AREADY HAVE AN ACCOUNT?</LoginLink>
         </Form>
       </Wrapper>

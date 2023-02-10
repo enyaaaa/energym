@@ -76,6 +76,7 @@ const instructorregisterform = () => {
         <Title>REGISTER AS INSTRUCTOR</Title>
         <Form onSubmit={registerSubmit}>
           <Input
+            id="username"
             margin="8px 0"
             size="lg"
             type="text"
@@ -86,6 +87,7 @@ const instructorregisterform = () => {
           />
           <Validation>{registerInput.error_list.username}</Validation>
           <Input
+            id="name"
             margin="8px 0"
             size="lg"
             type="text"
@@ -96,6 +98,7 @@ const instructorregisterform = () => {
           />
           <Validation>{registerInput.error_list.name}</Validation>
           <Input
+            id="email"
             margin="8px 0"
             size="lg"
             type="text"
@@ -106,6 +109,7 @@ const instructorregisterform = () => {
           />
           <Validation>{registerInput.error_list.email}</Validation>
           <Input
+            id="mobile"
             margin="8px 0"
             size="lg"
             type="tel"
@@ -117,8 +121,8 @@ const instructorregisterform = () => {
           <Validation>{registerInput.error_list.mobile}</Validation>
           <FormControl>
             <Select
-              name="category"
               id="category"
+              name="category"
               margin="8px 0"
               value={registerInput.category}
               onChange={handleInput}
@@ -133,6 +137,7 @@ const instructorregisterform = () => {
           </FormControl>
           <Validation>{registerInput.error_list.category}</Validation>
           <Input
+            id="password"
             margin="8px 0"
             size="lg"
             type="password"
@@ -143,6 +148,7 @@ const instructorregisterform = () => {
           />
           <Validation>{registerInput.error_list.password}</Validation>
           <Input
+            id="confirmpassword"
             margin="8px 0"
             size="lg"
             type="password"
@@ -153,6 +159,7 @@ const instructorregisterform = () => {
           />
           <Validation>{registerInput.error_list.comfirmPassword}</Validation>
           <Input
+            id="verificationcode"
             margin="8px 0"
             size="lg"
             type="password"
@@ -162,7 +169,7 @@ const instructorregisterform = () => {
             value={registerInput.code}
           />
           <Validation>{registerInput.error_list.code}</Validation>
-          <Button type="submit">REGISTER</Button>
+          <Button id="register" type="submit">REGISTER</Button>
           <LoginLink to="/instructorlogin">AREADY HAVE AN ACCOUNT?</LoginLink>
         </Form>
       </Wrapper>

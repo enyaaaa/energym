@@ -62,6 +62,7 @@ const userloginform = () => {
         <Title>LOGIN AS USER</Title>
         <Form onSubmit={loginSubmit}>
           <Input
+            id="email"
             type="email"
             name="email"
             placeholder="email"
@@ -72,6 +73,7 @@ const userloginform = () => {
           />
           <Validation>{loginInput.error_list.email}</Validation>
           <Input
+            id="password"
             type="password"
             name="password"
             placeholder="password"
@@ -82,8 +84,10 @@ const userloginform = () => {
           />
           <Validation>{loginInput.error_list.password}</Validation>
           <ForgetPasswowrdLink to="/">FORGET PASSWORD?</ForgetPasswowrdLink>
-          <Button type="submit">SIGN IN</Button>
-          <CreateAccountLink to="/register">CREATE ACCOUNT</CreateAccountLink>
+          <Button id="signin" type="submit">SIGN IN</Button>
+          <CreateAccountLink id="create_account" to="/register">
+            CREATE ACCOUNT
+          </CreateAccountLink>
         </Form>
       </Wrapper>
     </Container>
