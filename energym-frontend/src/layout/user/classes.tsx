@@ -18,7 +18,7 @@ const classes = () => {
       id: 1,
       header: "SPIN",
       desc: "Indoor cycling, often known as spinning, is a type of exercise that involves using a specific stationary exercise bike with a weighted flywheel in a classroom setting. Classes focus on endurance, strength, intervals, high intensity, and recuperation.",
-      img: "https://mountainsidefitness.com/wp-content/uploads/2019/10/Cycle-v2.jpg",
+      img: "https://sgmagazine.com/sites/default/files/u143719/absolute_you.jpg",
       link: "spin",
     },
     {
