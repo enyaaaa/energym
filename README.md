@@ -46,7 +46,7 @@ This project was created for CADV (Cloud Application Devlopment and DevOps (Deve
 
 # Technologies used
 
-- React TypeScript
+- <b>React TypeScript</b>
   - Vite
   - Redux
   - Axios
@@ -56,23 +56,23 @@ This project was created for CADV (Cloud Application Devlopment and DevOps (Deve
   - Moment
   - Styled-components
   
-- Laravel
+- <b>Laravel</b>
   - Backend
 
-- Digitalocean
+- <b>Digitalocean</b>
   - Create server for backend
 
-- Docker
+- <b>Docker</b>
   - Run microservices
 
-- AWS
+- <b>AWS</b>
   - s3 bucket for storing images
   
-- Linode
+- <b>Linode</b>
   - Host my website
   
-- Github actions
+- <b>Github actions</b>
   - used for CI/CD
   
-- Cypress
+- <b>Cypress</b>
   - Automated Testing
